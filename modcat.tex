@@ -1958,9 +1958,7 @@ $R^{(I)} \to R^{(J)}$
 determined by requiring that $f$ maps the standard basis vector $e_i$ of $R^{(I)}$ to the standard basis vector $e'_{f(i)}$ of $R^{(J)}$. This construction defines a functor $\Set \to {}_R\Mod$.
 \end{example}
 
-\begin{example}[Units in a ring]
-If $f\colon R\to S$ is a ring homomorphism, then $f$ restricts to a group homomorphism $R^\times \to S^\times$, and we obtain a functor $\Ring \to \Grp$.
-\end{example}
+
 
 \begin{example}[The fundamental group of a pointed space] Let $\Top_\ast$ be the category of \emph{pointed topological spaces}. Objects in $\Top_\ast$ are pairs $(X,x)$ with $X$ a topological space and $x\in X$. A morphism from $(X,x)$ to $(Y,y)$ is a continuous map $f\colon X\to Y$ such that $f(x)=y$.
 
@@ -2129,10 +2127,16 @@ Let $\cC$ and $\cD$ be categories, let $F\colon \cC \to \cD$ be a functor. Let $
 in~$\cD$.  Give an example where $F(f)$ is an isomorphism but $f$ is not.
 \end{exercise}
 
-
+\begin{exercise}
+Verify that if $f\colon R\to S$ is a ring homomorphism, then $f$ restricts to a group homomorphism $R^\times \to S^\times$. Use this to construct a functor $\Ring \to \Grp$, mapping a ring $R$ to its group of units $R^\times$.
+\end{exercise}
 
 
 \begin{exercise}Verify the claims in Example \ref{exa:abelianization}.
+\end{exercise}
+
+\begin{exercise}
+Let $S$ and $T$ be pre-ordered sets, defining categories $\cC$ and $\cD$ respectively (see Example \ref{exa:pre-ordered}). Describe the functors from $\cC$ to~$\cD$.
 \end{exercise}
 
 \begin{exercise}\label{exc:functor-GLn}
