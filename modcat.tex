@@ -2193,17 +2193,18 @@ An \emph{isomorphism} from $F$ to $G$ is a morphism of functors $\eta$ such that
 
 We will  write $\eta\colon F\to G$ to denote that $\eta$ is a morphism from the functor $F$ to the functor $G$.
 
-\begin{example}[double dual]
+\begin{example}[double dual]\label{exa:double-dual}
 Let $K$ be a field and $V$ a $K$-vector-space. Then we have a natural map
 \[
 	\eta_V\colon V \to V^{\vee\vee} = \Hom_K(\Hom_K(V,K),K),\,
 	v \mapsto \left( \varphi \mapsto \varphi(v) \right).
 \]
-The word `natural' is usually used in an informal sense, meaning `not depending on the choice of a basis'. But it also has a precise mathematical meaning, namely that the collection of maps $(\eta_V)_V$ with $V$ running over all the vector spaces forms a morphism
+The word `natural' is often used in an informal sense, meaning `not depending on the choice of a basis'. But it also has a precise mathematical meaning, namely that the collection of maps $(\eta_V)_V$ with $V$ running over all the vector spaces forms a morphism
 \[
 	\eta\colon \id_{\Vec_K} \to (-)^{\vee\vee}
 \]
 from the functor $\id\colon \Vec_K \to \Vec_K$ to the functor $(-)^{\vee\vee}\colon \Vec_K \to \Vec_K$.
+See Exercise~\ref{exc:double-dual}.
 \end{example}
 
 \begin{example}
@@ -2389,7 +2390,10 @@ Note that $\cC$ and $\FVec_K$ are not \emph{isomorphic} as categories. The categ
 \section*{Exercises}
 
 
-
+\begin{exercise}\label{exc:double-dual}
+Verify that the $\eta_V$ of Example \ref{exa:double-dual} form a morphism of
+functors from $\id_{\Vec_K}$ to $(-)^{\vee\vee}$.
+\end{exercise}
 
 \begin{exercise}\label{exc:endo-identity-ab}
 Let $\eta \colon \id_\Ab \to \id_\Ab$ be a morphism of functors. Show that there is an integer $n$ such that  for every $A \in \ob \Ab$ and for every $x \in A$ the identity $\eta_A(x) =nx$ holds.
