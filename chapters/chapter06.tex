@@ -1,4 +1,3 @@
-
 \chapter{Morphisms of functors}
 
 \section{Morphisms of functors}
@@ -122,8 +121,8 @@ is a bijection.
 By assumption, there exists an isomorphism $\varphi\colon \id_\cC \to H$. By definition, this means that for all $f\colon X\to Y$ in $\cC$ the square
 \[
 \begin{tikzcd}
-	X \arrow{r}{\varphi_X} \arrow{d}{f} & HX \arrow{d}{Hf} \\
-	Y \arrow{r}{\varphi_Y} & HY.
+X \arrow{r}{\varphi_X} \arrow{d}{f} & HX \arrow{d}{Hf} \\
+Y \arrow{r}{\varphi_Y} & HY.
 \end{tikzcd}
 \]
 commutes. Note that $\varphi_X$ and $\varphi_Y$ are isomorphisms (since $\varphi$ is an isomorphism). In particular, we have $Hf = \varphi_Y \circ f \circ \varphi_X^{-1}$. One can now check directly that the map
@@ -181,7 +180,7 @@ But since the functor $F$ is full and faithful the map
 \[
 	\Hom_{\cC}(GX,GY) \to \Hom_\cD(F(GX),F(GY)),\, g \mapsto Fg
 \]
-is a bijection. Hence there exists a unique $g \colon GX \to GY$ with $Fg = \alpha_Y^{-1} f \alpha_X$, and we define $Gf := g$. One verifies that this $G$ defines indeed satisfies the axioms for a functor from $\cD$ to $\cC$.
+is a bijection. Hence there exists a unique $g \colon GX \to GY$ with $Fg = \alpha_Y^{-1} f \alpha_X$, and we define $Gf := g$. One verifies that this $G$ indeed satisfies the axioms for a functor from $\cD$ to $\cC$.
 
 Finally, to see that $G$ is a quasi-inverse to $F$, note that the $\alpha_X$ define an isomorphism of functors $\alpha\colon FG \to \id_{\cD}$. In the other direction, given an object $X$ in $\cC$ we define
 \[
