@@ -1,0 +1,333 @@
+
+\chapter{Free resolutions}
+
+\section{Definition and existence}
+
+
+
+
+\begin{definition}
+Let $R$ be a ring and let $M$ be an $R$-module. A \emph{free resolution} of $M$ is an exact sequence
+of $R$-modules
+\[
+	\cdots \longto F_2 \overset{d_2}{\longto} F_1 \overset{d_1}{\longto} F_0 \overset{\pi}{\longto} M \longto 0 
+\]
+in which the modules $F_i$ are free.
+\end{definition}
+
+\begin{example}
+If $M$ itself is free, then the exact sequence
+\[
+	\cdots \longto 0 \longto 0 \longto M \overset{\id}{\longto} M \longto 0
+\]
+is a free resolution (with $F_0=M$ and $F_i=0$ for $i\neq 0$). We will usually suppress leading zeroes from the notation, and simply write 
+\[
+	0 \longto M \longto M \longto 0
+\]
+for the above resolution.
+\end{example}
+
+\begin{example}Let $R$ be an integral domain. 
+If $I \subset R$ is a non-zero principal ideal, then $I$ is free of rank $1$ as an $R$-module (see Exercise \ref{exc:principal-ideal-in-domain}), hence the exact sequence
+\[
+	0 \longto I \longto R \longto R/I \longto 0
+\]
+is a free resolution of the $R$-module $R/I$.
+\end{example}
+
+\begin{example}
+If $R$ is a principal ideal domain, and $M$ a finitely generated $R$-module, then we have seen in
+Corollary \ref{cor:free-presentation} that $M$ has a free resolution of the form
+\[
+	0 \longto F_1 \longto F_0 \longto M \longto 0
+\]
+with $F_0$ and $F_1$ free $R$-modules of finite rank.
+\end{example}
+
+\begin{example}
+Let $K$ be a field, and let $R=K[X,Y]$. Then the sequence
+\[
+	0 \longto R  \overset{d_2}{\longto} R \oplus R
+	\overset{d_1}{\longto} R \overset{\pi}{\longto} K[X,Y]/(X,Y) \longto 0 
+\]
+with $d_2(1) = (Y,-X)$, $d_1(1,0) = X$ and $d_1(0,1)=Y$, and $\pi$ the quotient map is a free resolution of the $R$-module $K[X,Y]/(X,Y)$.
+\end{example}
+
+Every $R$-module has a free resolution, although in general the resolution need not be of finite length, and the free modules occurring in it need  not be of finite rank.
+
+\begin{proposition}\label{prop:free-resolutions-exist}
+Let $R$ be a ring. Then every $R$-module $M$ has  a  free resolution.
+\end{proposition}
+
+\begin{proof}
+Choose a generating set $I$ of $M$, and let $F_0= R^{(I)}$ be the free $R$-module with basis $I$. Then we have a natural surjective map $\pi\colon F_0\to M$, and hence an exact sequence
+\[
+	F_0 \overset{\pi}{\longto} M \longto 0.
+\]
+Now choose a generating set $I_1$ of the $R$-module 
+ $K_0 := \ker \pi \subset F_0$ and let $F_1=R^{(I_0)}$. The natural map $F_1 \to K_0 \subset F_0$
+ extends the above to an exact sequence
+ \[
+ 	F_1 \overset{d_1}{\longto} F_0 \overset{\pi}{\longto} M \longto 0.
+\]
+Repeating this argument with $K_1 := \ker d_1$ and so forth, we obtain an exact sequence
+\[
+	\cdots \longto F_2 \overset{d_2}{\longto} F_1 \overset{d_1}{\longto} F_0 \overset{\pi}{\longto} M \longto 0,
+\]
+with the $F_i$ free, as we had to show.
+\end{proof}
+
+\begin{remark}From a free resolution
+\[
+	\cdots \longto F_2 \overset{d_2}{\longto} F_1 \overset{d_1}{\longto} F_0 \overset{\pi}{\longto} M \longto 0 
+\]
+of $M$ we obtain a chain complex $F_\bullet$ of the form
+\[
+	\cdots \longto F_2 \overset{d_2}{\longto} F_1 \overset{d_1}{\longto} F_0 \longto 0 \longto  0 \longto \cdots
+\]
+by setting set $F_{i}=0$ for $i<0$.  This chain complex satisfies
+\[
+	 \rH_i(F_\bullet) \cong \begin{cases} M & i=0 \\ 0 & i \neq 0 \end{cases}
+\]
+Conversely, given a pair $(F_\bullet,\alpha)$ consisting of
+\begin{enumerate}
+\item a chain complex $F_\bullet$ 
+\item an isomorphism $\alpha\colon \rH_0(F_\bullet) \to M$
+\end{enumerate}
+with $F_i$ free for all $i$ and zero for $i<0$, and with $\rH_i(F_\bullet)=0$ for all $i\neq 0$, the sequence
+\[
+	\cdots \longto F_2 \longto F_1 \longto F_0 \overset{\pi} \longto M \longto 0,
+\]
+where $\pi$ is induced by $\alpha$, is a free resolution of $M$. 
+
+It will often be convenient to think of a free resolution as a pair $(F_\bullet,\alpha)$ consisting of a chain complex $F_\bullet$ and an isomorphism $\alpha$ as above.
+\end{remark}
+
+\section{The free resolution functor}
+
+% TODO: make the theorem below more precise
+
+\begin{theorem}\label{thm:functoriality-of-free-resolutions}
+Let $M$ and $M'$ be $R$-modules. Let $F_\bullet$ and $F'_\bullet$ be free resolutions of $M$ and $M'$ respectively. Let $\varphi \colon M\to M'$ be a morphism of $R$-modules. Then there exists a morphism
+$f\colon F_\bullet \to F'_\bullet$ such that $\rH_0(f) = \varphi$. Moreover, $f$ is unique up to homotopy.
+\end{theorem}
+
+\begin{proof}
+The existence of $f$ amounts to the existence of $R$-linear maps $f_i$ making the diagram 
+(with exact rows)
+\[
+\begin{tikzcd}
+\cdots \arrow{r} & 
+	F_2 \arrow[dashed]{d}{f_2} \arrow{r}{d_2} &
+	F_1 \arrow[dashed]{d}{f_1} \arrow{r}{d_1} & 
+	F_0 \arrow[dashed]{d}{f_0} \arrow{r}{\pi} & M \arrow{d}{\varphi} \arrow{r} & 0 \\
+\cdots \arrow{r} & 
+	F_2'  \arrow{r}{d'_2} & 
+	F_1'  \arrow{r}{d'_1} & 
+	F_0' \arrow{r}{\pi'} & M'  \arrow{r} & 0 
+\end{tikzcd}
+\]
+commute. We will construct such a diagram inductively.
+
+ Let $S_0\subset F_0$ be a basis of the free module $F_0$. For every $s\in S_0$, choose an $s'\in F'_0$ such that $\pi'(s')=\varphi\pi(s)$. Such $s'$ exists by the surjectivity of $\pi'$. Now, since $F_0$ is free with basis $S_0$, there exists a unique $R$-linear map $f_0\colon F_0\to F'_0$ that maps every $s\in S_0$ to its chosen counterpart $s'\in F'_0$. By construction the right-hand square commutes. 
+
+Next, let $S_1\subset F_1$ be a basis of $F_1$. For every $s\in S_1$, we have $\pi d_1(s)=0$ by the exactness of the top-row, hence $\pi' f_0 d_1(s) = 0$ by the commutativity of the right-hand square, and hence $f_0d_1(s) \in \ker \pi'$. We conclude that there exists an element $s'\in F'_1$ with $d_1'(s') = f_0d_1(s)$. Choosing such an $s'$ for every $s\in S_1$ yields an $R$-linear map $f_1\colon F_1 \to F'_1$ as above. Repeating the argument, we construct maps $f_i$ as required.
+
+ For the uniqueness assertion in the theorem, assume that we have chain complex homomorphisms $f\colon F_\bullet \to F'_\bullet$ and $g\colon F_\bullet \to F'_\bullet$ with $\rH_0(f)=\rH_0(g)=\varphi$. Let $\delta := g-f$. We need to show that there are $h_i$ as in the diagram below
+ \[
+\begin{tikzcd}
+\cdots \arrow{r} & F_2 \arrow{r}{d_2} \arrow{d}{\delta_2} \arrow[dashed]{dl}
+	& F_1 \arrow{d}{\delta_1} \arrow{r}{d_1} \arrow[dashed]{dl}[description]{h_1}
+	& F_0 \arrow{d}{\delta_0} \arrow{r}{\pi} \arrow[dashed]{dl}[description]{h_0}
+	& M \arrow{d}{0} \arrow{r} & 0 \\
+\cdots \arrow{r} & F_2' \arrow[swap]{r}{d'_2} 
+	& F_1'  \arrow[swap]{r}{d'_1} 
+	& F_0' \arrow[swap]{r}{\pi'} 
+	& M'  \arrow{r} & 0 
+\end{tikzcd}
+\]
+ satisfying
+\begin{align*}
+	\delta_0 &= d_1'h_0 \\
+	\delta_i &= d_{i+1}'h_i + h_{i-1} d_i \quad (i\geq 1)
+\end{align*}
+As in the proof of the first part of the theorem, we construct these $h_i$ inductively. 
+
+For the base step,  choose a basis $S_0$ of $F_0$ and for every $s\in S_0$ choose an $s' \in F'_1$ with $d'_1 s' = \delta_0 s$. Such $s'$ exists, since $\pi'\delta_0 s=0$, and the bottom row in the diagram is exact. Since $F_0$ is free with basis $S_0$, there is a (unique) morphism $h_0\colon F_0\to F'_1$ with $s\to s'$ for every $s\in S_0$, and we have $\delta_0 = d_1'h_0$ by  construction.
+
+Next, let $S_1$ be a basis of $F_1$, and choose for every $s\in S_1$ an $s'\in F_2'$ with $d'_2s' = \delta_1s - h_0d_1s$. Such $s'$ exists, since
+\[
+	d_1'(\delta_1s - h_0d_1s) = d_1'\delta_1 s - d_1'h_0d_1s
+	= \delta_0 d_1 s - \delta_0 d_1 s = 0.
+\]
+As before, the collection of $s'$ defines a map $h_1\colon F_1 \to F_2'$, and repeating the argument gives a collection of maps $h_i$ defining the desired homotopy between $f$ and $g$.
+\end{proof}
+
+\begin{corollary}
+If $F_\bullet$ and $F'_\bullet$ are free resolutions of $M$, then $F_\bullet$ and $F'_\bullet$ are isomorphic in ${}_R\Ho$.
+\end{corollary}
+
+\begin{proof}
+The proof is `abstract nonsense' and quite similar to the argument that showed that final objects are unique up to unique isomorphism (see Proposition \ref{prop:final-object-uniquely-unique}).
+
+Take $M':=M$ and apply Theorem \ref{thm:functoriality-of-free-resolutions} to $\id\colon M\to M'$ and $\id\colon M'\to M$ to obtain morphisms $f\colon F_\bullet\to F'_\bullet$ and $g\colon F'_\bullet \to F_\bullet$. Then apply Theorem \ref{thm:functoriality-of-free-resolutions} again to $\id_M$ and $\id_{M'}$ to show that $gf$ is homotopic to $\id_{F_\bullet}$ and $fg$ is homotopic to $\id_{F'_\bullet}$. This gives equalities $fg=\id_{F_\bullet}$ and $gf=\id_{F'_\bullet}$ in ${}_R\Ho$, which shows that $f$ and $g$ are mutually inverse isomorphisms in ${}_R\Ho$.
+\end{proof}
+
+\begin{example}
+The zero module $M=\{0\}$ has the zero resolution, but also the non-trivial free resolution
+\[
+	0 \longto R \overset{\id}{\longto} R \overset{\pi}{\longto} M \longto 0,
+\]
+hence the corresponding complexes 
+\[
+\begin{tikzcd}[row sep=small]
+\cdots \arrow{r}
+	& 0 \arrow{r}
+	& 0 \arrow{r}
+	& 0 \arrow{r}
+	& 0 \arrow{r}
+	&\cdots \\ 
+\cdots \arrow{r}
+	& 0 \arrow{r}
+	& R \arrow{r}
+	& R \arrow{r}
+	& 0 \arrow{r}
+	&\cdots
+\end{tikzcd}
+\]
+are isomorphic in ${}_R\Ho$. See also Exercise \ref{exc:an-isomorphism-in-the-homotopy-category}.
+\end{example}
+
+
+We can now summarise this section into one powerful theorem.
+
+\begin{theorem}\label{thm:free-resolution-functor}
+There exists a functor
+\[
+	F\colon {}_R\Mod \to {}_R\Ho,\, M \mapsto F_\bullet(M)
+\]
+and an isomorphism of functors
+\[
+	\alpha\colon \rH_0 \circ F \longisomto \id_{{}_R\Mod}
+\]
+such that for every $R$-module $M$, the complex $F_\bullet(M)$ together with the isomorphism $\alpha_M$ forms a free resolution of $M$.
+\end{theorem}
+
+The proof goes directly against our basic principle that `constructions depending on choices do not give rise to functors'. 
+
+\begin{proof}[Proof of Theorem \ref{thm:free-resolution-functor}]
+Using Proposition \ref{prop:free-resolutions-exist}, choose for every $R$-module $M$  a free resolution
+\[
+	\cdots \longto F_2(M) \longto F_1(M) \longto F_0(M) \overset{\pi_M} \longto M \longto 0.
+\]
+This defines for every $R$-module $M$ an object $F_\bullet(M) \in {}_R\Ho$, and an isomorphism
+$\alpha_M\colon \rH_0(F_\bullet(M)) \isomto M$ (induced by $\pi_M$).
+
+Now for every $\varphi\colon M\to N$ in ${}_R\Mod$, Theorem \ref{thm:functoriality-of-free-resolutions} gives
+a \emph{unique} morphism $F_\bullet(\varphi) \colon F_\bullet(M) \to F_\bullet(N)$ such that the square
+of $R$-modules
+\[
+\begin{tikzcd}
+\rH_0(F_\bullet(M)) \arrow{r}{\alpha_M} \arrow{d}{H_0(F_\bullet(\varphi))} & M \arrow{d}{\varphi} \\
+\rH_0(F_\bullet(N)) \arrow{r}{\alpha_N} & N
+\end{tikzcd}
+\]
+commutes. This provides the necessary data for a functor $F_\bullet$, and immediately shows that $\alpha$ is an isomorphism of functors, provided that the data defining $F_\bullet$ indeed forms a functor.
+
+For this, we need to check that $F_\bullet$ respects identity and composition. But this follows quite formally from the uniqueness statement in Theorem \ref{thm:functoriality-of-free-resolutions}. Given an $R$-module $M$, both $\id_{F_\bullet(M)}$ and $F_\bullet(\id)$ induce the identity on $\rH_0(F_\bullet(M))=M$, so they must be homotopic and hence they define the same morphism in ${}_R\Ho$. Similarly, given $f\colon M\to N$ and $g\colon N\to P$ then both
+\[
+	F_\bullet(g) F_\bullet(f)\colon F_\bullet(M) \to F_\bullet(N)
+\]
+and
+\[
+	F_\bullet(gf)\colon F_\bullet(M) \to F_\bullet(N)
+\]
+induce the map $gf\colon M\to P$ on $\rH_0$, so they must be homotopic and hence define the same morphism in ${}_R\Ho$.
+\end{proof}
+
+
+
+\newpage
+\section*{Exercises}
+
+\begin{exercise}
+Consider the ring $R=\bZ[X]$. Give a free resolution of the $R$-module $\bZ[X]/(X,2)$.
+\end{exercise}
+
+\begin{exercise}Let $K$ be a field and consider the subring $R=K[X^2,X^3]$ of the polynomial ring $K[X]$. Let $M$ be the $R$-module $R/(X^2,X^3)$. Find a free resolution of $M$.
+\end{exercise}
+
+
+\begin{exercise}
+Let $R$ be a commutative ring. 
+\begin{enumerate}
+\item Assume that $r\in R$ is not a zero divisor in $R$. Show that $R/rR$ has a free resolution of the form
+\[
+	0 \longto R \longto R \longto R/(r) \longto 0.
+\]
+\item Let $r,s\in R$. Assume that $r$ is not a zero divisor in $R$, and that $\bar{s}$ is not a zero divisor in $R/rR$. Show that $R/(s,r)$ has a free resolution of the form
+\[
+	 0 \longto R \longto R^2 \longto R \longto R/(r,s) \longto 0.
+\]
+\item[(3, $\star$)] Try to formulate and prove an analogous statement for modules of the form $R/(r,s,t)$, etcetera.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{exc:free-resolution-finite-cyclic-group}
+Let $n$ be a positive integer, and consider the ring $R := \bZ[X]/(X^n-1)$. Let $M$ be the quotient module $R/(X-1)$, $\pi \colon R\to M$ the quotient map. Show that
+\[
+	\cdots \overset{\beta}\longto R \overset{\alpha}\longto R \overset{\beta}\longto R \overset{\alpha}\longto R \overset{\pi}{\longto} M \longto 0,
+\]
+with $\alpha(r) = (X-1)r$ and $\beta(r)=(X^{n-1} + \cdots + X + 1)r$, is a free resolution of the $R$-module $M$. 
+\end{exercise}
+
+
+
+\begin{exercise}
+Let $R=\bZ/4\bZ$ and let $M$ be the $R$-module $\bZ/2\bZ$. Find a free resolution of $M$.
+\end{exercise}
+
+\begin{exercise}
+Let $K$ be a field, $n>1$ and let $R$ be the matrix ring $\Mat_n(K)$. Let $M=K^n$ be the left $R$-module of column vectors. Show that $M$ does not have a finite free resolution consisting of finitely generated free $R$-modules.
+\end{exercise}
+
+\begin{exercise}
+Let $0\to M_1\to M_2 \to M_3 \to 0$ be a short exact sequence of $R$-modules. Show that there exist free $R$-modules $F_1$, $F_2$, $F_3$, and a commutative diagram
+\[
+\begin{tikzcd}
+ 0 \arrow{r} & F_1 \arrow{r} \arrow[two heads]{d}
+ 	& F_2 \arrow{r} \arrow[two heads]{d}
+	& F_3 \arrow{r} \arrow[two heads]{d} & 0 \\
+0 \arrow{r} & M_1 \arrow{r} & M_2  \arrow{r} & M_3 \arrow{r} & 0
+\end{tikzcd}
+\]
+with exact rows and surjective vertical maps.
+\end{exercise}
+
+\begin{exercise}[Free resolution of a short exact sequence]\label{exc:short-exact-sequence-resolutions}
+Let $0\to M_1\to M_2 \to M_3 \to 0$ be a short exact sequence of $R$-modules. Show that there exist free resolutions
+\[
+	\cdots \longto F_{i,2} \longto F_{i,1} \longto F_{i,0} \longto M_i \longto 0
+\]
+for $i=1,2,3$, and a short exact sequence
+\[
+	0 \longto F_{1,\bullet} \longto F_{2,\bullet} \longto F_{3,\bullet} \longto 0
+\]
+of chain complexes compatible with the exact sequence $0\to M_1\to M_2 \to M_3 \to 0$.
+\end{exercise}
+
+\begin{exercise}[Uniqueness of free resolution functor]
+Let $F$ and $G$ be functors ${}_R\Mod \to {}_R\Ho$. Let $\alpha\colon \rH_0\circ F\isomto \id$ and $\beta\colon \rH_0\circ G \isomto \id$ be isomorphisms. Assume that for every $M$ the pairs $(F(M),\alpha)$ and $(G(M),\beta)$ are free resolutions of $M$. Show that the functors $F$ and $G$ are isomorphic.
+\end{exercise}
+
+\begin{exercise}\label{exc:resolution-of-length-two}
+Let $M_\bullet$ be a chain complex of $R$-modules with $M_i=0$ for all $i\not= 0,1$. Show that there exists a chain complex $F_\bullet$ and a morphism $\alpha\colon F_\bullet\to M_\bullet$ such that
+\begin{enumerate}
+\item $\rH_i(\alpha)$ is an isomorphism for all $i$, and
+\item $F_i$ is free for all $i$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$] Let $M_\bullet$ be a chain complex of $R$-modules with $M_i=0$ for all $i<0$. Show that there exists an $F_\bullet$ and $\alpha$ as in Exercise \ref{exc:resolution-of-length-two}.
+\end{exercise}
+

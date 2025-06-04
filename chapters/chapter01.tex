@@ -1,0 +1,464 @@
+
+\chapter{Modules over a ring}
+\label{chapter:modules}
+
+
+\section{Left and right modules}
+
+Let $R$ be a ring. Recall that this means $R$ is a set equipped with an addition $(s,t)\mapsto s+t$, multiplication $(s,t)\mapsto st$, and distinguished elements $0\in R$ and $1\in R$ satisfying 
+\begin{enumerate}
+\item[(R1)] $(R,+,0)$ is an abelian group,
+\item[(R2)] for all $r,s,t \in R$ we have $(rs)t = r(st)$,
+\item[(R3)] for all $r,s,t \in R$ we have $r(s+t) = rs+rt$ and $(r+s)t=rt+st$,
+\item[(R4)] for all $r\in R$ we have $1r = r1=r$.
+\end{enumerate}
+
+
+\begin{definition}A \emph{left module} over a ring $R$ is an abelian group $M$ equipped with an operation
+\[
+	R\times M \to M, (r,x) \mapsto rx
+\]
+satisfying for all $r,s\in R$ and $x,y \in M$ the following identities:
+\begin{enumerate}
+\item[(M1)] $r(x+y)=rx+ry$,
+\item[(M2)] $(r+s)x=rx+sx$,
+\item[(M3)] $(rs)x=r(sx)$,
+\item[(M4)] $1x=x$.
+\end{enumerate}
+\end{definition}
+
+One also says that `$R$ acts on $M$', so that axiom (M3) for example expresses that acting by $rs$ is the same as first acting by $s$, and then by $r$.
+
+We use the same symbol $0$ to denote the elements $0\in M$ and $0\in R$. This should not lead to confusion, see Exercise \ref{exc:zeroes}.
+
+A \emph{right module} over $R$ is defined similarly: the action is written on the right: $M\times R\to M, (x,r) \mapsto xr$, and must satisfy
+\begin{enumerate}
+\item[(M1')] $(x+y)r=xr+yr$,
+\item[(M2')] $x(r+s)=xr+xs$,
+\item[(M3')] $x(rs)=(xr)s$,
+\item[(M4')] $x1=x$.
+\end{enumerate}
+
+ If $R$ is commutative, then the difference between a left and a right module is purely a matter of notation, but over a non-commutative ring the axioms (M3) and (M3') give  genuinely different conditions.
+
+We will mostly work with left modules, and simply call them \emph{modules over $R$} or \emph{$R$-modules}. 
+
+There is another way to describe (left) modules, using the endomorphism ring of an abelian group.
+Let $A$ be an abelian group. Denote by $\End(A)$ the set of group homomorphisms $A\to A$. This forms a ring with addition and multiplication of $f,g\in \End(A)$ defined by pointwise addition
+\[
+	f+g\colon A\to A, \,a \mapsto f(a)+g(a)
+\]
+and composition
+\[
+	fg\colon A\to A,\, a\mapsto f(g(a)).
+\]
+The zero element of this ring is the constant map $0\colon a \mapsto 0$, and the unit element is the identity map $\id_A\colon a\mapsto a$.
+
+
+\begin{lemma}\label{lemma:left-module-via-end}
+Let $M$ be an $R$-module. Then the map
+\[
+	R \to \End(M), \, r \mapsto \left( x \mapsto rx \right)
+\]
+is a ring homomorphism. Conversely, let $M$ be an abelian group and $\phi\colon R\to \End(M)$ be a ring homomorphism. Then the operation
+\[
+	R\times M \to M, (r, x) \mapsto rx:= \phi(r)(x)
+\]
+gives $M$ the structure of an $R$-module.
+\end{lemma}
+
+\begin{proof}See Exercise \ref{exc:left-module-via-end}.
+\end{proof}
+
+In other words, a (left) $R$-module is the same as an abelian group $M$ together with a ring homomorphism $R\to \End(M)$. 
+
+
+
+
+\section{First examples}
+
+\begin{example} Let $R$ be a ring. Then the trivial group $\{0\}$ is an $R$-module with $r0:=0$ for all $r\in R$. We denote this module by $0$, and call it the \emph{zero module}.
+\end{example}
+
+\begin{example} Let $R$ be a ring and $n\geq 0$. Then $M:=R^n$ is an $R$-module with addition
+\[
+	(x_1,\ldots, x_n) + (y_1,\ldots, y_n) := (x_1+y_1, \ldots, x_n+y_n)
+\]
+and $R$-action
+\[
+	r\cdot (x_1,\ldots, x_n) := (rx_1,\ldots, rx_n).
+\]
+For $n=0$ we obtain the zero module $R^0=0$ and for $n=1$ we obtain the $R$-module $R$.
+\end{example}
+
+\begin{example} For every abelian group $A$ there is a unique ring homomorphism 
+$\bZ \to \End(A)$. It follows that a $\bZ$-module is the same as an abelian group.
+For $r\in \bZ$ and $x\in A$ we have
+\[
+	r \cdot x = \begin{cases} x + \cdots + x\quad \text{ ($r$ terms) } & r \geq 0 \\
+	-(x+ \cdots + x ) \quad\text{($-r$ terms) } & r \leq 0 \end{cases}
+\]
+\end{example}
+
+\begin{example} Let $K$ be a field. Then a $K$-module is the same as a $K$-vector space.
+\end{example}
+
+\begin{example} Let $K$ be a field and $n\geq 0$. Let $\Mat_n(K)$ be the ring of $n$ by $n$ matrices over $K$. Then $K^n$ is a left $\Mat_n(K)$-module via
+\[
+	\Mat_n(K) \times K^n \mapsto K^n, (A, v) \mapsto A\cdot v,
+\]
+where we interpret vectors $v\in K^n$ as column matrices.
+\end{example}
+
+
+\begin{example} Let $R$ be a ring and $I\subset R$ an ideal. Then $I$ is an $R$-module.
+\end{example}
+
+
+\begin{example}\label{exa:vect-with-endo}
+Let $K$ be a field. Let $V$ be a $K$-vector space, and $\alpha\colon V\to V$ be a $K$-linear endomorphism of $V$. Then there is a unique ring homomorphism
+\[
+	\rho\colon K[X] \to \End(V)
+\]
+such that 
+\begin{enumerate}
+\item $\rho(\lambda)(v) = \lambda v$ for all $\lambda \in K$ and $v\in V$\!, 
+\item $\rho(X)=\alpha$.	
+\end{enumerate}
+This homomorphism is given by
+\begin{equation}\label{eq:vect-with-endo}	
+	\rho\colon \sum \lambda_i X^i \mapsto \left( v \mapsto \sum \lambda_i \alpha^i(v) \right),
+\end{equation}
+where $\alpha^i$ denotes the iterated composition $\alpha \circ \cdots \circ \alpha$. In particular, $V$ obtains the structure of a $K[X]$-module.
+
+Conversely, given a $K[X]$-module $V$, the restriction of the action of $K[X]$ to $K$ makes $V$ into a $K$-vector space, and the map
+\[
+	\alpha\colon V \to V,\, v \mapsto X\cdot v
+\]
+is $K$-linear. We conclude that a $K[X]$-module is the same as a $K$-vector space equipped with an endomorphism (namely the action of $X$).
+
+We will see in Chapter \ref{ch:modules-over-PID} that the `Jordan normal form' of complex square matrices ($\bC$-linear endomorphisms of $\bC^n$), is really a theorem about the structure of $\bC[X]$-modules, and that it is most naturally explained in  terms of ideals in $\bC[X]$.
+\end{example}
+
+
+\begin{example}[The group algebra and representations]\label{exa:group-algebra}
+Let $K$ be a field and $G$ a group. Let $K[G]$ be the group algebra of $G$ over $K$. Elements of $K[G]$ are formal expressions 
+\[
+	\sum_{g\in G} a_g g \quad (a_g \in K)
+\]
+with $a_g=0$ for all but  finitely many $g$ (this is automatic if $G$ is a finite group).
+Addition is defined in the obvious way. Multiplication is defined by extending the multiplication in $G$. We have
+\[
+	\left(\sum_{g\in G} a_g g \right) \cdot \left(\sum_{h\in G} b_h h \right)
+	= \sum_{t \in G} c_t t
+\]
+with
+\[
+	c_t = \sum_{gh=t} a_gb_h.
+\]
+A $K[G]$-module is the same as a $K$-vector space $V$, together with a group homomorphism
+\[
+	G \to \GL_K(V) = \End_K(V)^\times.
+\]
+In other words, a $K[G]$-module is a $K$-linear representation of $G$.
+\end{example}
+
+
+\section{Homomorphisms, submodules and quotient modules}
+
+\begin{definition} Let $M$ and $N$ be $R$-modules. An \emph{$R$-module homomorphism} from $M$ to $N$ is a map $f\colon M\to N$ such that for all $r\in R$ and $x,y\in M$ we have
+\[
+	f(x+y)=f(x)+f(y)
+\]
+and
+\[
+	f(rx) = r f(x).
+\]
+We also say that the map $f\colon M\to N$ is \emph{$R$-linear}. The set of $R$-module homomorphisms from $M$ to $N$ is denoted $\Hom_R(M,N)$. An \emph{isomorphism} of $R$-modules is a bijective $R$-module homomorphism. Two $R$-modules are called \emph{isomorphic} if there exists an  isomorphism between them.
+\end{definition}
+
+
+
+
+A \emph{submodule} of an $R$-module $M$ is a subgroup $N\subset M$ such that for all $r\in R$ and $x\in N$ we have $rx\in N$. A submodule of an $R$-module is itself an $R$-module. If $N\subset M$ is a submodule, then the abelian group $M/N$ has the structure of an $R$-module, via
+\[
+	r(x+N) := rx + N.
+\]
+We call $M/N$ the \emph{quotient module}.
+
+To a module homomorphism $f\colon M \to N$ are associated three important modules. The \emph{kernel}
+\[
+	\ker f := \{ x\in M \mid f(x)=0 \} \subset M,
+\]
+which is a submodule of $M$, the \emph{image}
+\[
+	\im f := f(M) \subset N,
+\]
+which is a submodule of $N$, and the \emph{cokernel}
+\[
+	\coker f := N/(\im f),
+\]
+which is a quotient module of $N$. A homomorphism $f$ is injective if and only if $\ker f$ is trivial, and it is surjective if and only if $\coker f$ is trivial.
+
+As with groups or vector spaces, we have the natural isomorphism
+\[
+	M/(\ker f) \isomto \im f,\, \bar{x} \mapsto f(x).
+\]
+
+\section{Products, direct sums and free modules}\label{sec:products-and-direct-sums}
+
+Let $R$ be a ring and let $M$ and $N$ be $R$-modules. The cartesian product $M\times N$ is naturally an $R$-module with $(x_1,x_2)+(y_1,y_2)=(x_1+y_1,x_2+y_2)$ and $r(x_1,x_2)=(rx_1,rx_2)$. We call this $R$-module the \emph{product} or \emph{direct product} of the $R$-modules $M$ and $N$.  More generally, if $(M_i)_{i\in I}$ is a family of $R$-modules indexed by a set $I$, then the product $\prod_{i\in I} M_i$ is naturally an $R$-module with
+\[
+	(x_i)_{i\in I} + (y_i)_{i\in I} = (x_i+y_i)_{i\in I},\quad r(x_i)_{i\in I} = (rx_i)_{i \in I},
+\]
+for all $(x_i)_{i\in I}$,  $(y_i)_{i\in I}$ in $\prod_{i\in I} M_i$ and $r\in R$. The empty product gives the zero module.  
+
+The \emph{direct sum} of a collection $(M_i)_{i\in I}$ of $R$-modules indexed by a set $I$, denoted $\bigoplus_{i\in I} M_i$ is the $R$-submodule of $\prod_{i\in I} M_i$ defined as
+\[
+	\bigoplus_{i\in I} M_i := \Big\{ (x_i)_{i\in I} \in \prod_{i\in I} M_i \,\mid\,
+	\{i\in I \colon x_i\neq 0\} \text{ is finite}\Big\}.
+\]
+Note that this is indeed a submodule: if $(x_i)_{i\in I}$ and $(y_i)_{i\in I}$  have only finitely many non-zero terms, then so do $(x_i+y_i)_{i\in I}$ and $(rx_i)_{i\in I}$.  
+
+One sometimes phrases the finiteness condition as  `$x_i$ is zero for all but finitely many $i$' or `$(x_i)_{i\in I}$ has finite support'. Of course, if $I$ is finite then the condition is vacuous and we have $\bigoplus_{i\in I} M_i = \prod_{i\in I} M_i$.
+
+The direct sum comes equipped with `inclusion' maps
+\[
+	\iota_j\colon M_j \to \bigoplus_{i\in I} M_i,\, x \mapsto \iota_j(x),\quad
+	\iota_j(x)_i = \begin{cases} x & i=j \\ 0 & i\neq j \end{cases}
+\]
+and the product comes equipped with `projection' maps
+\[
+	\pi_j\colon  \prod_{i\in I} M_i \to M_j,\, (x_i)_{i\in I} \mapsto x_j.
+\]
+
+
+If we have $M_i=M$ for all $i$, then we write $M^I := \prod_{i\in I} M$ and $M^{(I)} := \bigoplus_{i\in I} M$,
+so that we have
+\[
+	M^{I} = \{ (x_i )_{i\in I} \,\mid\, x_i \in M \}
+\]
+and
+\[
+	M^{(I)} = \big\{ (x_i)_{i\in I} \,\mid\, x_i \in M, \text{ and $x_i=0$ for all but  finitely many $i$}\, \big\}.
+\]
+If $I$ is a finite set of cardinality $n$, then we have $M^{I} = M^{(I)} \cong M^n$.
+
+
+\bigskip
+
+Let $(x_i)_{i \in I}$ be a family of elements of an $R$-module $M$. Then we call the intersection of all submodules $N\subset M$ that  contain all $x_i$ the \emph{submodule generated by $(x_i)_{i\in I}$}. We denote it by $\langle x_i \rangle_{i \in I}$.  It is the smallest submodule of $M$ containing all the $x_i$. It consists of all finite $R$-linear combinations of the $x_i$.
+
+We say that $M$ is  \emph{finitely generated} if there exists a finite family $(x_i)_{i\in I}$ with $M=\langle x_i \rangle_{i\in I}$.
+
+\begin{example}\label{ex:free-module}
+Let $R$ be a ring and $I$ a set. Consider the module
+\[
+	R^{(I)}  = \Big\{ (r_i)_{i\in I} \in R^I \mid  \text{  $r_i=0$ for all but finitely many $i\in I$} \Big\}.
+\]
+For an index $i\in I$ we denote by $e_i \in R^{(I)}$ the element $e_i := \iota_i(1)$. One may think of $e_i$ as the `standard basis' element
+\[
+	e_i = ( \ldots, 0, 0, 1, 0, 0, \ldots  )
+\]
+with a $1$ at position $i$.  Clearly, every element of $R^{(I)}$ is a finite $R$-linear combination of $e_i$'s, so the family $(e_i)_{i \in I}$ generates $R^{(I)}$. Note that if $I$ is infinite, then the $e_i$ do not generate the direct product $R^{I}$. 
+\end{example}
+
+\begin{proposition}\label{prop:universal-property-free-module}
+Let $R$ be a ring, $M$ an $R$-module, and $(x_i)_{i \in I}$ a family of elements of $M$. Then there exists a unique 
+$R$-linear map $\varphi\colon R^{(I)} \to M$ with $\varphi(e_i)=x_i$ for every $i\in I$. 
+
+Moreover,  $\varphi$ is surjective if and only if $M$ is generated by $(x_i)_{i\in I}$.
+\end{proposition}
+
+This generalises the basic fact from linear algebra that giving a linear map $\bR^n\to V$ is the same as giving the images of the standard basis vectors.
+
+\begin{proof}[Proof of Proposition \ref{prop:universal-property-free-module}]
+The map $\varphi$ is given by
+\[
+	\varphi\colon R^{(I)} \to M,\, (r_i)_{i\in I} \mapsto \sum_{i\in I} r_i x_i
+\]
+(note that in the sum only finitely many terms are non-zero). This map is surjective if and only if every
+element of $M$ can be written as a finite $R$-linear combination of elements $x_i$.
+\end{proof}
+
+\begin{definition}
+Let $M$ be an $R$-module and $(x_i)_{i \in I}$ a family of elements of $M$. Let $\varphi\colon R^{(I)} \to M$ be the unique $R$-linear map with
+$\varphi(e_i)=x_i$ for all $i\in I$. We say that $(x_i)_{i\in I}$ is a \emph{basis} of $M$ if $\varphi$ is an isomorphism. We say that an $R$-module $M$ is \emph{free} if it has a basis. If it has a basis of cardinality $n$, then we say that $M$ is \emph{free of rank $n$}.
+\end{definition}
+
+In particular, $M$ is free of rank $n$ if and only if $M\cong R^n$.
+
+% TODO: maybe define free of rank n as isomorphic with R^n?
+
+In contrast with the case of vector spaces (modules over a field), a finitely generated $R$-module need not have a basis. For example: for $m> 1$ the $\bZ$-module $\bZ/m\bZ$ does not have a basis, and hence is not free.
+
+\begin{proposition}\label{prop:equivalent-def-basis}
+Let $M$ be an $R$-module and $(x_i)_{i \in I}$ a family of elements of $M$. Then $(x_i)_{i\in I}$ is a basis of $M$ if and only if for every $x\in M$ there 
+is a unique family $(r_i)_{i\in I}$ of elements in $R$ with
+\begin{enumerate}
+\item $r_i=0$ for all but finitely many $i$, and
+\item   $x=\sum_{i\in I} r_i x_i$.
+\end{enumerate}
+\end{proposition}
+
+Note that  the condition in (1) guarantees that only finitely many terms in the sum in (2) are non-zero.
+
+\begin{proof}[Proof of Proposition \ref{prop:equivalent-def-basis}]
+This is a direct translation of the definition: existence of $(r_i)_{i\in I}$ is equivalent with $x$ being in the image of $\varphi\colon R^{(I)}\to M$, and uniqueness is equivalent with $\varphi\colon R^{(I)} \to M$ being injective.
+\end{proof}
+
+\begin{example}
+Let $U$ be an open subset of $\bR^n$. Then the space of $1$-forms $\Omega^1(U)$ on $U$ forms a module over the ring $\cC^\infty(U)$ of $\cC^\infty$ functions on $U$. This module is free of rank $n$, with basis ${\rm d} x_1, \ldots, {\rm d}x_n$.
+\end{example}
+
+
+\begin{proposition}\label{prop:invariant-basis-number}
+Let $R$ be a commutative ring with $0\neq 1$. If $R^n$ and $R^m$ are isomorphic $R$-modules, then $n=m$.
+\end{proposition}
+
+In other words: an $R$-module over a non-zero commutative ring which is free of finite rank has a well-defined rank. We already know this if $R$ is a field (any two bases of a vector space have the same cardinality), and the proof of the proposition will be by reduction to the case of a field.
+
+\begin{proof}[Proof of Proposition \ref{prop:invariant-basis-number}]
+Let $M=R^m$, $N=R^n$ and let
+\[
+	\varphi\colon M \to N
+\]
+be an isomorphism. Let $I \subset R$ be a maximal ideal (which exists in every non-zero commutative ring). Then $\varphi$ induces an isomorphism
+\[
+	\bar\varphi\colon M/IM \to N/IN
+\]
+of $R/I$-modules (see also Exercise \ref{exc:module-by-ideal}). We have $M/IM = (R/I)^m$ and $N/IN = (R/I)^n$. But $R/I$ is a field, so using
+the fact that a vector space has a well-defined dimension we find
+\[
+	m = \dim_{R/I} M/IM = \dim_{R/I} N/IN = n,
+\]
+which is what we had to prove.
+\end{proof}
+
+\newpage
+\section*{Exercises}
+
+
+\begin{exercise}\label{exc:zeroes}
+Let $M$ be an $R$-module. Show that for every $r\in R$ and $x\in M$ the following identities in $M$ hold:
+\begin{enumerate}
+\item $r0=0$,
+\item $0x=0$,
+\item  $(-r)x=r(-x)=-(rx)$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Let $R = \{0\}$ be the zero ring. Show that every $R$-module is the zero module.
+\end{exercise}
+
+\begin{exercise}\label{exc:left-module-via-end}
+Prove Lemma \ref{lemma:left-module-via-end}.
+\end{exercise}
+
+
+\begin{exercise}Let $R=(R,0,1,+,\cdot)$ be a ring. Consider the opposite ring
+$R^\opp=(R,0,1,+,\cdot^\opp)$ where multiplication is defined by
+\[
+	r \cdot^\opp s := s\cdot r.
+\]
+Show that  a \emph{right module} over $R$ is the same as an abelian group $M$ equipped with a ring homomorphism $R^\opp \to \End(M)$.
+\end{exercise}
+
+\begin{exercise}
+Let $M$ be an $R$-module, and let $x_1,\ldots, x_n$ be elements of $M$. Verify that the map
+\[
+	R^n \to M,\, (r_1,\ldots, r_n) \mapsto r_1x_1 + \cdots + r_n x_n
+\]
+is a homomorphism of $R$-modules.
+\end{exercise}
+
+\begin{exercise}\label{exc:principal-ideal-in-domain}
+Let $R$ be an integral domain and $I\subset R$ a non-zero principal ideal. Show that $I$, as an $R$-module, is isomorphic to the $R$-module $R$. 
+\end{exercise}
+
+\begin{exercise}Let $R$ be a ring, and let $M$ and $N$ be $R$-modules. Show that point-wise addition makes $\Hom_R(M,N)$ into an abelian group. Show that if $R$ is commutative, then $\Hom_R(M,N)$ has  a natural structure of $R$-module.
+\end{exercise}
+
+\begin{exercise}
+Let $R$ be a ring. Show $\Hom_R(R,M) \cong M$ as abelian groups (and if $R$ is commutative, as $R$-modules).
+\end{exercise}
+
+\begin{exercise}\label{ex:vect-with-endo} Verify that the map (\ref{eq:vect-with-endo}) in Example \ref{exa:vect-with-endo} is indeed a ring homomorphism.
+\end{exercise}
+
+\begin{exercise}\label{exc:modules-over-multivariate-polynomial-ring}
+Let $K$ be a field and $n$ a positive integer. Let $V$ be a $K$-vector space, and let $\alpha_1$, $\alpha_2$, \ldots, $\alpha_n$ be pairwise \emph{commuting} linear endomorphisms of $V$. Show that there is a unique ring homomorphism
+\[
+	\rho \colon K[X_1,\ldots,X_n] \to \End(V)
+\]
+such that for all $\lambda \in K$ and $v\in V$ we have $\rho(\lambda)(v)=\lambda v$ and for all $i$ we have $\rho(X_i)(v) = \alpha_i(v)$.
+
+Convince yourself that a $K[X_1,\ldots,X_n]$-module is the same thing as a vector space together with $n$ pairwise commuting linear endomorphisms.
+\end{exercise}
+
+
+
+\begin{exercise}\label{exc:module-by-ideal}
+Let $R$ be a ring and $I\subset R$ a (two-sided) ideal. Let $M$ be an $R$-module. Show that
+\[
+	IM := \{ \sum r_ix_i \mid r_i\in I, x_i\in M \}
+\]
+is a sub-$R$-module of $M$, and show that $M/IM$ is an $R/I$-module. Show that if $M$ is free of rank $n$ as $R$-module, then $M/IM$ is free of rank $n$ as $R/I$-module.
+\end{exercise}
+
+\begin{exercise}\label{exc:annihilator}
+Let $R$ be a ring and let $M$ be a left $R$-module. Show that
+\[
+	\Ann_R( M ) := \{ r \in R \mid \text{ $rx=0$ for all $x\in M$ } \}
+\]
+is a (two-sided) ideal in $R$.
+\end{exercise}
+
+
+\begin{exercise}
+Show that $\bQ$ is not a finitely generated $\bZ$-module.
+\end{exercise}
+
+\begin{exercise}
+Let $K$ be a field and $I$ a countably infinite set. Show that the $K$-module $K^{I}$ does not have a countable generating set.
+\end{exercise}
+
+
+\begin{exercise}
+Show that $\bQ$ is not a free $\bZ$-module.
+\end{exercise}
+
+\begin{exercise}Prove the following generalisation of Proposition \ref{prop:universal-property-free-module}: Let $R$ be a ring and let $(M_i)_{i\in I}$ be a collection of $R$-modules indexed by a set $I$. Let $N$ be an $R$-module, and let $(f_i\colon M_i \to N)_i$ be a collection of $R$-linear maps. Then there exists a unique $R$-linear map
+\[
+	f\colon \bigoplus_{i\in I} M_i \to N
+\]
+such that for all $i\in I$ and $x\in M_i$ we have $f(\iota_i(x)) = f_i(x)$.
+\end{exercise}
+
+
+\begin{exercise}\label{exc:universal-property-direct-sum}
+Let $R$ be a ring, $(M_i)_{i\in I}$ a family of $R$-modules, and $N$ an $R$-module. Show that there are
+isomorphisms
+\[
+	\Hom_R(\bigoplus_{i\in I} M_i, N) \longisomto \prod_{i\in I} \Hom_R(M_i,N)
+\]
+and
+\[
+	\Hom_R(N, \prod_{i\in I} M_i) \longisomto \prod_{i\in I} \Hom_R(N,M_i)
+\]
+of abelian groups.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exc:no-well-defined-rank}
+Let $K$ be a field. Let $R$ be the set of $\infty$ by $\infty$ matrices 
+\[
+\left(\begin{array}{ccc}a_{11} & a_{12} & \cdots \\a_{21} & a_{22} & \cdots \\\vdots & \vdots & \end{array}\right)
+\]
+with $a_{ij} \in K$, and with the property that every column contains only finitely many non-zero elements. Verify that $R$ (with the usual rule for matrix multiplication) is a ring. Show that the left $R$-modules $R$ and $R\oplus R$ are isomorphic. Conclude that the condition that $R$ is commutative cannot be dropped from Proposition \ref{prop:invariant-basis-number}.
+\end{exercise}
+
+
+%%%%%%%%%%%%%%%%%%
+% EXACT SEQUENCES
+%%%%%%%%%%%%%%%%%%

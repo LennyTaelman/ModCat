@@ -1,0 +1,389 @@
+
+\chapter{Chain complexes}
+
+\section{Chain complexes and their homology modules}
+
+
+\begin{definition}
+Let $R$ be a ring. A \emph{chain complex} of $R$-modules consists of
+\begin{enumerate}
+\item for every $i\in \bZ$ an $R$-module $M_i$,
+\item for every $i\in \bZ$ an $R$-linear map $d_i\colon M_i \to M_{i-1}$
+\end{enumerate}
+such that for every $i$ the identity $d_i \circ d_{i+1} = 0 $ holds.
+\end{definition}
+
+We depict a chain complex as a diagram
+\[
+	\cdots \longto M_2 \overset{d_2}{\longto} M_1 \overset{d_1}{\longto}  M_0 
+	\overset{d_0}{\longto} M_{-1} \longto \cdots 
+\]
+and often denote the chain complex by $M_\bullet$.
+
+\begin{definition}
+A \emph{morphism of chain complexes} $M_\bullet \to M'_\bullet$ consists of an $R$-module
+homomorphism $f_i\colon M_i \to M_i'$ for every $i$, such that the resulting diagram
+\[
+\begin{tikzcd}
+\cdots \arrow{r}
+	& M_{2} \arrow{r}{d_{2}} \arrow{d}{f_{2}} 
+	& M_{1} \arrow{r}{d_{1}} \arrow{d}{f_{1}} 
+	& M_{0} \arrow{r} \arrow{d}{f_{0}} 
+	& \cdots \\
+\cdots \arrow{r}
+	& M'_{2} \arrow{r}{d'_{2}} 
+	& M'_{1} \arrow{r}{d'_{1}} 
+	& M'_{0} \arrow{r} 
+	& \cdots 
+\end{tikzcd}
+\]
+commutes.  The resulting category of chain complexes of left $R$-modules is denoted 
+${}_R\Ch$. The similarly-defined category of chain complexes of right $R$-modules is denoted $\Ch_R$.
+\end{definition}
+
+The condition $d_i \circ d_{i+1} = 0$ in a chain complex
+ \[
+	\cdots \longto M_{i+1} \overset{d_{i+1}}{\longto} M_i \overset{d_i}{\longto}  M_{i-1}
+	\longto \cdots
+\]
+implies that $\im d_{i+1} \subset \ker d_i$ inside $M_i$. 
+
+\begin{definition}
+Let $M_\bullet$ be a chain complex of $R$-modules and $i$ an integer. The \emph{$i$-th homology module of $M_\bullet$} is the $R$-module
+\[
+	\rH_i(M_\bullet) := \frac{\ker d_i}{\im d_{i+1}}.
+\]
+\end{definition}
+
+If $f\colon M_\bullet \to M'_\bullet$ is a morphism of chain complexes, then $f_i\colon M_i \to M_i'$ induces a morphism
+\[
+	\rH_i(f)  \colon \rH_i(M_\bullet) \to \rH_i(M'_\bullet)
+\]
+(see Exercise \ref{exc:induced-morphism-on-homology}). We obtain for every $i$ a functor
+\[
+	\rH_i \colon {}_R\Ch \to {}_R\Mod.
+\]
+
+These modules measure the failure of the sequence $M_\bullet$ to be exact, in the following sense.
+
+\begin{lemma}
+A chain complex
+\[
+	\cdots \longto M_2 \overset{d_2}{\longto} M_1 \overset{d_1}{\longto}  M_0 
+	\overset{d_0}{\longto} M_{-1} \longto \cdots 
+\]
+is exact if and only if $\rH_i(M_\bullet)=0$ for all $i\in \bZ$. \qed
+\end{lemma}
+
+\section{The long exact sequence}
+
+Let $M_\bullet$, $N_\bullet$ and $P_\bullet$ be chain complexes of $R$-modules. 
+We say that a sequence of morphisms  
+\[
+	0 \longto M_\bullet \overset{\alpha}{\longto} N_\bullet 
+	\overset{\beta}{\longto} P_\bullet \longto 0
+\]
+is a short exact sequence in ${}_R\Ch$ if it is termwise exact. In other words, 
+if in the commutative diagram
+\[
+\begin{tikzcd}
+	& 0  \arrow{d}
+	& 0 \arrow{d}
+	& 0 \arrow{d}
+	&  \\
+\cdots \arrow{r}
+	& M_{i+1} \arrow{r}{} \arrow{d}{\alpha_{i+1}} 
+	& M_{i} \arrow{r}{} \arrow{d}{\alpha_{i}} 
+	& M_{i-1} \arrow{r} \arrow{d}{\beta_{i-1}} 
+	& \cdots \\
+\cdots \arrow{r}
+	& N_{i+1} \arrow{r}{} \arrow{d}{\beta_{i+1}} 
+	& N_{i} \arrow{r}{} \arrow{d}{\beta_{i}} 
+	& N_{i-1} \arrow{r} \arrow{d}{\beta_{i-1}} 
+	& \cdots \\
+\cdots \arrow{r}
+	& P_{i+1} \arrow{r}{} \arrow{d}
+	& P_{i} \arrow{r}{}  \arrow{d}
+	& P_{i-1} \arrow{r} \arrow{d}
+	& \cdots \\
+	& 0 
+	& 0 
+	& 0  
+	&  
+\end{tikzcd}
+\]
+all the columns are short exact sequences of $R$-modules. 
+
+\begin{theorem}\label{thm:long-exact-sequence}
+Let 
+\[
+	0 \longto M_\bullet \overset{\alpha}{\longto} N_\bullet 
+	\overset{\beta}{\longto} P_\bullet \longto 0
+\]
+be a short exact sequence of chain complexes of $R$-modules. Then there exists
+an exact sequence
+\[
+\begin{tikzcd}
+ 	\cdots \arrow{r}
+ 	& \rH_{i+1}(N_\bullet) \arrow{r}{\rH_{i+1}(\beta)}
+ 	& \rH_{i+1}(P_\bullet) \arrow[out=-5, in=175]{dll} \\
+ 	\rH_{i}(M_\bullet) \arrow{r}{\rH_{i}(\alpha)}
+ 	& \rH_{i}(N_\bullet) \arrow{r}{\rH_{i}(\beta)}
+ 	& \rH_{i}(P_\bullet) \arrow[out=-5, in=175]{dll} \\
+ 	\rH_{i-1}(M_\bullet) \arrow{r}{\rH_{i-1}(\alpha)}
+ 	& \rH_{i-1}(N_\bullet) \arrow{r}
+ 	& \cdots 
+\end{tikzcd}
+\]
+of $R$-modules.
+\end{theorem}
+
+The resulting exact sequence of homology modules is called the \emph{long exact sequence of homology} associated to the short exact sequence of chain complexes.
+
+\begin{proof}[Proof of Theorem \ref{thm:long-exact-sequence}]
+We omit the proof, which is a tedious diagram chase in the style of the proof of the Snake Lemma (Theorem \ref{thm:snake-lemma}). In fact, the Snake Lemma is a special case of the theorem, obtained by assuming the $M_i$, $N_i$ and $P_i$ vanish for $i\not\in \{0,1\}$.
+\end{proof}
+
+\section{The homotopy category}
+
+\begin{definition}
+Let $R$ be a ring and let $f\colon M_\bullet \to M'_\bullet$ and $g\colon M_\bullet \to M'_\bullet$ be morphisms of chain complexes of $R$-modules. A \emph{homotopy} from $f$ to $g$ consists of
+a collection of $R$-linear maps $h_i\colon M_i \to M'_{i+1}$ indexed by $i\in \bZ$, such that for every $i\in \bZ$ the identity
+\[
+	g_i - f_i =  d'_{i+1} h_i + h_{i-1} d_i
+\]
+holds in $\Hom_R( M_i, M'_i )$. We say that $f$ and $g$ are \emph{homotopic}, and write $f\sim g$, if there exists a homotopy from $f$ to $g$. 
+\end{definition}
+
+It is convenient to keep track of these maps in a diagram:
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+\cdots \arrow{r}
+	& M_{2} \arrow{r}{d_{2}} 
+		\arrow[transform canvas={xshift=-.5ex},swap]{d}{f_{2}} 
+		\arrow[transform canvas={xshift=.5ex}]{d}{g_{2}} 
+		\arrow[dashed]{dl}{}
+	& M_{1} \arrow{r}{d_{1}}  
+		\arrow[transform canvas={xshift=-.5ex},swap]{d}{f_{1}} 
+		\arrow[transform canvas={xshift=.5ex}]{d}{g_{1}} 
+		\arrow[dashed]{dl}[description]{h_1}
+	& M_{0} \arrow{r} 
+		\arrow[transform canvas={xshift=-.5ex},swap]{d}{f_{0}} 
+		\arrow[transform canvas={xshift=.5ex}]{d}{g_{0}} 
+		\arrow[dashed]{dl}[description]{h_0}
+	& \cdots \arrow[dashed]{dl}{} \\
+\cdots \arrow{r}
+	& M'_{2} \arrow[swap]{r}{d'_{2}} 
+	& M'_{1} \arrow[swap]{r}{d'_{1}} 
+	& M'_{0} \arrow[swap]{r} 
+	& \cdots 
+\end{tikzcd}
+\]
+but note that in the definition of homotopy it is \emph{not} required that the $h_i$'s commute with the horizontal maps $d$ in any way.
+
+The equation defining homotopy can be remembered as
+\[
+	g-f=dh+hd,
+\]
+omitting the indices which can be reinserted in only one meaningful way. 
+
+\begin{proposition}\label{prop:homotopy-equivalence-relation}
+Let $R$ be a ring and $M_\bullet$, $M'_\bullet$ chain complex of $R$-modules. Then homotopy is an equivalence relation on the set
+ $\Hom_{{}_R\Ch}(M_\bullet,M'_\bullet)$. \qed
+\end{proposition}
+
+
+
+\begin{proposition}\label{prop:homotopy-composition}
+Let $R$ be a ring and $f,g \colon M_\bullet \to M'_\bullet$ homotopic morphisms of chain complexes of $R$-modules. Then
+\begin{enumerate}
+\item for any morphism $s\colon M'_\bullet \to N_\bullet$ in ${}_R\Ch$, the compositions $sf$ and $sg$ are homotopic;
+\item for any morphism $t\colon N_\bullet \to M_\bullet$ in ${}_R\Ch$, the compositions $ft$ and $gt$ are homotopic.
+\end{enumerate}
+\end{proposition}
+
+
+\begin{proof}
+Let $(h_i)_i$ be a homotopy from $f$ to $g$. In the first case, one  verifies that $(s_{i+1}h_i)_i$ is a homotopy from $sf$ to $sg$, and in the second case,  that $(h_it_i)_i$ is a homotopy from $ft$ to $gt$. 
+\end{proof}
+
+\begin{definition}
+The \emph{homotopy category of chain complexes of $R$-modules}, denoted ${}_R\Ho$,  is the
+category with
+\begin{enumerate}
+\item $\ob {}_R\Ho := \ob {}_R\Ch$
+\item $\Hom_{{}_R\Ho}(M_\bullet,N_\bullet) := \Hom_{{}_R\Ch}(M_\bullet, N_\bullet) / \sim$
+\end{enumerate}
+where composition and identity maps are inherited from composition and identity maps in ${}_R\Ch$.
+\end{definition}
+
+Proposition  \ref{prop:homotopy-composition} guarantees that composition in ${}_R\Ho$ is well-defined. 
+
+\begin{proposition}\label{prop:homotopic-maps-agree-on-homology}
+Let $f,g\colon M_\bullet \to M'_\bullet$ be homotopic maps in $\Ch_R$, and let $i$ be an integer. Then $\rH_i(f)=\rH_i(g)$ as maps $\rH_i(M_\bullet) \to \rH_i(M'_\bullet)$.
+\end{proposition}
+
+\begin{proof}
+By definition, an element of $\rH_i(M_\bullet)$ is a coset
+\[
+	 \bar{x} := x + \im(d_{i+1})
+\]
+for some  $x\in \ker(d_i)$. We have
+\begin{align*}
+	\rH_i(f)(\bar{x}) - \rH_i(g)(\bar{x}) &=  f(x) - g(x) + \im (d'_{i+1})  \\
+	&= d'_{i+1}(h_i(x)) + h_{i-1}(d_i(x))  +  \im (d'_{i+1}).
+\end{align*}
+Since $d'_{i+1}(h_i(x))  \in \im(d'_{i+1})$, the first term vanishes in $\rH_i(M'_\bullet)$. Since $x\in \ker(d_i)$, also the second term vanishes, and  $\rH_i(f)=\rH_i(g)$.
+\end{proof}
+
+A consequence of Proposition \ref{prop:homotopic-maps-agree-on-homology} is that the functors $\rH_i$ on ${}_R\Ch$ induce  functors
+\[
+	\rH_i\colon {}_R\Ho \to {}_R\Mod,\, M_\bullet \mapsto \rH_i(M_\bullet)
+\]
+on the homotopy category of chain complexes.
+
+\begin{remark}As the terminology suggests, there is a close relationship with the notions of homotopic maps and homology groups in algebraic topology. Homology groups of topological spaces are usually defined in terms of the functor
+\[
+	C\colon \Top \to {}_\bZ\Ch,\, X \mapsto C_\bullet(X)
+\]
+that maps a space $X$ to the chain complex of \emph{singular chains}. One then defines the
+$i$-th homology group of $X$ by
+\[
+	\rH_i(X,\bZ) := \rH_i(C_\bullet(X))
+\]
+and obtains functors $\rH_i\colon \Top \to \Ab$. 
+
+If $f,g\colon X\to Y$ are homotopic continuous maps, then their induced maps $C_\bullet(X) \to C_\bullet(Y)$ are homotopic maps of chain complexes, and hence their induced maps $\rH_i(X,\bZ) \to \rH_i(Y,\bZ)$ coincide.
+\end{remark}
+
+\begin{remark}
+Chain complexes form a mathematical context in which three layers play a role: objects (chain complexes), morphisms (morphisms of chain complexes), and maps between morphisms (homotopies). See Remark \ref{rmk:2-cat} for two other such contexts: topological spaces (spaces, continuous maps, homotopies), and categories (categories, functors, morphisms of functors).
+\end{remark}
+
+
+\newpage
+\section*{Exercises}
+
+\begin{exercise}[Functoriality of homology]\label{exc:induced-morphism-on-homology}
+Let $f\colon M_\bullet \to M'_\bullet$ be a morphism of chain complexes of $R$-modules. 
+\begin{enumerate}
+\item Show  $f_i(\ker d_i) \subset \ker d'_i$;
+\item Show $f_i(\im d_{i+1}) \subset \im d'_{i+1}$;
+\item Conclude that $f_i$ induces an $R$-linear map $\rH_i(M) \to \rH_i(M')$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Let 
+\[
+	\ldots \to M_2 \to M_1 \to M_0 \to N \to 0
+\]
+be an exact sequence of $R$-modules. Show that the complex
+\[
+	M_\bullet = \big( \ldots \to M_2 \to M_1 \to M_0  \to 0 \to \cdots \big)
+\]
+satisfies $\rH_0(M_\bullet)\cong N$ and $\rH_n(M_\bullet)=0$ for all $n\neq 0$.
+\end{exercise}
+
+
+\begin{exercise}\label{exc:an-isomorphism-in-the-homotopy-category}
+Let $R$ be a non-zero ring. Show that the  two chain complexes
+\[
+\begin{tikzcd}[row sep=small]
+\cdots \arrow{r}
+	& 0 \arrow{r}
+	& 0 \arrow{r}
+	& 0 \arrow{r}
+	& 0 \arrow{r}
+	&\cdots \\ 
+\cdots \arrow{r}
+	& 0 \arrow{r}
+	& R \arrow{r}{\id}
+	& R \arrow{r}
+	& 0 \arrow{r}
+	&\cdots
+\end{tikzcd}
+\]
+are isomorphic in ${}_R\Ho$.
+\end{exercise}
+
+\begin{exercise}Let $n>1$ and let $f$ be the morphism in ${}_\bZ\Ch$ given by the diagram
+\[
+\begin{tikzcd}
+\cdots \arrow{r}
+	& 0 \arrow{r} \arrow{d}
+	& \bZ \arrow{r}{n} \arrow{d}
+	& \bZ \arrow{r} \arrow{d}{\pi}
+	& 0 \arrow{r} \arrow{d}
+	&\cdots \\ 
+\cdots \arrow{r}
+	& 0 \arrow{r}
+	& 0 \arrow{r}
+	& \bZ/n\bZ \arrow{r}
+	& 0 \arrow{r}
+	&\cdots
+\end{tikzcd}
+\]
+with $\pi$ the canonical map. Show that $\rH_i(f)$ is an isomorphism for all $i$, but that $f$ is not an isomorphism in ${}_\bZ\Ho$.
+\end{exercise}
+
+\begin{exercise}Let $R$ and $S$ be rings. A functor $F\colon {}_R\Mod\to {}_S\Mod$ is
+called \emph{additive} if for all $R$-modules $M$, $N$ the map
+\[
+	F\colon \Hom_R(M,N) \to \Hom_S(FM,FN)
+\]
+is a homomorphism of abelian groups.  Let $A$ be an $(R,S)$-bimodule. Show that the functor
+\[
+	{}_R\Mod \to {}_S\Mod,\, M \mapsto \Hom_R(A,M)
+\]
+is additive.
+\end{exercise}
+
+\begin{exercise}
+Show that an additive functor $F\colon {}_R\Mod \to {}_S\Mod$ induces functors
+${}_R\Ch\to {}_S\Ch$ and ${}_R\Ho\to {}_S\Ho$.
+\end{exercise}
+
+\begin{exercise}\label{exc:contravariant-hom-on-chain-complexes}
+Let $R$ and $S$ be rings and $A$ an $(R,S)$-bimodule. For a chain complex $M_\bullet$ in ${}_R\Ch$ define a chain complex $M'_\bullet$ in $\Ch_S$
+by
+\begin{enumerate}
+\item $M'_i := \Hom_R(M_{-i},A)$ 
+\item $d_i\colon M'_i \to M'_{i-1}$ the map induced from $d_{1-i} \colon M_{1-i} \to M_{-i}$
+\end{enumerate}
+Verify that $M'_\bullet$ is a chain complex of right $S$-modules, and that the operation $M_\bullet \mapsto M'_\bullet$ defines functors ${}_R\Ch^\opp \to \Ch_S$ and ${}_R\Ho^\opp \to \Ho_S$.
+\end{exercise}
+
+\begin{exercise}[$\star$]
+Let $G$ be a group. Consider the abelian groups $C_n(G) := \bZ^{(G^n)}$. To ease the notation, denote the basis vector $e_{(g_1,\ldots,g_n)}$ by $[g_1,\ldots,g_n] \in C_n(G)$. Consider the morphisms
+\[
+	d_n \colon C_n(G) \to C_{n-1}(G) 
+\]
+defined on the basis of $C_n(G)$ by
+\begin{align*}
+	[g_1,\ldots, g_n] \mapsto &[g_2, g_3, \ldots, g_n] \\
+	&+ \sum_{i=1}^{n-1} (-1)^i [g_1,\ldots, g_{i-1}, g_i g_{i+1}, g_{i+2}, \ldots, g_n] \\
+	& + (-1)^n [ g_1,\ldots, g_{n-1} ].
+\end{align*}
+Set $C_n(G)=0$ for $n<0$.
+\begin{enumerate}
+\item Show that $C_\bullet(G)$ is a chain complex of abelian groups.
+\end{enumerate}
+The homology groups
+$\rH_n(C_\bullet(G))$ are called the \emph{homology groups} of $G$, and are denoted $\rH_n(G,\bZ)$.
+\begin{enumerate}
+\item[(2)] Show that $\rH_0(G,\bZ)\cong \bZ$;
+\item[(3)] Show that $\rH_1(G,\bZ)\cong G^\ab$.
+\end{enumerate} 
+\end{exercise}
+
+
+\begin{exercise}[$\star$]
+Let $K$ be a field. Let $\prod_{i\in \bZ} \Vec_K$ be the category whose objects are sequences $(V_i)_{i\in \bZ}$ of $K$-vector spaces, and whose morphisms are sequences $(f_i)_{i\in \bZ}$ of $K$-linear maps. Show that the functor
+\[
+	\Ho_K \to \prod_{i\in \bZ} \Vec_K,\, V_\bullet \mapsto \left( \rH_i(V_\bullet) \right)_{i}
+\]
+is an equivalence of categories.
+\end{exercise}
+
+

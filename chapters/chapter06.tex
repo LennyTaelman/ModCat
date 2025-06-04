@@ -1,0 +1,369 @@
+
+\chapter{Morphisms of functors}
+
+\section{Morphisms of functors}
+
+
+\begin{definition}
+Let $\cC$ and $\cD$ be categories, and let $F\colon \cC\to \cD$ and $G\colon \cC \to \cD$ be functors. A \emph{morphism} or \emph{natural transformation} $\eta$ from $F$ to $G$ consists of the data of
+\begin{enumerate}
+\item for every object $X$ in $\cC$ a morphism $\eta_X \colon FX \to GX$ in $\cD$
+\end{enumerate}
+subject to the condition 
+\begin{enumerate}
+\item[(N1)]  for every morphism $f\colon X\to Y$ in $\cC$ the square
+\[
+\begin{tikzcd}
+FX \arrow{r}{Ff} \arrow{d}{\eta_X} & FY \arrow{d}{\eta_Y} \\
+GX \arrow{r}{Gf} & GY
+\end{tikzcd}
+\]
+in $\cD$ commutes.
+\end{enumerate}
+An \emph{isomorphism} from $F$ to $G$ is a morphism of functors $\eta$ such that $\eta_X$ is an isomorphism in $\cD$ for every $X$ in $\cC$.
+\end{definition}
+
+We will  write $\eta\colon F\to G$ to denote that $\eta$ is a morphism from the functor $F$ to the functor $G$.
+
+\begin{example}[double dual]\label{exa:double-dual}
+Let $K$ be a field and $V$ a $K$-vector-space. Then we have a natural map
+\[
+	\eta_V\colon V \to V^{\vee\vee} = \Hom_K(\Hom_K(V,K),K),\,
+	v \mapsto \left( \varphi \mapsto \varphi(v) \right).
+\]
+The word `natural' is often used in an informal sense, meaning `not depending on the choice of a basis'. But it also has a precise mathematical meaning, namely that the collection of maps $(\eta_V)_V$ with $V$ running over all the vector spaces forms a morphism
+\[
+	\eta\colon \id_{\Vec_K} \to (-)^{\vee\vee}
+\]
+from the functor $\id\colon \Vec_K \to \Vec_K$ to the functor $(-)^{\vee\vee}\colon \Vec_K \to \Vec_K$.
+See Exercise~\ref{exc:double-dual}.
+\end{example}
+
+\begin{example}
+Consider the forgetful functor $F\colon \Grp \to \Set$. Let $n$ be an integer. Then we have a morphism of functors $\eta\colon F \to F$ defined by
+\[
+	\eta_G \colon G \to G,\,g \mapsto g^n.
+\]
+Note that $g\mapsto g^n$ is a morphism of sets, but in general not a morphism of groups.
+\end{example}
+
+\begin{remark}\label{rmk:2-cat}
+Note that the world of categories has three layers:
+\begin{enumerate}
+\item[(0)] categories
+\item[(1)] functors between categories
+\item[(2)] morphisms (natural transformations) between functors
+\end{enumerate}
+A similar picture arises in topology, where one distinguishes
+\begin{enumerate}
+\item[(0)] topological spaces
+\item[(1)] continuous maps between spaces
+\item[(2)] homotopies between continuous maps
+\end{enumerate}
+There is more to this than just an analogy and modern category theory and algebraic topology are heavily intertwined.
+
+\end{remark}
+
+
+\section{Equivalences of categories}
+
+
+
+
+\begin{definition}
+An functor $F\colon \cC \to \cD$ is called \emph{an equivalence} or \emph{an equivalence of categories} if there exists a functor $G\colon \cD \to \cC$ and isomorphisms of functors
+\[
+	\epsilon\colon FG \isomto \id_\cD,\quad \eta\colon GF\isomto \id_\cC.
+\]
+A functor $G$ with this property is called a \emph{quasi-inverse} of $F$. If there exists an equivalence from $\cC$ to $\cD$ then $\cC$ and $\cD$ are called \emph{equivalent} categories.
+\end{definition}
+
+\begin{remark}
+Note that this is formally very similar to the notion of a homotopy equivalence in topology. See also Remark \ref{rmk:2-cat}.
+\end{remark}
+
+Equivalent categories tend to be `indistinguishable' from the point of view of category theory. See Exercise \ref{exc:equivalence-final} for an example. It is however often difficult to decide if a functor $F$ is an equivalence from the definition, since it can be hard to construct a quasi-inverse functor. We end this chapter with a powerful criterion for testing if a functor $F$ is an equivalence.
+
+\begin{definition}
+Let $F\colon \cC \to \cD$ be a functor. We say that $F$ is
+\begin{enumerate}
+\item \emph{full} if for every $X,Y$ in $\cC$ the map
+\[
+	\Hom_\cC(X,Y) \to \Hom_\cD(FX,FY),\, f \mapsto Ff
+\]
+ is surjective;
+\item \emph{faithful} if for every $X,Y$ in $\cC$ the map
+\[
+	\Hom_\cC(X,Y) \to \Hom_\cD(FX,FY),\, f \mapsto Ff
+\]
+is injective;
+\item \emph{essentially surjective} if for every object $Z$ in $\cD$ there is an $X$ in $\cC$ such that $FX$ and $Z$ are isomorphic in $\cD$.
+\end{enumerate}
+A functor which is full and faithful is often called \emph{fully faithful}.
+\end{definition}
+
+
+
+\begin{theorem}\label{thm:equivalence-of-categories}
+A functor $F\colon \cC \to \cD$ is an equivalence of categories if and only if it is full, faithful and essentially surjective.
+\end{theorem}
+
+We start with two lemmas. 
+
+\begin{lemma}\label{lemma:functor-iso-to-id}
+Let $H\colon \cC \to \cC$ be a functor, and assume that $H$ is isomorphic to the functor $\id_\cC$. Then for all objects $X$ and $Y$ of $\cC$ the map
+\[
+	\Hom_\cC(X,Y) \to \Hom_\cC(HX, HY),\, f \mapsto Hf
+\]
+is a bijection.
+\end{lemma}
+
+\begin{proof}
+By assumption, there exists an isomorphism $\varphi\colon \id_\cC \to H$. By definition, this means that for all $f\colon X\to Y$ in $\cC$ the square
+\[
+\begin{tikzcd}
+	X \arrow{r}{\varphi_X} \arrow{d}{f} & HX \arrow{d}{Hf} \\
+	Y \arrow{r}{\varphi_Y} & HY.
+\end{tikzcd}
+\]
+commutes. Note that $\varphi_X$ and $\varphi_Y$ are isomorphisms (since $\varphi$ is an isomorphism). In particular, we have $Hf = \varphi_Y \circ f \circ \varphi_X^{-1}$. One can now check directly that the map
+\[
+	\Hom_\cC(HX,HY) \to \Hom_\cC(X,Y),\, g \mapsto \varphi_Y^{-1} \circ g \circ \varphi_X
+\]
+is a two-sided inverse to the map $f\mapsto Hf$.
+\end{proof}
+
+\begin{lemma}\label{lemma:two-out-of-three}
+Let 
+\[
+	S \overset\alpha\longto T \overset\beta\longto U \overset\gamma\longto V
+\]
+be functions. Assume that the compositions $\beta\alpha$ and $\gamma\beta$ are bijections. Then $\alpha$, $\beta$, and $\gamma$ are bijections.
+\end{lemma}
+
+\begin{proof}
+Since $\beta\alpha$ is surjective, $\beta$ must be surjective. Since $\gamma\beta$ is injective $\beta$ must also be injective. So $\beta$ is a bijection. But then $\alpha$ and $\gamma$ must be bijections too.
+\end{proof}
+
+
+
+\begin{proof}[Proof of Theorem~\ref{thm:equivalence-of-categories}]
+Assume $F$ is an equivalence of categories, with quasi-inverse $G$ and isomorphisms
+\[
+	\epsilon\colon FG \to \id_\cD,\quad \eta\colon GF\to \id_\cC.
+\]
+Then for every $Y$ in $\cD$ the object $X := GY$ satisfies $FX = FGY \cong Y$ (via $\epsilon_Y$), hence $F$ is essentially surjective. 
+
+To see that $F$ is full and faithful, let $X$ and $Y$ be objects of $\cC$ and consider
+the composition
+\[
+	\Hom_{\cC}(X,Y) \to \Hom_{\cD}(FX,FY) \to \Hom_{\cC}(GFX,GFY).
+\]
+By Lemma~\ref{lemma:functor-iso-to-id} this composition is a bijection (since $GF\cong \id_\cC$). Similarly, the composition
+\[
+	\Hom_{\cD}(FX,FY) \to \Hom_{\cC}(GFX,GFY) \to \Hom_{\cD}(FGFX,FGFY).
+\]
+is a bijection (since $FG\cong \id_{\cC}$). But now applying Lemma~\ref{lemma:two-out-of-three} we conclude that 
+\[
+	\Hom_{\cC}(X,Y) \to \Hom_{\cD}(FX,FY)
+\]
+is a bijection for all $X$ and $Y$, and hence that $F$ is full and faithful.
+
+
+
+Conversely, assume that $F$ is full, faithful and essentially surjective. Essential surjectivity means that for every $X$ in $\cD$ there exists an object $GX$ in $\cC$ and an isomorphism $\alpha_{X}\colon F(GX) \to X$. Using a suitable form of axiom of choice, we choose such a pair $(GX, \alpha_X)$ for every $X$ in $\cD$.
+
+We want to make the construction $X \mapsto GX$ into a functor (which will be a quasi-inverse to $F$). For this, we need to define for every $f\colon X\to Y$  a map $Gf\colon GX \to GY$. Note that the map $f$ induces a map
+\[
+	 \alpha_Y^{-1} f\alpha_X \colon F(GX) \to F(GY).
+\]
+But since the functor $F$ is full and faithful the map
+\[
+	\Hom_{\cC}(GX,GY) \to \Hom_\cD(F(GX),F(GY)),\, g \mapsto Fg
+\]
+is a bijection. Hence there exists a unique $g \colon GX \to GY$ with $Fg = \alpha_Y^{-1} f \alpha_X$, and we define $Gf := g$. One verifies that this $G$ defines indeed satisfies the axioms for a functor from $\cD$ to $\cC$.
+
+Finally, to see that $G$ is a quasi-inverse to $F$, note that the $\alpha_X$ define an isomorphism of functors $\alpha\colon FG \to \id_{\cD}$. In the other direction, given an object $X$ in $\cC$ we define
+\[
+	\beta_X \colon GFX \to X
+\]
+to be the pre-image of $\alpha_{FX}$ under the bijection
+\[
+	\Hom_\cC(GFX,X) \to \Hom_\cD(FGFX,FX).
+\]
+Then one verifies that the $\beta_X$ define an isomorphism of functors $GF \to \id_{\cC}$, and we conclude that $F$ is an equivalence of categories.
+\end{proof}
+
+
+
+\begin{example}
+Let $K$ be a field, let $\FVec_K$ be the category of finite-dimensional $K$-vector spaces. Let $\cC$ be the category of matrices over $K$, see Example \ref{exa:category-of-matrices}. Consider the functor
+\[
+	F\colon  \cC \to \FVec_K
+\]
+that maps an object $n$ of $\cC$ to the vector space $K^n$ and a matrix
+\[
+	A \in \Hom_\cC(n,m) = \Mat_{m,n}(K)
+\]
+to the corresponding linear map $K^n \to K^m$. We claim that $F$ is an equivalence of categories.
+
+Indeed, using Theorem \ref{thm:equivalence-of-categories} it suffices to observe that the functor is essentially surjective, since every finite-dimensional vector space is isomorphic to $K^n$ for some $n$, and that the functor is full and faithful, since for every $m$ and $n$ the map
+\[
+	\Mat_{m,n}(K) \to \Hom_K(K^n,K^m)
+\]
+is a bijection.
+
+Note that $\cC$ and $\FVec_K$ are not \emph{isomorphic} as categories. The category $\FVec_K$ is much bigger than $\cC$ since for every $n$ there are infinitely many $n$-dimensional vector spaces (all isomorphic, but not \emph{equal}). In fact, $\cC$ is a small category, whereas $\FVec_K$ is not.
+\end{example}
+
+
+
+\newpage
+\section*{Exercises}
+
+
+\begin{exercise}\label{exc:double-dual}
+Verify that the $\eta_V$ of Example \ref{exa:double-dual} form a morphism of
+functors from $\id_{\Vec_K}$ to $(-)^{\vee\vee}$.
+\end{exercise}
+
+\begin{exercise}\label{exc:endo-identity-ab}
+Let $\eta \colon \id_\Ab \to \id_\Ab$ be a morphism of functors. Show that there is an integer $n$ such that  for every $A \in \ob \Ab$ and for every $x \in A$ the identity $\eta_A(x) =nx$ holds.
+\end{exercise}
+
+
+
+\begin{exercise}
+Show that taking determinants defines a morphism 
+\[
+	\det\colon\!\GL_n \to \GL_1
+\]
+between functors from $\CRing$ to $\Grp$. (See Exercise~\ref{exc:functor-GLn}).
+\end{exercise}
+
+
+\begin{exercise}
+Let $G$ and $H$ be groups, and $\rB G$ and $\rB H$ the corresponding one-object categories (see Example \ref{exa:BG}). Show that a functor $F\colon \rB G \to \rB H$ is the same as a group homomorphism $f\colon G\to H$, and a morphism of functors $\eta\colon F_1 \to F_2$ is the same as an element $h\in H$ such that $h f_1(g) h^{-1} = f_2(g)$ for all $g\in G$.
+\end{exercise}
+
+
+\begin{exercise}
+Let $R$ be a ring. Recall that the \emph{center} of a ring is the subring
+\[
+	Z(R) = \{ z \in R \mid zr=rz \text{ for all $r \in R$} \}.
+\]
+Denote by $\cC$ the category of left $R$-modules.
+\begin{enumerate}
+\item Let $z\in Z(R)$. Show that $\eta_{z,M} \colon M \to M,\, x \mapsto zx$ defines a morphism of functors $\eta_z\colon \id_\cC \to \id_\cC$.
+\item Let $\eta \colon \id_\cC \to \id_\cC$ be a morphism of functors. Show that there is a $z\in Z(R)$ with $\eta = \eta_z$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Show that there are precisely two morphisms of functors $\id_\Grp \to \id_\Grp$.  
+\end{exercise}
+
+\begin{exercise}
+Consider categories and functors as in the following diagram:
+\[
+\begin{tikzcd}
+\cC \arrow[bend left]{r}{F_0} \arrow[bend right,swap]{r}{F_1} & \cD \arrow{r}{G} & \cE
+\end{tikzcd}
+\]
+Let $\eta\colon F_0 \to F_1$ be a morphism of functors. Construct a morphism of functors $GF_0 \to GF_1$.
+\end{exercise}
+
+\begin{exercise}[Equivalence is an equivalence relation]
+Let $F\colon \cC \to \cD$ and $G\colon \cD\to \cE$ be equivalences of categories. Show that $GF\colon \cC \to \cE$ is an equivalence of categories.\end{exercise}
+
+\begin{exercise}\label{exc:fully-faithful-isomorphism}
+Let $F\colon \cC \to \cD$ be a full and faithful functor. Let $X$ and $Y$ be objects in $\cC$. 
+\begin{enumerate}
+\item Let $f \colon X\to Y$ be a morphism. Show that $f$ is an isomorphism if and only if $Ff$ is an isomorphism.
+\item Show that $X$ and $Y$ are isomorphic if and only if $FX$ and $FY$ are isomorphic.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+For a category $\cC$, we denote by $[\cC]$ the class of isomorphism classes of objects in $\cC$. 
+Let $F\colon \cC \to \cD$ be a functor. Show that $F$ induces a map $[F]\colon [\cC] \to [\cD]$. Show that if $F$ is fully faithful, then $[F]$ is injective, and if $F$ is essentially surjective, then $[F]$ is surjective.
+\end{exercise}
+
+\begin{exercise}
+Let $\cC$ be a non-empty locally small category in which all objects are isomorphic and in which every morphism is an isomorphism. Show that there is a group $G$ and an equivalence of categories $\rB G \to \cC$.
+\end{exercise}
+
+
+\begin{exercise}[Fundamental groupoid]
+Let $X$ be a topological space. Let $\Pi_1(X)$  be the category with
+\begin{enumerate}
+\item objects: $\ob \Pi_1(X) = X$ 
+\item morphisms: $\Hom_{\Pi_1(X)}(x,y)$ the set of homotopy classes of paths from $x$ to $y$
+\item composition: composition of paths
+\end{enumerate}
+Verify that this indeed defines a category. It is called the \emph{fundamental groupoid} of $X$.
+
+Assume that $X$ is path connected, and let $x\in X$. Show that $\Pi_1(X)$ is equivalent with the category $\rB \pi_1(X,x)$. (See Example \ref{exa:BG}).
+\end{exercise}
+
+
+
+\begin{exercise}
+Give for every $n\in \bN$ a category $\cC_n$ so that $\cC_n$ has exactly $n$ objects, and all the $\cC_n$ are equivalent.
+\end{exercise}
+
+
+\begin{exercise} \label{exc:equivalence-final}
+Let $F\colon \cC \to \cD$ be an equivalence of categories. Show that $\cC$ has a final object if and only if $\cD$ has a final object.
+\end{exercise}
+
+
+\begin{exercise}
+Let $R$ and $S$ be rings. Show that the categories ${}_R\Mod\times {}_S\Mod$ and ${}_{R\times S}\Mod$ are equivalent.
+\end{exercise}
+
+
+\begin{exercise}[Morita equivalence ($\star$)]
+Let $R$ be a ring and $n$ a positive integer.  If $M$ is an $R$-module, then we can consider elements of $M^n$ as length $n$ column matrices with entries in $M$. In this way, we have an action
+\[
+	\Mat_n(R) \times M^n \to M^n,\, (A,    \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix} ) \mapsto
+	A \cdot   \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}
+\]
+This makes $M^n$ into a left $\Mat_n(R)$-module. Verify that this defines a functor
+\[
+	{}_R\Mod \to {}_{\Mat_n(R)}\Mod,\, M \mapsto M^n.
+\]
+Show that this functor is an equivalence of categories.
+\end{exercise}
+
+%\begin{exercise}[$\star$]
+%Let $R$ and $S$ be commutive rings. Assume that the categories ${}_R\Mod$ and ${}_S\Mod$ are equivalent. Prove that $R$ and $S$ are isomorphic. (Hint: do exercise \ref{exc:endo-identity-ab} first). 
+% WARNING: addition on End(id_C) needs additive structure on C
+%\end{exercise}
+
+%\begin{exercise}[$\star$]\label{exc:equivalence-preserves-mono}
+%Let $F\colon \cC \to \cD$ be an equivalence of categories. Let $f\colon X\to Y$ be a morphism in $\cC$. Show that $f$ is a monomorphism (epimorphism) if and only if $F(f)$ is a monomorphism (epimorphism).
+%\end{exercise}
+
+
+
+\begin{exercise}[Abelianized fundamental group without base point ($\star$)]
+Let $\cC$ be the category of path connected topological spaces. Let $P$ be the functor
+from $\Top_\ast$ to $\cC$ that maps a pair $(X,x)$ the the path component of $x\in X$.
+Show that there is a functor $F\colon \cC \to \Ab$
+and an isomorphism between the functors
+\[
+	\pi_1^\ab \colon \Top_\ast \to \Ab,\, (X,x) \mapsto \pi_1(X,x)^\ab
+\]
+and $F\circ P$. Bonus question: show that there is \emph{no} functor $F\colon \cC \to \Grp$ and 
+an isomorphism between $F\circ P$ and $\pi_1$.
+\end{exercise}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TENSOR PRODUCT
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+

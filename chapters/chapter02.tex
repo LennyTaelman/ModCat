@@ -1,0 +1,456 @@
+
+\chapter{Exact sequences}
+
+Exact sequences form a useful and extensively used notational tool in algebra. They allow to replace tedious and verbose arguments involving kernels and quotients by quick and intuitive `diagram chases'. 
+
+
+\section{Exact sequences}
+
+
+If $f\colon M_1\to M_2$ and $g\colon M_2\to M_3$ are $R$-module homomorphisms, then we say that the sequence
+\[
+	M_1 \overset{f}{\longto} M_2 \overset{g}{\longto} M_3
+\]
+is \emph{exact} if and only if the image of $f$ is the kernel of $g$, as submodules of $M_2$. For example: the sequence
+\[
+	0 \longto M \longto N
+\]
+is exact if and only if $M\to N$ is injective, and the sequence
+\[
+	M \longto N \longto 0
+\]
+is exact if and only if $M\to N$ is surjective. 
+
+A general sequence
+\[
+	\cdots \longto M_{i-1} \overset{f_{i-1}}{\longto} M_i \overset{f_{i}}{\longto}  M_{i+1} \longto \cdots
+\]
+is called exact if for every $i$ we have $\ker f_i = \im f_{i-1}$ as submodules of $M_i$.  
+
+
+An exact sequence of the form
+\[
+	0 \longto M_1 \overset{f}{\longto} M_2 \overset{g}{\longto} M_3 \longto 0
+\]
+is called a \emph{short exact sequence}. Note that $f$ induces an isomorphism
+\[
+	M_1 \cong \ker g
+\]
+and $g$ induces an isomorphism
+\[
+	\coker f  \cong M_3.
+\]
+We will often interpret the injective map $f$ as the inclusion of a submodule $M_1$ into $M_2$, and $M_3$ as the quotient of $M_2$ by the submodule $M_1$, so that we can think of any short exact sequence as 
+a sequence of the type
+\[
+	0 \longto M_1 \longto M_2 \longto M_2/M_1 \longto 0.
+\]
+
+\section{The Five Lemma and the Snake Lemma}
+
+The Five Lemma and Snake Lemma are powerful and often-used lemmas about modules that are hard to state (and even harder to prove) without the language of commutative diagrams and exact sequences. The proofs are classic examples of `diagram chasing'. Such arguments are often fairly easy to verify by tracing elements around the diagram on the blackboard or a piece of paper, but are sometimes headache-provokingly resistant to being rendered or read in prose. 
+
+
+\begin{theorem}[Five Lemma]\label{thm:five-lemma}
+Let $R$ be a ring. Consider a commutative diagram of $R$-modules
+\[
+\begin{tikzcd}
+	M_1 \arrow{r} \arrow{d}{f_1}
+	& M_2 \arrow{r} \arrow{d}{f_2}
+	& M_3 \arrow{r} \arrow{d}{f_3}
+	& M_4 \arrow{r} \arrow{d}{f_4}
+	& M_5  \arrow{d}{f_5} \\
+	N_1 \arrow{r}
+	& N_2 \arrow{r}
+	& N_3 \arrow{r}
+	& N_4 \arrow{r}
+	& N_5 
+\end{tikzcd}
+\]
+with exact rows. If $f_1$, $f_2$, $f_4$, $f_5$ are isomorphisms, then so is $f_3$.
+\end{theorem}
+
+In fact, the proof will show that it suffices to assume that $f_1$ is surjective, $f_5$ is injective, and $f_2$ and $f_4$ are isomorphisms.
+
+
+\begin{proof}The proof consists of two parts, one showing that $f_3$ is injective, the other that it is surjective. Both parts require only part of the hypotheses in the theorem.
+
+\emph{Claim}. If $f_1$ is surjective, and $f_2$ and $f_4$ are injective, then $f_3$ is injective.
+
+Indeed, assume $f_3(x)=0$ for some $x\in M_3$. We need to show that $x=0$. Let $x'\in M_4$ be the image of $x$. By the commutativity of the diagram, $f_4(x')=0$. But $f_4$ was injective, hence $x'=0$. It follows that $x\in M_3$ is the image of some element $y\in M_2$.  By commutativity, $f_2(y)$ maps to zero in $N_3$, hence $f_2(y)$ is the image of some element $z \in N_1$. By the assumption on $f_1$, there is a $\tilde{z} \in M_1$ with $f_1(\tilde{z})=z$. 
+
+Consider the image $y'$ of $\tilde{z}$ in $M_2$. By commutativity, we have $f_2(y')=f_2(y)$, but since $f_2$ is injective, this implies $y'=y$. We see that $x\in M_3$ is the image of some element $\tilde{z}$ in $M_1$, and hence by exactness we conclude $x=0$.
+
+\emph{Claim}. If $f_5$ is injective, and $f_2$ and $f_4$ are surjective, then $f_3$ is surjective.
+The proof of this second claim is left to the reader, see Exercise \ref{exc:five-lemma-part-2}.
+
+The theorem follows immediately from the above two claims.
+\end{proof}
+
+
+\begin{theorem}[Snake Lemma]\label{thm:snake-lemma}
+Let $R$ be a ring. Let
+\[
+\begin{tikzcd}
+ 0 \arrow{r} 
+ 	& M_1 \arrow{r}{\alpha} \arrow{d}{f_1}
+ 	& M_2 \arrow{r}{\beta} \arrow{d}{f_2}
+ 	& M_3 \arrow{r} \arrow{d}{f_3}
+	& 0 \\
+0 \arrow{r}
+	& N_1 \arrow{r}{\alpha'}
+	& N_2 \arrow{r}{\beta'}
+	& N_3 \arrow{r}
+	& 0
+\end{tikzcd}
+\]
+be a commutative diagram in which both horizontal rows are short exact sequences. Then there is 
+a commutative diagram
+\[
+\begin{tikzcd}
+0 \arrow{r} 
+ 	& \ker f_1 \arrow{d} \arrow{r}
+ 	& \ker f_2 \arrow{d} \arrow{r}
+ 	& \ker f_3 \arrow{d} \arrow[out=-5, in=175]{dddll}
+	&  \\
+ 0 \arrow{r} 
+ 	& M_1 \arrow{r}{\alpha} \arrow{d}{f_1}
+ 	& M_2 \arrow{r}{\beta} \arrow{d}{f_2}
+ 	& M_3 \arrow{r} \arrow{d}{f_3}
+	& 0 \\
+0 \arrow{r}
+	& N_1 \arrow{r}{\alpha'} \arrow{d}
+	& N_2 \arrow{r}{\beta'} \arrow{d}
+	& N_3 \arrow{r} \arrow{d}
+	& 0 \\
+	& \coker f_1 \arrow{r}
+	& \coker f_2 \arrow{r}
+	& \coker f_3 \arrow{r} & 0
+\end{tikzcd}
+\]
+of $R$-modules in which the maps $\ker f_i\to M_i$ and $N_i \to \coker f_i$ are the natural inclusions and projections, and
+in which the sequence
+\[
+	0 \to \ker f_1 \to \ker f_2 \to \ker f_3 \to \coker f_1 \to \coker f_2 \to \coker f_3 \to 0
+\]
+is exact.
+\end{theorem}
+
+
+
+\begin{proof}[Sketch of proof]
+We only give the most interesting part of the proof: the construction of the `snake' map
+\[
+	d\colon \ker f_3 \to \coker f_1.
+\]
+
+Let $x\in \ker f_3 \subset M_3$.  Since the map $\beta\colon M_2\to M_3$ is surjective, there is a $y\in M_2$ with $\beta(y)=x$. By the commutativity of the right square, we have
+\[
+	\beta'(f_2(y)) = f_3(\beta(y)) = f_3(x) = 0.
+\]
+So $f_2(y) \in \ker \beta' = \im \alpha'$, hence there is a $z\in N_1$ with $\alpha'(z)=f_2(y)$. Note that $z$ is unique, as the map $\alpha'$ is injective. We define $d(x)$ as the element $\bar{z} \in \coker f_1 = N_1/f_1(M_1)$.
+
+We must check that this is well-defined, since our construction depended on the choice of $y\in M_2$ with $\beta(y)=x$. Let $y'\in M_2$ be another element with $\beta(y')=x$, leading to a $z'\in N_1$ as above.
+Since $\beta(y'-y)=x-x=0$ there is a unique $\delta \in M_1$  with $y' -y = \alpha(\delta)$. Now the commutativity of the diagram shows $z'-z=f_1(\delta)$ in $N_1$, and hence $\bar{z}' = \bar{z}$ in $N_1/f_1(M_1)$, as we had to show.
+\end{proof}
+
+\section{Split short exact sequences}
+
+Let $M$ and $N$ be $R$-modules. Then their direct sum fits into a short exact sequence
+\[
+	0 \longto M \overset{i}{\longto} M\oplus N \overset{p}{\longto} N \longto 0
+\]
+where the maps are the natural inclusion $i\colon x\mapsto (x,0)$, and projection $p\colon (x,y)\mapsto y$. It is often convenient to be able to recognize if a given short exact sequence is of the above special form.
+
+\begin{theorem}[Splitting lemma]\label{thm:splitting-lemma}
+Let
+\[
+	0 \longto M_1 \overset{f}{\longto} M_2 \overset{g}{\longto} M_3 \longto 0
+\]
+be an exact sequence of $R$-modules. Then the following are equivalent:
+\begin{enumerate}
+\item there is a homomorphism $h\colon M_2 \to M_1$ such that $hf=\id_{M_1}$
+\item there is a homomorphism $s\colon M_3 \to M_2$ such that $gs=\id_{M_3}$
+\item there is an isomorphism $\varphi\colon M_2 \isomto M_1 \oplus M_3$ such that the diagram
+\[
+\begin{tikzcd}
+0 \arrow{r} & M_1 \arrow{r}{f} \arrow{d}{\id} 
+	& M_2 \arrow{r}{g} \arrow{d}{\varphi} 
+	& M_3 \arrow{r} \arrow{d}{\id} & 0 \\
+0 \arrow{r} & M_1 \arrow{r}{i} & M_1 \oplus M_3 \arrow{r}{p} & M_3 \arrow{r} & 0
+\end{tikzcd}
+\]
+commutes (where $i(x)=(x,0)$ and $p(x,y)=y$.)
+\end{enumerate}
+\end{theorem}
+
+If these conditions hold, we say that the sequence is \emph{split} or \emph{split exact}. The map $h$ is called a \emph{retraction} of $f$, and the map $s$ a \emph{section} of $g$. See Exercise \ref{exc:nonsplit-examples} for examples of short exact sequences that are not split.
+
+\begin{proof}[Proof of Theorem \ref{thm:splitting-lemma}]
+We first show that (3) implies (2). Indeed, the map
+\[
+	M_3 \to M_2,\, y \mapsto \varphi^{-1}(0,y)
+\]
+is a section of $g$.
+
+Next, we show that (2) implies (1), so assume that $s\colon M_3\to M_2$ is a section. We will construct a retraction $h\colon M_2 \to M_1$. Let $x\in M_2$. Consider the element
+\[
+	y := x - s(g(x)) \in M_2.
+\]
+Then, since $gs=\id$ we have
+\[
+	g(y) = g(x) - g(s(g(x))) = g(x) - g(x) = 0.
+\]
+So $y \in \ker g = \im f$, and since $f$ is injective, there is a {unique} $z\in M_1$ with $f(z)=y$. Define $h(x) := z$. One checks that $h$ is indeed a retraction.
+
+Finally, to show that (1) implies (3), assume that $h\colon M_2 \to M_1$ is a retraction. Then consider the map
+\[
+	\varphi\colon M_2 \to M_1 \oplus M_3,\,
+	x \mapsto (h(x), g(x)).
+\]
+Note that this map is an $R$-module homomorphism. We verify that it makes the diagram commute. We start with the left square. Take an $x\in M_1$ in the left-top corner of this square. Going down and then right, it gets mapped to $i(\id (x)) = (x,0) \in M_1 \oplus M_3$. Following the other path, we end up with
+$ \varphi(f(x))= (h(f(x)),g(f(x)))$. But now, $h(f(x))=x$ because $h$ is a retraction, and $g(f(x))=0$ because $\im f = \ker g$ by the hypothesis that the sequence is exact. We conclude that $\varphi(f(x))=(x,0)$ and that the left square indeed commutes. For the right-hand square, take $x\in M_2$. Then one path yields $\id(g(x)) = g(x)$, and following the other path, we obtain $p(\varphi(x))=p(h(x),g(x))=g(x)$. These agree, so we conclude that the diagram indeed commutes. Finally, by Exercise \ref{exc:morphism-of-extensions-is-isomorphism} we see that the map $\varphi$ is automatically an isomorphism, which shows that (3) indeed follows from (1).
+\end{proof}
+
+
+
+
+
+% SECTION: EXERCISES
+
+\newpage
+\section*{Exercises}
+
+
+
+
+\begin{exercise}Show that
+\[
+	0 \longto M \longto 0
+\]
+is exact if and only if $M$ is the zero module.
+\end{exercise}
+
+\begin{exercise}Let $f\colon M\to  N$ be an $R$-module homomorphism. Show that there is an exact sequence
+\[
+	0 \longto \ker f \longto M \overset{f}{\longto} N \longto \coker f \longto 0
+\]
+of $R$-modules.
+\end{exercise}
+
+\begin{exercise}\label{exc:five-lemma-part-2}
+Complete the proof of the Five Lemma (Theorem \ref{thm:five-lemma}): show that if $f_2$ and $f_4$ are surjective, and if $f_5$ is injective, then $f_3$ is surjective. 
+\end{exercise}
+
+\begin{exercise}
+Let
+\[
+\begin{tikzcd}
+	M_1 \arrow{r} \arrow{d}{f_1}
+	& M_2  \arrow{r} \arrow{d}{f_2}
+	& M_3 \arrow{r} \arrow[dashed]{d}{}  & 0 \\
+ N_1 \arrow{r} & N_2 \arrow{r} & N_3 \arrow{r} & 0
+\end{tikzcd}
+\]
+be a commutative diagram of $R$-modules with exact rows. Show that there exists a unique $R$-linear map $f_3\colon M_3 \to N_3$ making the resulting diagram commute.
+\end{exercise}
+
+\begin{exercise}\label{exc:morphism-of-extensions-is-isomorphism}
+Consider a commutative diagram of $R$-modules
+\[
+\begin{tikzcd}
+0 \arrow{r}
+	& M \arrow{r}{\alpha} \arrow{d}{\id_M}
+	& E \arrow{r} \arrow{d}{f}
+	& N \arrow{r} \arrow{d}{\id_N} & 0 \\
+0 \arrow{r} & M \arrow{r} & E' \arrow{r} & N \arrow{r} & 0
+\end{tikzcd}
+\]
+in which both rows are short exact sequences. Deduce from the snake or five lemma that $f$ must be an isomorphism. Show that $f$ is  an isomorphism without using the snake or five lemma. (Hint for surjectivity: given $y\in E'$ choose an $x\in E$ with same image as $y$ in $N$. Show that there is an $z\in M$ with $f(\alpha(z)+x)=y$.)
+\end{exercise}
+
+\begin{exercise}
+Give an example of a diagram as in Theorem \ref{thm:snake-lemma}, for which the `snake map' $d\colon \ker f_3 \to \coker f_1$ is non-zero.
+\end{exercise}
+
+
+\begin{exercise}\label{exc:square-snake}
+Let $R$ be a ring and let
+\[
+\begin{tikzcd}
+M_1 \arrow[hook]{r} \arrow{d}{\alpha_1} & M_2 \arrow{d}{\alpha_2} \\
+N_1 \arrow[hook]{r} & N_2 
+\end{tikzcd}
+\]
+be a commutative diagram of $R$-modules, in which the two horizontal maps are injective. Show that there exists an $R$-module $E$ and an exact sequence
+\[
+	0 \longto \ker \alpha_1 \longto \ker \alpha_2 \longto E \longto \coker \alpha_1 \longto \coker \alpha_2
+\]
+of $R$-modules.
+\end{exercise}
+
+
+\begin{exercise} \label{exc:covariant-short-exact-hom}
+Let $R$ be a ring,  let
+\begin{equation}\label{eq:exc-short-exact-hom}
+	0 \longto M_1 \longto M_2 \longto M_3 
+\end{equation}
+be an exact sequence of $R$-modules, and let $N$ be an $R$-module. Show that there 
+is an exact sequence of abelian groups
+\[
+	0 \longto \Hom_R(N,M_1) \longto \Hom_R(N,M_2) \longto \Hom_R(N,M_3).
+\]
+Give an example to show that the exactness of $0\to M_1 \to M_2\to M_3\to 0$ need not imply
+that the map $\Hom_R(N,M_2)\to \Hom_R(N,M_3)$ is surjective.
+\end{exercise}
+
+\begin{exercise}\label{exc:contravariant-short-exact-hom}
+Let $R$ be a ring,  let
+\[
+	 M_1 \longto M_2 \longto M_3 \longto 0
+\]
+be an exact sequence of $R$-modules, and let $N$ be an $R$-module. Show that there 
+is an exact sequence of abelian groups
+\[
+	0 \longto \Hom_R(M_3,N) \longto \Hom_R(M_2,N) \longto \Hom_R(M_1,N).
+\]
+Give an example to show that the exactness of $0\to M_1 \to M_2\to M_3\to 0$ need not imply
+that the map $\Hom_R(M_2,N)\to \Hom_R(M_1,N)$ is surjective.
+\end{exercise}
+
+
+\begin{exercise}
+Let $I$ and $J$ be left ideals in a ring $R$. Show that there are exact sequences
+\[
+	0 \to I \cap J \to I \oplus J \to I + J \to 0
+\]
+and
+\[
+	0 \to R/(I\cap J) \to R/I \oplus R/J \to R/(I+J) \to 0
+\]
+of $R$-modules. 
+\end{exercise}
+
+
+
+\begin{exercise}
+Let $R$ be a commutative ring and let
+\[
+	0 \longto M \longto E \longto N \longto 0
+\]
+be a short exact sequence of $R$-modules. Let $I:=\Ann_R M$ and $J := \Ann_R N$ (see Exercise \ref{exc:annihilator}). Show that
+\[
+	IJ \subset \Ann_R E \subset I \cap J
+\]
+as ideals in $R$.
+\end{exercise}
+
+
+
+\begin{exercise}\label{exc:nonsplit-examples}
+Show that the short exact sequences of $\bZ$-modules
+\[
+	0 \longto \bZ \overset{2}{\longto} \bZ \longto \bZ/2\bZ \longto 0
+\]
+and
+\[
+	0 \longto \bZ/2\bZ \overset{2}{\longto} \bZ/4\bZ \longto \bZ/2\bZ \longto 0
+\]
+are \emph{not} split. (Here the `$2$' above the arrows are shorthand for the maps $x\mapsto 2x$ and $\bar{x}\mapsto \overline{2x}$.)
+\end{exercise}
+
+
+\begin{exercise}Let $K$ be a field. Show that every short exact sequence of $K$-modules is split exact.
+\end{exercise}
+
+\begin{exercise}
+Let $G$ be a finite group, and $K$ a field of characteristic zero. \emph{Maschke's theorem} asserts that for every representation $V$ of $G$ over $K$, and for every $G$-stable subspace $W\subset V$ there exists a $G$-stable complement $U\subset V$. 
+Show that every short exact sequence of $K[G]$-modules is split. 
+\end{exercise}
+
+\begin{exercise}[$\star$]
+Let $G$ be the cyclic group of $2$ elements. Consider the group ring $R:=\bF_2[G]$. Give an example of a non-split short exact sequence of $R$-modules. Show that not every representation of the group $G$ over the field $\bF_2$ is isomorphic to a direct sum of irreducible representations. 
+\end{exercise}
+
+
+\begin{exercise}Let $K$ be a field. Consider the subring
+\[
+	R := \left\{ \left(\begin{matrix} a & b \\ 0 & c \end{matrix}\right) \mid a,b,c\in K \right \}
+\]
+of the ring $\Mat(2,K)$ of two-by-two matrices over $K$.
+Let $M$ be the module of column vectors $x \choose {y}$ on which $R$ acts by the usual matrix multiplication:
+\[
+\left(\begin{matrix} a & b \\ 0 & c \end{matrix}\right)
+\left(\begin{matrix} x  \\ y \end{matrix}\right) =
+\left(\begin{matrix} ax + by  \\ cy \end{matrix}\right)
+\]
+Show that $N:= \{ {x \choose 0} \mid x \in K \} \subset M$ is a sub-$R$-module, and that the short exact sequence
+of $R$-modules
+\[
+	0 \longto N \longto M \longto M/N \longto 0
+\]
+does not split.
+\end{exercise}
+
+\begin{exercise}\label{exc:free-module-split-short-exact-sequence}
+Let $R$ be a ring and let $M$ and $N$ be $R$-modules. Show that any short exact sequence of the form
+\[
+	0 \longto M \longto N \longto R^n \longto 0
+\]
+is split. 
+\end{exercise}
+
+\begin{exercise}
+Let $R$ be a ring and let $I\subset R$ be a left ideal. Show that a short exact sequence
+of left $R$-modules of the form
+\[
+	0 \longto M \longto N \overset{\pi}{\longto} R/I \longto 0
+\]
+splits if and only if there exists an $x\in N$ with $\pi(x)=1+I$ and $rx=0$ for all $r\in I$.
+\end{exercise}
+
+
+
+\begin{exercise}\label{exc:hom-of-split-exact-seq}
+Let
+\[
+	0\longto M_1 \longto M_2 \longto M_3 \longto 0
+\]
+be a split short exact sequence of $R$-modules, and let $N$ be an $R$-module. Show that the induced sequences
+\[
+	0 \longto \Hom_R(N,M_1) \longto \Hom_R(N,M_2) \longto \Hom_R(N,M_3) \longto 0
+\]
+and
+\[
+	0 \longto \Hom_R(M_3,N) \longto \Hom_R(M_2,N) \longto \Hom_R(M_1,N) \longto 0
+\]
+are exact.
+\end{exercise}
+
+
+\begin{exercise}
+Let $R$ be a ring and let 
+\[
+	0 \longto M_1 \longto M_2 \longto M_3 \longto 0
+\]
+be a short exact sequence of $R$-modules. Show that if $M_1$ is free of rank $n_1$ and $M_3$ is free of rank $n_3$, then $M_2$ is free of rank $n_1+n_3$.
+\end{exercise}
+%
+%\begin{exercise}[$\star$]
+%Let $R$ be a non-zero commutative ring, and let
+%\[
+%	0 \longto M_1 \longto M_2  \longto \cdots \longto M_n \longto 0
+%\]
+%be an exact sequence of $R$-modules. Assume that $M_i$ is free of rank $n_i$. Show that
+%the equality 
+%\[	
+%	\sum_i (-1)^i n_i = 0
+%\]
+%holds.
+%\end{exercise}
+%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTER: FINITELY GENERATED MODULES OVER A PID %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

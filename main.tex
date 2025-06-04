@@ -1,0 +1,242 @@
+\documentclass[11pt]{amsbook}
+
+\setlength{\textwidth}{11.8cm} % or whatever length you want
+\setlength{\textheight}{18.5cm} 
+\calclayout
+
+\usepackage{amsgen}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+\usepackage{chngcntr}
+\usepackage{wrapfig}
+\usepackage{etoolbox}
+
+\usepackage[T2A,T1]{fontenc}
+\DeclareSymbolFont{cyrillic}{T2A}{cmr}{m}{n}
+\DeclareMathSymbol{\Sha}{\mathalpha}{cyrillic}{216}
+
+
+\makeatletter
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+\newcommand*\widebar[1]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+    \rel@kern{0.8}%
+    \overline{\rel@kern{-0.8}\macc@nucleus\rel@kern{0.2}}%
+    \rel@kern{-0.2}%
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+  \macc@nested@a\relax111{#1}%
+  \endgroup
+}
+
+\newcommand*\cocolon{%
+        \nobreak
+        \mskip6mu plus1mu
+        \mathpunct{}%
+        \nonscript
+        \mkern-\thinmuskip
+        {:}%
+        \mskip2mu
+        \relax
+}
+
+\makeatother
+
+
+\usepackage{xstring}
+\renewcommand{\tocappendix}[3]{\indentlabel{\IfStrEq{#3}{Bibliography}{Bibliography.}{\IfStrEq{#3}{Index}{Index.}{Appendix #2.\quad{#3}}}}}
+
+\renewcommand{\chaptername}{Chapter}
+
+\DeclareRobustCommand{\gobblefive}[5]{}
+\newcommand*{\SkipTocEntry}{\addtocontents{toc}{\gobblefive}}
+
+\usepackage{amssymb}
+\usepackage{amscd}
+\usepackage[all,cmtip]{xy}
+
+\newcommand{\medwedge}{{\scalebox{1.25}{$\wedge$}}}
+
+\newcommand{\isomto}{\overset{\sim}{\to}}
+\newcommand{\longisomto}{\overset{\sim}{\longrightarrow}}
+
+\newcommand{\isomfrom}{\overset{\sim}{\longleftarrow}}
+\newcommand{\surjto}{\twoheadrightarrow}
+\newcommand{\longsurjto}{\relbar\joinrel\twoheadrightarrow}
+\newcommand{\surjfrom}{\twoheadleftarrow}
+\newcommand{\injto}{\hookrightarrow}
+\newcommand{\longinjto}{\lhook\joinrel\longrightarrow}
+\newcommand{\injfrom}{\hookleftarrow}
+\newcommand{\longto}{\longrightarrow}
+\newcommand{\longfrom}{\longleftarrow}
+
+\newcommand{\plim}{\mathop{\varprojlim}\limits}
+
+\renewcommand{\ast}{\star}
+
+\DeclareMathOperator{\Frac}{\mathrm{Frac}}
+\DeclareMathOperator{\Frob}{\mathrm{Frob}}
+\DeclareMathOperator{\Spm}{\mathrm{Spm}}
+\DeclareMathOperator{\Sym}{\mathrm{Sym}}
+\DeclareMathOperator{\Aut}{\mathrm{Aut}}
+\DeclareMathOperator{\Tot}{\mathrm{Tot}}
+\DeclareMathOperator{\rk}{\mathrm{rk}}
+\DeclareMathOperator{\End}{\mathrm{End}}
+\DeclareMathOperator{\Reg}{\mathrm{Reg}}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\Map{Map}
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator\Gal{Gal}
+\DeclareMathOperator\QCoh{{\bf{QCoh}}}
+\DeclareMathOperator\Coh{{\bf{Coh}}}
+\DeclareMathOperator\Proj{Proj}
+\DeclareMathOperator\Crys{{\bf{Crys}}}
+\DeclareMathOperator\Nil{{\bf{Nil}}}
+\DeclareMathOperator\Mod{{\bf{Mod}}}
+\renewcommand{\Vec}{\operatorname{{\bf{Vec}}}}
+\DeclareMathOperator\Cl{Cl}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\coker{coker}
+\DeclareMathOperator\Pic{Pic}
+\DeclareMathOperator\Mat{Mat}
+\DeclareMathOperator\Ind{Ind}
+\DeclareMathOperator\Res{Res}
+\DeclareMathOperator\Lie{Lie}
+\DeclareMathOperator\Det{det}
+\DeclareMathOperator\tr{tr}
+\DeclareMathOperator\Nm{Nm}
+\DeclareMathOperator\pr{pr}
+\DeclareMathOperator\TS{TS}
+\DeclareMathOperator\Ext{Ext}
+\DeclareMathOperator\ext{ext}
+\DeclareMathOperator\Tor{Tor}
+\DeclareMathOperator\Ann{Ann}
+
+\DeclareMathOperator\Kosz{Kosz}
+\DeclareMathOperator\gr{gr}
+\DeclareMathOperator\ob{ob}
+
+\DeclareMathOperator\colim{colim}
+
+
+\def\bQ{{\mathbf{Q}}} \def\bZ{{\mathbf{Z}}} \def\N{{\mathbf{N}}}
+\def\bF{{\mathbf{F}}} \def\bG{\mathbf{G}} \def\bR{{\mathbf{R}}}
+\def\bC{{\mathbf{C}}} \def\bP{{\mathbf{P}}} \def\bA{{\mathbf{A}}}
+\def\bN{{\mathbf{N}}}
+\def\bOne{{\mathbf{1}}}
+
+\def\cO{{\mathcal{O}}} \def\cV{{\mathcal{V}}} \def\cM{{\mathcal{M}}}
+\def\cU{{\mathcal{U}}} \def\cC{{\mathcal{C}}} \def\cL{{\mathcal{L}}}
+\def\cF{{\mathcal{F}}} \def\cD{{\mathcal{D}}} \def\cI{{\mathcal{I}}}
+\def\cE{{\mathcal{E}}} \def\cG{{\mathcal{G}}} \def\cH{{\mathcal{H}}}
+\def\cN{{\mathcal{N}}} \def\cA{{\mathcal{A}}} \def\cB{{\mathcal{B}}}
+\def\cQ{{\mathcal{Q}}} \def\cP{{\mathcal{P}}} \def\cS{{\mathcal{S}}}
+\def\cR{{\mathcal{R}}} \def\cZ{{\mathcal{Z}}}
+
+\def\rH{{\mathrm H}} \def\rK{{\mathrm K}} \def\rR{{\mathrm R}}
+\def\rmd{{\mathrm d}} \def\rmT{{\mathrm T}} \def\rmk{{\mathrm k}}
+\def\rL{{\mathrm L}} \def\rD{{\mathrm D}}\def\rB{{\mathrm B}}
+
+\def\fp{{\mathfrak p}} \def\fm{{\mathfrak{m}}} \def\fS{{\mathfrak S}}
+\def\fU{{\mathfrak U}} \def\fC{{\mathfrak{C}}} \def\fV{{\mathfrak{V}}}
+
+
+\def\id{{\rm id}}
+\def\et{\mathrm{et}}
+\def\ab{\mathrm{ab}}
+\def\opp{\mathrm{op}}
+\def\sep{\mathrm{sep}}
+\def\tors{\mathrm{tors}}
+
+\def\Set{\mathbf{Set}}
+\def\Ab{\mathbf{Ab}}
+\def\Top{\mathbf{Top}}
+\def\hTop{\mathbf{hTop}}
+\def\Grp{\mathbf{Grp}}
+\def\Ring{\mathbf{Ring}}
+\def\CRing{\mathbf{CRing}}
+\def\Alg{\mathbf{Alg}}
+\def\CAlg{\mathbf{CAlg}}
+\def\Mod{\mathbf{Mod}}
+\def\FVec{\mathbf{FVec}}
+\def\Fun{\mathbf{Fun}}
+\def\Ch{\mathbf{Ch}}
+\def\Ho{\mathbf{Ho}}
+
+\newcommand{\comment}[1]{}
+
+
+\makeatletter
+\patchcmd{\@thm}{\thm@headfont{\scshape}}{\thm@headfont{\scshape\bfseries}}{}{}
+%\patchcmd{\@thm}{\thm@notefont{\fontseries\mddefault\upshape}}{}{}{}
+\makeatother
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}[theorem]{Examples}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{exercise}{Exercise}
+
+\counterwithin{theorem}{chapter}
+\counterwithin{exercise}{chapter}
+
+
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\makeindex
+\begin{document}
+
+\title
+ {Modules and Categories\footnote{Preliminary version, \today}}
+
+
+\author
+ {Lenny Taelman \\\medskip\bigskip\bigskip\medskip\bigskip\bigskip\medskip\bigskip\bigskip\medskip\bigskip\bigskip\medskip\bigskip\bigskip\medskip\bigskip\bigskip\medskip\bigskip\bigskip\medskip\bigskip\bigskip\medskip\bigskip\bigskip\medskip\bigskip\bigskip\medskip\bigskip\bigskip
+ \includegraphics[height=2cm]{uva}}
+ 
+ \date
+ {\today}
+
+%\begin{abstract} 
+%\end{abstract}
+
+
+\maketitle
+
+
+\tableofcontents
+
+
+% Include foreword
+\include{chapters/foreword}
+
+% Include all chapters
+\include{chapters/chapter01}
+\include{chapters/chapter02}
+\include{chapters/chapter03}
+\include{chapters/chapter04}
+\include{chapters/chapter05}
+\include{chapters/chapter06}
+\include{chapters/chapter07}
+\include{chapters/chapter08}
+\include{chapters/chapter09}
+\include{chapters/chapter10}
+\include{chapters/chapter11}
+\include{chapters/chapter12}
+
+% Include bibliography
+\include{chapters/bibliography}
+
+\printindex
+n\end{document}

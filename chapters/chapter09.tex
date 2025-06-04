@@ -1,0 +1,785 @@
+
+\chapter{Limits and colimits}\label{chapter:limits-and-colimits}
+
+
+
+
+
+\section{Product and coproduct}
+
+\begin{definition}
+Let $\cC$ be a category, let $X$ and $Y$ be objects in $\cC$.  A \emph{product} of $X$ and $Y$
+consists of the data of
+\begin{enumerate}
+\item an object $P$
+\item  morphisms $\pi_X\colon P \to X$ and $\pi_Y\colon P \to Y$
+\end{enumerate}
+such that for all objects $T$ in $\cC$, and for all $f\colon T\to X$ and $g\colon T\to Y$ there is a unique map $h\colon T \to P$ making the following diagram commute
+\[
+\begin{tikzcd}
+& & X \\
+T \arrow[out=40,in=185]{rru}{f} \arrow[out=-40,in=175,swap]{rrd}{g} \arrow[dashed]{r}{h}
+	& P \arrow[swap]{ru}{\pi_X} \arrow{rd}{\pi_Y} & \\
+& & Y 
+\end{tikzcd}
+\]
+\end{definition}
+
+A product need not exist, but if it does, it is unique up to unique isomorphism. In particular, we will refer to any product of $X$ and $Y$ as \emph{the product} of $X$ and $Y$. We will usually denote it by $X\times Y$, omitting the morphisms $\pi_X$ and $\pi_Y$. The proof of uniqueness is formal, and essentially identical to the proofs of Proposition  \ref{prop:final-object-uniquely-unique} and the uniqueness part of Theorem
+\ref{thm:existence-of-tensor-product}. We repeat the argument for the last time.
+
+\begin{proposition}\label{prop:product-uniquely-unique}
+Let $(P,\pi_X,\pi_Y)$ and $(P',\pi'_X,\pi'_Y)$ be products of $X$ and $Y$. Then there exists a unique isomorphism $h\colon P \to P'$ such that the diagram
+\[
+\begin{tikzcd}
+& X & \\
+P \arrow{ru}{\pi_X} \arrow[swap]{rd}{\pi_Y} \arrow[dashed]{rr}{h}
+	 & &  P' \arrow[swap]{lu}{\pi'_X} \arrow{ld}{\pi'_Y} \\
+& Y &
+\end{tikzcd}
+\]
+commutes.
+\end{proposition}
+
+
+\begin{proof}[Proof of Proposition \ref{prop:product-uniquely-unique}]
+Since $P'$ is a product, there exists a unique $h\colon P \to P'$ making the diagram commute. Likewise, since $P$ is a product, there exists a unique $h'\colon P'\to P$ making the diagram commute. By the same reasoning, there are unique maps $i$ and $i'$ making the diagrams
+\[
+\begin{tikzcd}
+& X & & & X & \\
+P \arrow{ru}{\pi_X} \arrow[swap]{rd}{\pi_Y} \arrow[dashed]{rr}{i}
+	 & &  P \arrow[swap]{lu}{\pi_X} \arrow{ld}{\pi_Y} 
+& P' \arrow{ru}{\pi'_X} \arrow[swap]{rd}{\pi'_Y} \arrow[dashed]{rr}{i'}
+	 & &  P' \arrow[swap]{lu}{\pi_X'} \arrow{ld}{\pi_Y'} \\
+& Y & & & Y &
+\end{tikzcd}
+\]
+commute. Combining both parts, we see that both $i=\id_P$ and $i=h'h$ make the first diagram commute, and that both $i'=\id_{P'}$ and $i'=hh'$ make the second diagram commute. By unicity we have $h'h=\id_P$ and $hh'=\id_{P'}$, hence $h$ is an isomorphism.
+\end{proof}
+
+
+\begin{examples}
+In $\Set$ the product is the cartesian product, together with the usual projections. In $\Top$ the product is the cartesian product equipped the product topology, together with the usual projections. The product of two rings  $R$ and $S$ in $\Ring$ is the product ring $R\times S$.  The product of two modules in ${}_R\Mod$ is the cartesian product  $M \times N$.
+\end{examples}
+
+
+
+The dual notion of a product is a coproduct  (sometimes called sum).
+
+\begin{definition}
+Let $\cC$ be a category, let $X$ and $Y$ be objects in $\cC$.  A \emph{coproduct} of $X$ and $Y$
+consists of the data of
+\begin{enumerate}
+\item an object $S$
+\item  morphisms $\iota_X\colon X \to S$ and $\iota_Y\colon Y \to S$
+\end{enumerate}
+such that for all objects $T$ in $\cC$, and for all $f\colon X\to T$ and $g\colon Y\to T$ there is a unique map $h\colon S \to T$ making the diagram 
+\[
+\begin{tikzcd}
+X \arrow[swap]{rd}{\iota_X} \arrow[out=-5,in=140]{rrd}{f} & & \\
+& S \arrow[dashed]{r}{h} & T \\
+Y \arrow{ru}{\iota_Y} \arrow[out=5,in=-140]{rru}{g} & & 
+\end{tikzcd}
+\]
+commute.
+\end{definition}
+
+By the same argument as before, a coproduct, if it exists, is unique up to isomorphism. We talk about \emph{the} coproduct, and denote it with $X\amalg Y$.
+
+\begin{example}Let $X$ and $Y$ be sets. Then the coproduct of $X$ and $Y$ in $\Set$ is the disjoint union $X\amalg Y$, together with the canonical inclusions $\iota_X \colon X\to X \amalg Y$ and $\iota_Y\colon Y \to X \amalg Y$. 
+
+Similarly, the coproduct in $\Top$ of topological spaces $X$ and $Y$ is the disjoint union $X \amalg Y$, with the natural topology (in which $X$ and $Y$ are both open and closed).
+\end{example}
+
+\begin{example}
+Let $R$ be a ring. Then the coproduct of $R$-modules $M$ and $N$ is the direct sum $M\oplus N$, and hence in this case the  product and the coproduct coincide (although the former is considered together with the projections, and the latter with the inclusions). 
+\end{example}
+
+More generally one can define products and coproducts of arbitrary (possibly infinite) families of objects.
+
+\begin{definition}
+The \emph{product} of a family $(X_i)_{i\in I}$  of objects in $\cC$ is an object $\prod_{i\in I} X_i$ together with maps $\pi_n \colon \prod_{i\in I} X_i \to X_n$ such that for every $T$ and for every collection of morphisms $f_i \colon T\to X_i$ there is a unique $h\colon T\to \prod_{i\in I} X_i$ such that $f_i = \pi_ih$ for all $i\in I$.
+\end{definition}
+
+\begin{definition}
+The \emph{coproduct} of a family $(X_i)_{i\in I}$  of objects in $\cC$ is an object $\coprod_{i\in I} X_i$ together with maps $\iota_n \colon X_n\to \coprod_{i\in I} X_i$ such that for every $T$ and for every collection of morphisms $f_i \colon X_i\to T$ there is a unique $h\colon \coprod_{i\in I} X_i \to T$ such that $f_i = h\iota_i$ for all $i\in I$.
+\end{definition}
+
+Again, products and coproducts of arbitrary families need not exist, but if they do they are unique up to unique isomorphism.
+
+\begin{example}[Product and coproduct of modules]
+Let $R$ be a ring and $(M_i)_{i\in I}$ a collection of $R$-modules. Then the product of $(M_i)$ is the $R$-module
+\[
+	\prod_{i\in I} M_i = \{ (x_i)_{i\in I} \mid x_i \in M_i \}
+\]
+together with the projection maps $\pi_n\colon \prod_{i\in I} M_i \to M_n$. 
+The universal property of products gives a natural (\emph{i.e.} functorial) bijection
+\[
+	\Hom_R( N,  \prod_{i\in I} M_i ) \longisomto \prod_{i\in I} \Hom_R(N, M_i ).
+\]
+The coproduct of $(M_i)_i$ is the direct sum $\bigoplus_{i\in I} M_i$ 
+together with the inclusion maps $\iota_n\colon M_n \to \bigoplus_{i\in I} M_i $ given by
+\[
+	\iota_n(x)_i = \begin{cases} x & i=n \\ 0 & i \neq n \end{cases}
+\]
+for all $x\in M_n$ and $i\in I$. Indeed, the natural  bijection
+\[
+	\Hom_R( \bigoplus_{i\in I} M_i, N ) \longisomto \prod_{i\in I} \Hom_R(M_i, N )
+\]
+of Exercise \ref{exc:universal-property-direct-sum} shows that for every collection of morphisms $(f_i\colon M_i 
+\to N)_i$ there is a unique morphism $h\colon  \bigoplus_{i\in I} M_i \to N$ with $h \iota_i = f_i$.
+\end{example}
+
+
+
+\section{Pullback and pushout}
+
+\begin{definition}
+Let $\cC$ be a category and let  $f\colon X\to Z$ and $g\colon Y\to Z$ be morphisms in $\cC$. The \emph{pullback} or \emph{fibered product} of $f$ and $g$ consists of 
+\begin{enumerate}
+\item an object $P$ in $\cC$
+\item morphisms $\pi_X\colon P \to X$ and $\pi_Y\colon P \to Y$
+\end{enumerate}
+such that $f\pi_X=g\pi_Y$ as maps $P\to Z$, and such that for every object $T$ and for every pair of maps $s\colon T\to X$, $t\colon T\to Y$ with $fs=gt$
+there is a unique morphism $h\colon T\to P$ making the diagram
+\[
+\begin{tikzcd}
+& & X \arrow[swap]{rd}{f} \\
+T \arrow[out=40,in=185]{rru}{s} \arrow[out=-40,in=175,swap]{rrd}{t} \arrow[dashed]{r}{h}
+	& P \arrow{ru}{\pi_X} \arrow[swap]{rd}{\pi_Y} & & Z  \\
+& & Y \arrow{ru}{g}
+\end{tikzcd}
+\]
+commute.
+\end{definition}
+
+ If it exists, the pullback is unique up to unique isomorphism. It is usually denoted by $P=X\times_Z Y$, but care should be taken since the pullback does depend on the maps $f$ and $g$. Alternatively, one  says that the square
+ \[
+ \begin{tikzcd}
+ 	P \arrow{r}{\pi_Y} \arrow[swap]{d}{\pi_X} & Y \arrow[swap]{d}{g} \\
+	X \arrow{r}{f} & Z
+\end{tikzcd}
+\]
+is \emph{cartesian} if $(P,\pi_X,\pi_Y)$ is the fibered product of $f$ and $g$.
+ 
+\begin{example}
+In the category of sets, the fiber product of any pair of maps $f\colon X\to Z$ and $g\colon Y\to Z$ exists. It is given by
+\[
+	X\times_Z Y = \{ (x,y) \in X\times Y \mid f(x) = g(y) \},
+\]
+together with the projection maps. Indeed, if $s\colon T\to X$ and $t\colon T\to Y$ satisfy $fs=gt$, then the  map
+\[
+	h\colon T \to X\times_Z Y,\, u \mapsto (s(u),t(u)).
+\]
+is the unique map making the diagram of the definition commute. 
+
+In the  case that $X=\{\star\}$ and $f$ the map $\star \mapsto z$, then we find
+\[
+	\{\star\} \times_Z Y = g^{-1}(z),
+\]
+the fiber of $Y$ over $z$.
+
+In the case that $X, Y$ are subsets of  $Z$ and $f$ and $g$ are the respective inclusions we find
+$X\times_Z Y = X \cap Y$.
+\end{example}
+
+\begin{example}
+Similarly, in $\Top$ we have
+\[
+	X\times_Z Y = \{ (x,y) \in X\times Y \mid f(x) = g(y) \}
+\]
+with the induced topology from the product topology on $X\times Y$.
+\end{example}
+
+\begin{example}
+Similarly, if $f_1\colon M_1 \to N$ and $f_2\colon M_2 \to N$ are $R$-module homomorphisms, then
+\[
+	\{ (x_1,x_2) \in M_1\times M_2 \mid f_1(x_1)=f_2(x_2) \}
+\]
+is a sub-$R$-module of $M_1\times M_2$, and one verifies that it is the pullback of $f_1$ and $f_2$.
+\end{example}
+
+\begin{example}In particular, the kernel of a morphism $f\colon M\to N$ is the pull-back of $f$ and the map $0\to N$. In other words, the square
+\[
+	\begin{tikzcd}
+		\ker f \arrow{r} \arrow{d} & M \arrow{d}{f} \\
+		0 \arrow{r} & N
+	\end{tikzcd}
+\]
+is cartesian in ${}_R\Mod$.
+\end{example}
+
+The dual notion of pullback/fibered product is pushout/fibered coproduct. The definition is obtained by reversing all the arrows.
+
+\begin{definition}
+Let $\cC$ be a category and let  $f\colon Z\to X$ and $g\colon Z\to Y$ be morphisms in $\cC$. The \emph{pushout} or \emph{fiber coproduct} or \emph{fiber sum} of $f$ and $g$ consists of 
+\begin{enumerate}
+\item an object $S$ in $\cC$
+\item morphisms $\iota_X\colon X \to S$ and $\iota_Y\colon Y \to S$
+\end{enumerate}
+such that $\iota_Xf=\iota_Yg$ as maps $Z\to S$, and such that for every object $T$ and for every pair of maps $s\colon X\to T$, $t\colon Y\to T$ with $sf=tg$
+there is a unique morphism $h\colon S\to T$ making the diagram
+\[
+\begin{tikzcd}
+&X \arrow[swap]{rd}{\iota_X} \arrow[out=-5,in=140]{rrd}{s} & & \\
+Z \arrow{ru}{f} \arrow[swap]{rd}{g} && S \arrow[dashed]{r}{h} & T \\
+ & Y \arrow{ru}{\iota_Y} \arrow[out=5,in=-140]{rru}{t} & & 
+\end{tikzcd}
+\]
+commute.
+\end{definition}
+
+If it exists, the pushout is unique up to unique isomorphism. 
+ 
+\begin{example}Pushouts exist in $\Set$, and can be constructed as follows. Let $f\colon Z\to X$ and $g\colon Z\to Y$ be functions. Consider the equivalence relation $\sim$ on the disjoint union $X\amalg Y$ generated by $f(z) \sim g(z)$. Let $S$ be the quotient $(X\amalg Y)/\sim$. Then we claim that $S$ is the pushout of $f$ and $g$. Indeed, assume that we have a commutative diagram
+\[
+\begin{tikzcd}
+&X \arrow[swap]{rd}{\iota_X} \arrow[out=-1,in=140]{rrd}{s} & & \\
+Z \arrow{ru}{f} \arrow[swap]{rd}{g} && S \arrow[dashed]{r}{h} & T \\
+ & Y \arrow{ru}{\iota_Y} \arrow[out=1,in=-140]{rru}{t} & & 
+\end{tikzcd}
+\]
+Then there is only one possibility for the map $h$:
+\[
+	h\colon S \to T,\,
+	\begin{cases} [x] \mapsto s(x) & x\in X \\ [y] \mapsto t(y) & y\in Y
+	\end{cases}
+\]
+This is indeed well-defined, since for any $z\in Z$ we have $s(f(z))=t(g(z))$.
+\end{example}
+
+\begin{example}[gluing]
+The same construction as in $\Set$ defines a pushout in $\Top$, it suffices to put the quotient topology on $X\amalg Y/\sim$.  This construction is particularly useful in topology when both $f\colon Z\to X$ and $g\colon Z\to Y$ are injective. In this case it constructs a space $S$ by `gluing' $X$ and $Y$ along their common subspace $Z$. 
+
+Conversely, if $S$ is a topological space and $X$ and $Y$ subspaces with $S = X \cup Y$, then $S$ is the pushout of the inclusion maps $X\cap Y \to X$ and $X\cap Y \to Y$.
+\end{example}
+
+\begin{example}The cokernel of a morphism $f\colon M\to N$ is the pushout of $f$ and the map $M\to 0$. See also Exercise~\ref{exc:fibered-coproduct-in-Ab}.
+\end{example}
+
+%
+%\section{Equalizer and co-equalizer}
+%
+%\begin{definition} Let $\cC$ be a category, let $X$ and $Y$ be objects in $\cC$ and let $f\colon X\to Y$ and $g\colon X\to Y$ be morphisms in $\cC$. The \emph{equalizer} of $f$ and $g$ is a pair $(E,\iota)$ consisting of 
+%\begin{enumerate}
+%\item an object $E$ in $\cC$,
+%\item a morphism $\iota\colon E\to X$ in $\cC$,
+%\end{enumerate}
+%such that $f\iota=g\iota$, and such that for every morphism $t\colon T\to X$ with $ft=gt$ there is a unique $h\colon T\to E$ making the diagram
+%\[
+%\begin{tikzcd}
+%	T \arrow[dashed]{d}{h} \arrow{dr}{t} \\
+%	E \arrow{r}{\iota} & X \arrow[out=8,in=172]{r}{f} \arrow[out=-8,in=-172,swap]{r}{g} & Y
+%\end{tikzcd}
+%\]
+%commute.
+%\end{definition}
+%
+%The equalizer of $f$ and $g$, if it exists, is unique up to unique isomorphism.
+%
+%\begin{example}In $\Set$ the equalizer of $f,g\colon X\to Y$ is given by $E=\{x \in X \mid f(x)=g(x)\}$ and $\iota\colon E\to X$ the inclusion. Also in $\Ring$, $\CRing$, $\Top$, $\Grp$, ${}_R\Mod$ equalizers exist, and are given by the same recipe. For example, the equalizer of a pair of ring homomorhpisms $f,g\colon R\to S$ is the subring
+%\[
+%	\{ r\in R \mid f(r) = g(r) \} \subset R,
+%\]
+%together with its inclusion in $R$.
+%\end{example}
+%
+%\begin{example}In ${}_R\Mod$ the equalizer of $f,g\colon M\to N$ is nothing but $\ker (f-g)$. In particular, taking $g=0$ we see that a kernel of an $R$-module homomorphism is a special case of an equalizer.
+%\end{example}
+%
+%The dual notion of equalizer is co-equalizer.
+%
+%
+%\begin{definition} Let $\cC$ be a category, let $X$ and $Y$ be objects in $\cC$ and let $f\colon X\to Y$ and $g\colon X\to Y$ be morphisms in $\cC$. The \emph{co-equalizer} of $f$ and $g$ is a pair $(C,\pi)$ consisting of 
+%\begin{enumerate}
+%\item an object $C$ in $\cC$,
+%\item a morphism $\pi\colon Y\to C$ in $\cC$,
+%\end{enumerate}
+%such that $\pi f=\pi g$, and such that for every morphism $t\colon Y\to T$ with $tf=tg$ there is a unique $h\colon C\to T$ making the diagram
+%\[
+%\begin{tikzcd}
+%	 X \arrow[out=8,in=172]{r}{f} \arrow[out=-8,in=-172,swap]{r}{g} 
+%	 	& Y \arrow{r}{\pi} \arrow[swap]{rd}{t} & C \arrow[dashed]{d}{h}\\
+%	 & & T 
+%\end{tikzcd}
+%\]
+%commute.
+%\end{definition}
+%
+%The co-equalizer of $f$ and $g$, if it exists, is unique up to unique isomorphism.
+%
+%\begin{example}In $\Set$, the co-equalizer of $f,g\colon X\to Y$ is the quotient $C=Y/\!\sim$ of $Y$ by the equivalence relation generated by $f(x)\sim g(x)$ for all $x\in X$. 
+%\end{example}
+%
+%\begin{example}In ${}_R\Mod$ the co-equalizer of $f,g\colon M\to N$ is $\coker(f-g)$. In particular, taking $g=0$ we see that cokernels of $R$-linear maps are examples of co-equalizers.
+%\end{example}
+%
+\section{Limits and colimits}
+
+The above constructions are examples of two dual general classes of categorical constructions called limits and colimits.
+
+Let $\cI$ be a small category (see Definition \ref{def:small-category}), let $\cC$ be a category, and let $X\colon \cI \to \cC$ be a functor. We will often denote the image of an object $i \in \cI$ by $X_i$.
+
+It is useful to think of the functor $X\colon \cI\to \cC$ informally as a diagram in $\cC$, indexed by $\cI$. For example, if $\cI$ is the three-object category
+\[
+\begin{tikzcd}[row sep=small]
+1 \arrow{rd}{\varphi}  \\ & 2 \\ 3 \arrow[swap]{ru}{\psi}
+\end{tikzcd}
+\]
+then a functor $X\colon \cI\to \cC$ can be thought of as  a diagram
+\[
+\begin{tikzcd}[row sep=small]
+X_1 \arrow{rd}{\!X(\varphi)}  \\ & X_2 \\ X_3 \arrow[swap]{ru}{\!X(\psi)}
+\end{tikzcd}
+\]
+of objects and morphisms in $\cC$. See also Example \ref{exa:diagrams-as-functors}.
+
+\begin{definition}The \emph{limit} of a functor $X\colon \cI \to \cC$  consists of
+\begin{enumerate}
+\item an object $\lim_\cI X$ in $\cC$
+\item for every object $i$ in $\cI$ a morphism $\pi_i \colon \lim_\cI X \to X_i$
+\end{enumerate}
+such that
+\begin{enumerate}
+\item for every $\varphi\colon i \to j$ in $\cI$ we have $\pi_j = X(\varphi) \circ \pi_i$
+\item for every $T$ in $\cC$ and for every collection of morphisms $t_i\colon T\to X_i$ satisfying $t_j = X(\varphi) \circ t_i$ for all $\varphi\colon i\to j$, there is a unique $h\colon T\to \lim_\cI X$ with $t_i = \pi_i h$ for all $i$.
+\end{enumerate}
+\end{definition}
+
+Of course, the limit of $\cI \to \cC$, if it exists, is unique up to unique isomorphism. The limit is sometimes written $\lim_i X_i$ or $\lim_\cI X_i$, but one should be careful to remember that it depends on the full functor $X$, and not just on the objects $(X_i)_{i \in \ob \cI}$.
+
+
+\begin{examples}\label{exa:three-limits}
+If $\cI$ the discrete category on a set $I$ (see \ref{exa:discrete-cat}), then $\lim_\cI X$ is the product $\prod_{i\in I} X_i$ (if it exists). If $\cI$ is empty, then the limit of the unique functor $\emptyset\to \cC$ is the final object of $\cC$ (if it exists). Taking for $\cI$ the category
+\[
+\begin{tikzcd}[row sep=small]
+	1 \arrow{rd} & \\  & 2, \\ 3 \arrow{ru} & 
+\end{tikzcd}
+\]
+recovers the notion of  fibered product.  
+\end{examples}
+
+
+There is no surprise in the definition of colimit: 
+
+\begin{definition}The \emph{colimit} of a functor $X\colon \cI \to \cC$  consists of
+\begin{enumerate}
+\item an object $\colim_\cI X$ in $\cC$,
+\item for every object $i$ in $\cI$ a morphism $\iota_i \colon X_i \to \colim_\cI X$
+\end{enumerate}
+such that
+\begin{enumerate}
+\item for every $\varphi\colon i \to j$ in $\cI$ we have $\iota_j \circ X(\varphi) = \iota_i$,
+\item for every $T$ in $\cC$ and for every collection of morphisms $t_i\colon X_i\to T$ satisfying $t_j \circ X(\varphi) = t_i$ for all $\varphi\colon i\to j$, there is a unique $h\colon \colim_\cI X\to T$ with $t_i = h \iota_i$ for all $i$.
+\end{enumerate}
+\end{definition}
+
+If it exists, it is unique up to unique isomorphism.
+
+\begin{examples}
+If $\cI$ the discrete category on a set $I$, then $\colim_\cI X$ is the coproduct $\coprod_{i\in I} X_i$ (if it exists). If $\cI$ is empty, then the colimit of the unique functor $\emptyset\to \cC$ is the cofinal object of $\cC$ (if it exists). Taking for $\cI$ the category
+\[
+\begin{tikzcd}[row sep=small]
+	& 1  \\  2 \arrow{ru} \arrow{rd}  & \\ & 3  
+\end{tikzcd}
+\]
+recovers the notion of pushout. 
+\end{examples}
+
+We end with an example of an infinite diagram in $\Set$ and its limit and colimit.
+
+\begin{example}\label{exa:descending-chain-of-inclusions}
+Let $\cI$ be the category with $\ob \cI = \bN$ and such that for all $i<j$ we have $\Hom(i,j) = \emptyset$, and for all $i\geq j$ we have $\Hom(i,j)=\{\star\}$. In a picture:
+\[
+	0 \longfrom 1 \longfrom 2 \longfrom 3 \longfrom \cdots.
+\]
+Let $S_0 \supset S_1 \supset S_2 \supset \cdots $ be a decreasing chain of sets. Then this defines a functor
+\[
+	S \colon \cI \to \Set,\, i \mapsto S_i
+\]
+which for $i\geq j$ maps the unique map $i\to j$ to the inclusion $S_i \injto S_j$.
+
+To give a collection of maps $t_i\colon T\to S_i$ such that for all $i\geq j$ the diagram
+\[
+\begin{tikzcd}
+	T \arrow{d}{t_j} \arrow{dr}{t_i} \\
+	S_j  & S_i \arrow{l}
+\end{tikzcd}
+\]
+commutes, is the same as to give a map $t\colon T \to \bigcap_i S_i$. From this it follows easily that $\lim_i S_i = \bigcap_i S_i$.
+
+For the colimit, note that a collection of maps $t_i\colon S_i \to T$ such that for all $i\geq j$ the diagram
+\[
+\begin{tikzcd}
+	S_j  \arrow[swap]{dr}{t_j}  & S_i \arrow{d}{t_i} \arrow{l} \\
+	& T
+\end{tikzcd}
+\]
+commutes is completely determined by $t_0\colon S_0\to T$ (since $t_i$ must be the restriction of $t_0$ to the subset $S_i\subset S_0$), and one easily verifies that $\colim_i S_i = S_0$.
+\end{example}
+
+\section{Yoneda and limits and colimits of sets}
+
+The category $\Set$ has all limits and colimits.
+
+\begin{proposition}\label{prop:limit-in-Set}
+Let $\cI$ be a small category and let $X\colon \cI \to \Set,\, i \mapsto X_i$ be a functor. Then
+$\lim_\cI X_i$ exists, and is given by
+\[
+	\big\{ (x_i)_i \in \! \prod_{i\in \ob\cI} \! X_i \mid
+	\text{$X(\varphi)(x_i) = x_j$ for all $\varphi\colon i \to j$} \big\}
+\]
+together with the projection maps to the sets $X_i$.
+\end{proposition}
+
+\begin{proof}The proof is a straightforward verification that the set $L:=\{ (x_i)_i \in \! \prod_{i} \! X_i \mid \cdots \}$  described in the proposition, with the projection maps
+\[
+	\pi_n\colon L\to X_n,\, (x_i)_i \mapsto x_n
+\]
+satisfies the definition of a limit. The first property holds by construction: for every $x \in L$ and $\varphi\colon i \to j$ in $\cI$ we have
+\[
+	\pi_j (x) = x_j = X_\varphi (x_i) = ( X_\varphi \circ \pi_i )(x),
+\]
+hence $\pi_j = X_\varphi \circ \pi_i$. For the second property, assume that $(T,(t_i\colon T\to X_i)_i)$ satisfies 
+$t_j = X_\varphi \circ t_i$ for every $\varphi\colon i\to j$. Then the map 
+\[
+	h \colon T \to L,\, x \mapsto  (t_i(x))_i 
+\]
+is well-defined (that is, $h(x)$ lands in $L \subset \prod_i X_i$), and clearly is the unique map such that $t_i = \pi_i h$ for every $i$.
+\end{proof}
+
+
+
+\begin{proposition}\label{prop:colimit-in-Set}
+Let $\cI$ be a small category and let $X\colon \cI \to \Set,\, i \mapsto X_i$ be a functor. Consider on the disjoint union 
+$\coprod_{i\in \ob\cI}  X_i$
+the equivalence relation $\sim$ generated by $x_i \sim X(\varphi)(x_i)$ for all $\varphi\colon i \to j$ and all $x_i \in X_i$. Then 
+$\colim_{\cI} X_i$ exists and is given by
+\[
+	\colim_{\cI} X = \Big( \!\coprod_{i\in \ob\cI}\!\!  X_i\, \Big) \big/ \! \sim
+\]
+together with the compositions
+\[
+	\iota_i \colon X_I \longinjto \!\coprod_{i\in \ob\cI} \!\! X_i \longsurjto \colim_{\cI} X.
+\]
+\end{proposition}
+
+\begin{proof}
+This is shown by a direct verification, somewhat similar to the proof of Proposition \ref{prop:limit-in-Set}. See also Exercise \ref{exc:colimit-in-Set}.
+\end{proof}
+
+
+
+Using the explicit descriptions of limits  of sets, we can now rephrase the universal property for limits and colimits in an arbitrary category:
+
+\begin{theorem}\label{thm:limit-yoneda}
+Let $\cI$ be a small category and let $X\colon \cI \to \cC$ be a functor. Let $L$ be an object of $\cC$. Then $\lim_\cI X$ exists and is isomorphic to $L$ if and only if there is an isomorphism
+\[
+	\Hom_\cC(-, L) \isomto \textstyle\lim_\cI \Hom_\cC(-,X_i),
+\]
+of functors $\cC^\opp \to \Set$. \end{theorem}
+
+Note that by Yoneda (Theorem \ref{thm:yoneda})  the above theorem completely characterizes $\lim_\cI X$. 
+
+\begin{proof}[Proof of Theorem \ref{thm:limit-yoneda}]
+Let $T$ be an object in $\cC$. By the explicit description of limit of sets in Proposition \ref{prop:limit-in-Set}
+we have
+\[
+	\lim_{i\in \cI} \Hom_\cC(T,X_i) = \big\{ (t_i\colon T\to X_i)_i \mid \forall \varphi \colon i \to j,\,X(\varphi) \circ t_i = t_j \big\}.
+\]
+By the universal property of the limit in $\cC$ the map 
+\[
+	\Hom_\cC(T, \textstyle\lim_i X_i) \longisomto
+	\big\{ (t_i\colon T\to X_i)_i \mid \forall \varphi \colon i \to j,\,X(\varphi) \circ t_i = t_j \big\}
+\]
+given by $h \mapsto ( \pi_i \circ h)_{i \in \cI}$ is a bijection. The bijection is functorial in $T$, and hence defines an isomorphism of functors.
+Conversely, if there is a functorial bijection
+\[
+	\Hom_\cC(T,L) \longisomto
+	\big\{ (t_i\colon T\to X_i)_i \mid \forall \varphi \colon i \to j,\, X(\varphi) \circ t_i = t_j \big\},
+\]
+then $L$ satisfies the universal property of the limit.
+\end{proof}
+
+\begin{theorem}\label{thm:colimit-yoneda}
+Let $\cI$ be a small category and let $X\colon \cI \to \cC$ be a functor. Let $C$ be an object of $\cC$. 
+Then $\colim_\cI X$ exists and is isomorphic to $C$ if and only if there is an isomorphism
+\[
+	\Hom_\cC(C, -) = \textstyle\lim_{\cI^\opp} \Hom_\cC(X_i, -)
+\]
+of functors $\cC\to \Set$. \qed
+\end{theorem}
+Note that by co-Yoneda (Theorem \ref{thm:co-yoneda})  the above theorem completely characterizes $\colim_\cI X$. 
+
+
+\section{Adjoint functors and limits}
+
+
+
+\begin{theorem}[Left adjoints commute with colimits]\label{thm:left-adjoints-commute-with-colimits}
+Let $F\colon \cC\to \cD$ be a left adjoint to $G\colon \cD\to \cC$. Let $X\colon \cI \to \cC$ be a functor, and suppose that $\colim_\cI X$ exists in $\cC$. Then $\colim_\cI (FX)$ exists and
+\[
+	\colim_\cI (FX) \cong F(\colim_\cI X)
+\]
+in $\cD$.
+\end{theorem}
+
+Informally, we say that `$F$ commutes with colimits'.
+
+\begin{proof}[Proof of Theorem \ref{thm:left-adjoints-commute-with-colimits}]
+Using Theorem \ref{thm:colimit-yoneda} and the definition of adjoint functors we find for every $T$ in $\cD$ a chain of isomorphisms
+\begin{align*}
+	\Hom_\cD(F(\colim_\cI X_i), T)
+		&\cong \Hom_\cC( \colim_\cI X_i , GT ) \\
+		&\cong \textstyle\lim_{\cI^\opp} \Hom_\cC( X_i, GT) \\
+		&\cong \textstyle\lim_{\cI^\opp} \Hom_\cD( FX_i, T),
+\end{align*}
+functorial in $T$,  and hence an isomorphism of functors
+\[
+	\Hom_\cD(F(\colim_\cI X_i), - ) \cong 
+	 \textstyle\lim_{\cI^\opp} \Hom_\cD( FX_i, -)
+\]
+which by Theorem \ref{thm:colimit-yoneda} shows that $F(\colim_\cI X_i)$ is the colimit of the
+diagram $\cI \to \cD,\, i \mapsto FX_i$.
+\end{proof}
+
+The co-theorem states that right adjoints commute with limits:
+
+\begin{theorem}[Right adjoints commute with limits]\label{thm:right-adjoints-commute-with-limits}
+Let $F\colon \cC\to \cD$ be a left adjoint to $G\colon \cD\to \cC$. Let $X\colon \cI \to \cD$ be a functor, and suppose that $\lim_\cI X$ exists in $\cD$. Then $\lim_\cI (GX)$ exists and
+\[
+	\textstyle\lim_\cI (GX) \cong G(\textstyle\lim_\cI X)
+\]
+in $\cC$.\qed
+\end{theorem}
+
+
+
+
+\begin{example}
+Let $R$ be a ring and let $A$ be an $(S,R)$-bimodule.
+By Theorem \ref{thm:tensor-hom-adjunction} the functor
+\[
+	{}_R\Mod \to {}_S\Mod,\, M \mapsto A \otimes_R M
+\]
+is left adjoint (to the functor $\Hom_S(A,-)$), and hence by Theorem \ref{thm:left-adjoints-commute-with-colimits} it commutes with 
+colimits. In particular, it commutes with coproducts:
+\[
+	A\otimes_R (\oplus_{i\in I} M_i) = \oplus_{i\in I} ( A\otimes_R M_i )
+\]
+and with cokernels:
+\[
+	\coker( \id\otimes f\colon A\otimes_R M \to A\otimes_R N ) =
+	A\otimes_R \coker(f\colon M \to N).
+\]
+(Note that the latter gives a one-line proof of Proposition \ref{prop:tensor-right-exact}!). 
+
+There is a priori no reason for the functor to commute with limits, and indeed in general $A\otimes_R -$ does not respect kernels (see Exercise \ref{exc:tensor-not-exact}) or (infinite) products (see Exercise \ref{exc:tensor-does-not-preserve-products}).
+\end{example}
+
+\begin{example}The forgetful functor ${}_R\Mod \to \Set$ is right adjoint to the free module functor 
+(see Example \ref{exa:free-forgetful-adjunction}) and hence by Theorem \ref{thm:right-adjoints-commute-with-limits} it commutes with limits. For example, this implies that the underlying set of a product of modules is the product of the underlying sets of the modules. 
+
+On the other side of the adjunction, we see that the free module functor $I \mapsto R^{(I)}$ must commute with colimits. For example, this contains the (trivial) statement that a basis for the direct sum of free modules is given by the disjoint union of their bases, that is
+\[
+	R^{(I)} \oplus R^{(J)} \cong R^{(I\amalg J)}
+\]
+as $R$-modules.
+\end{example}
+
+\begin{example}We have seen in Example \ref{exa:discrete-forgetful-trivial} that the forgetful functor $\Top\to \Set$ is both right adjoint (to the discrete topology functor) and left adjoint (to the trivial topology functor). It therefore commutes with both limits and colimits, and hence any limit or colimit of topological spaces can be constructed by putting a suitable topology on the limit or colimit of the underlying sets.
+\end{example}
+
+
+
+
+\newpage
+\section*{Exercises}
+
+
+\begin{exercise}
+Let $X$ and $Y$ be topological spaces. Show that the cartesian product $X\times Y$ with the product topology is the product of $X$ and $Y$ in the category $\Top$.
+\end{exercise}
+
+\begin{exercise}\label{exc:fibered-coproduct-in-Ab}
+Let $f_0\colon M\to N_0$ and $f_1\colon M\to N_1$ be morphisms in ${}_R\Mod$. Show that their fibered coproduct exists. (Hint: construct the fibered coproduct as a quotient module of $N_0\oplus N_1$).
+\end{exercise}
+
+
+\begin{exercise}Does the category of pointed topological spaces $\Top_\ast$ have products and/or coproducts? And if so, what are they? Does the forgetful functor $\Top_\ast \to \Top$ commute with products and/or coproducts? 
+\end{exercise}
+
+\begin{exercise}\label{exc:product-as-final-object}
+Let $\cC$ be a category and let $X$ and $Y$ be objects in $\cC$. Find a category $\cP$ in which the products of $X$ and $Y$ are precisely the final objects. Conclude that Proposition \ref{prop:product-uniquely-unique} can be deduced directly from Proposition  \ref{prop:final-object-uniquely-unique}.
+\end{exercise}
+
+
+\begin{exercise}
+Show that the pushout of the inclusion map $\{0,1\} \to [0,1]$ and the map $\{0,1\} \to \{\star\}$ in $\Top$ is the circle.
+\end{exercise}
+
+\begin{exercise}
+Let $\cC$ be a category. Consider the diagonal functor 
+\[
+	\Delta\colon \cC \to \cC \times \cC
+\]
+defined by $X\mapsto (X,X)$ and $f\mapsto (f,f)$. When does $\Delta$ have a left adjoint? And a right adjoint?
+\end{exercise}
+
+
+\begin{exercise}[Coproduct of commutative rings]
+Let $R$ and $S$ be commutative rings.
+\begin{enumerate}
+\item Show that there is a unique ring structure on the $\bZ$-module $R\otimes_\bZ S$ such that
+\[
+	(r_1 \otimes s_1)(r_2\otimes s_2) = r_1 r_2 \otimes s_1s_2.
+\]
+\item Show that $R\to R\otimes_\bZ S,\, r \mapsto r \otimes 1$ and
+$S\to R\otimes_\bZ S,\, s \mapsto 1 \otimes s$ are ring homomorphisms.
+\item Show that $R\otimes_\bZ S$ is the coproduct of $R$ and $S$ in $\CRing$. 
+\end{enumerate}
+\end{exercise}
+
+
+\begin{exercise}\label{exc:module-pushout}
+Let $R$ be a ring and let
+\[
+\begin{tikzcd}
+	M \arrow{r}{f} \arrow{d}{g} & P \arrow{d}{\varphi} \\
+	Q \arrow{r}{\psi} & N 
+\end{tikzcd}
+\]
+be a commutative square of $R$-modules. 
+\begin{enumerate}
+\item Show that $M$ (with the maps $f$ and $g$) is the pullback of $P\to N$ and $Q\to N$ if and only if the sequence
+\[
+	0 \longto M \overset{(f,g)}{\longto} P \oplus Q \overset{\varphi-\psi}{\longto} N
+	\phantom{\longto 0}
+\]
+is exact.
+\item Show that $N$ (with the maps $\varphi$ and $\psi$) is the pushout of $M\to P$ and $M\to Q$ if and only if the sequence
+\[
+	\phantom{0\longto} M \overset{(f,g)}{\longto} P \oplus Q \overset{\varphi-\psi}{\longto} N \longto 0
+\]
+is exact.
+\end{enumerate}
+
+\end{exercise}
+
+
+%\begin{exercise}
+%Let $\cC$ be a category which has both products and fibered products. Show that $\cC$ has equalizers. (Hint: given $f,g\colon X\to Y$ consider their fibered product $Z := X\times_Y X$. Show that there are maps $Z\to X\times X$ and $X\to X\times X$ whose fibered product is an equalizer of $f$ and $g$.)
+%\end{exercise}
+
+\begin{exercise}\label{exc:tensor-does-not-preserve-products}
+Show that the element
+\[
+	1 \otimes (1, 1, \ldots )	
+\]
+of the module  $\bQ\otimes_\bZ \left( \prod_{n>0} \bZ/n\bZ \right)$
+is non-zero. Conclude that the functor $\bQ\otimes_\bZ -$ from $\Ab$ to $\Ab$ does not commute with infinite products.
+\end{exercise}
+
+\begin{exercise}
+Let $X,Y\colon \cI \to \cC$ be functors, and let $\eta\colon X \to Y$ be a morphism of functors. Assume that $\lim_\cI X$ and $\lim_\cI Y$ exist. Show that $\alpha$ induces a morphism $\lim_\cI X \to \lim_\cI Y$ in $\cC$. Formulate and prove the analogous statement for colimits. 
+\end{exercise}
+
+\begin{exercise}
+Show that the $\lim$ and $\colim$ in Example \ref{exa:descending-chain-of-inclusions} coincide with those described by
+Propositions \ref{prop:limit-in-Set} and \ref{prop:colimit-in-Set}.
+\end{exercise}
+
+\begin{exercise}\label{exc:increasing-union}
+Let  $S_0 \subset S_1 \subset S_2 \cdots $
+be an infinite sequence of inclusions of sets. Show that the union $\cup_i S_i$ is the colimit
+of a suitably chosen diagram $\cI \to \Set$.
+\end{exercise}
+
+\begin{exercise}Let $K$ be a field. Let $\cI$ be the category with $\ob \cI = \bN$ and
+\[
+	\Hom_\cI(i,j) = \begin{cases} \{\star\} & j\leq i \\ \emptyset & j > i \end{cases}
+\]
+Consider the diagram
+\[
+	R\colon \cI \to \CRing,\, i \mapsto R_i := K[X]/(X^i),
+\]
+(where for $j\leq i$ the map $K[X]/(X^i) \to K[X]/(X^j)$ is the quotient map). Show that $\lim_\cI R_i$ exists in $\CRing$, and is isomorphic to the power series ring $K[[X]]$.
+\end{exercise}
+
+\begin{exercise}
+Let $G$ be a group and let $\rB G$ the category of Example \ref{exa:BG}. Let $F\colon \rB G \to \Set$ be a functor. 
+\begin{enumerate}
+\item Show that $F(\star)$ is a set $X$ equipped with an action of $G$.
+\item Show that $\lim F$ is the set of fixed points of the action.
+\item Show that $\colim F$ is the set of orbits of the action. 
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Let $X$ be a topological space, and let $(U_i)_{i\in I}$ be an open cover. Let $\cI$ be the category with $\ob \cI = I$ and
+\[
+	\Hom(i,j) = \begin{cases} \{\star\} & U_i \subset U_j \\ \emptyset & \text{otherwise} \end{cases}
+\]
+Assume that for all $i,j$ there is a $k\in I$ such that $U_i \cap U_j = U_k$. Show that $\colim_\cI U_i = X$ in $\Top$.
+\end{exercise}
+
+\begin{exercise}
+Let $\cZ$ and $\cR$ be the categories of Exercise \ref{exc:ordered-Z-and-R}. Let $\cI$ be the category with $\ob \cI = \bN$ and
+\[
+	\Hom_\cI(i,j) = \begin{cases} \{\star\} & i\leq j \\ \emptyset & i > j \end{cases}
+\]
+Verify that a functor $\cI \to \cR$ is the same as an increasing sequence of real numbers
+\[
+	x_0 \leq x_1 \leq x_2 \leq \cdots
+\]
+When does this functor have a limit? And a colimit? Verify directly if they are preserved by the left and right adjoints of the inclusion functor $\cZ \to \cR$.
+\end{exercise}
+
+\begin{exercise}\label{exc:colimit-in-Set}
+Prove Proposition \ref{prop:colimit-in-Set}.
+\end{exercise}
+
+\begin{exercise}Show that all limits and colimits exist in the category $\Top$. 
+(Hint: see Propositions \ref{prop:limit-in-Set} and \ref{prop:colimit-in-Set}).
+\end{exercise}
+
+\begin{exercise}[Arbitrary limits of modules]
+Let $R$ be a ring, $\cI$ a small category, and $M\colon \cI \to {}_R\Mod,\, i \mapsto M_i$ a functor. Show that there is an exact sequence
+\[
+	0 \longto \lim_\cI M \longto \prod_{i} M_i \longto \prod_{f\colon i\to j} M_j
+\]
+of $R$-modules (in particular the limit exists). Here the first product ranges over all objects $i$ in $\cI$, and the second ranges over all triples $(i,j,f)$ with $i$ and $j$ objects in $\cI$ and $f\colon i\to j$ a morphism in $\cI$. Verify by hand that your exact sequence is correct in the special cases where the limit is a product or a pullback.
+\end{exercise}
+
+\begin{exercise}[Arbitrary colimits of modules]
+Formulate and prove an analogous statement for colimits of modules.
+\end{exercise}
+
+\begin{exercise}
+Let $R$ and $S$ be rings, let $A$ be an $(R,S)$-module and let 
+\[
+	0 \longto M_1 \longto M_2 \longto M_3
+\]
+be an exact sequence of $R$-modules. Use Theorem \ref{thm:right-adjoints-commute-with-limits} to prove that
+the induced sequence
+\[
+	0 \longto \Hom_R(A,M_1) \longto \Hom_R(A,M_2) \longto \Hom_R(A,M_3)
+\]
+is exact in ${}_S\Mod$. (See Exercise \ref{exc:covariant-short-exact-hom} for a more direct approach). 
+\end{exercise}
+
+\begin{exercise}Consider the functor $F\colon \Grp \to \Ab,\, G\mapsto G^\ab$. (See Example \ref{exa:abelianization} and Exercise \ref{exc:abelianization-adjunction}).
+\begin{enumerate}
+\item Let $f\colon G_1\to H$ and $g\colon G_2\to H$ be group homomorphisms. Show that the pullback of $f$ and $g$ exists, and is isomorphic to
+$\{ (s,t)\in G\times G \mid f(s)=g(t) \}$.
+\item Let $f\colon \bZ/3\bZ \to S_3$ be an injective homomorphism and let $g\colon \{1\}\to S_3$ be the trivial homomorphism. Compute the pullback in $\Grp$ of $f$ and $g$, as well as the pullback in $\Ab$ of $F(f)$ and $F(g)$.
+\item Conclude that $F$ does not have a left adjoint.
+\item Show that $F$ does commute with finite products. 
+\end{enumerate}
+\end{exercise}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAIN COMPLEXES
+%%%%%%%%%%%%%%%%%%%%%%
+

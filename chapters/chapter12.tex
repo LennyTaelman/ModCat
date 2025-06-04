@@ -1,0 +1,495 @@
+
+\chapter{The $\Ext$ functors}
+
+\section{The functors $\Ext^n$}
+
+Let $R$ be a ring. If $M_\bullet$ is the complex of $R$-modules given by
+\[
+	\cdots \longto M_{i+1} \longto   M_i \longto M_{i-1} \longto \cdots
+\]
+and if $N$ is an $R$-module, then the induced sequence 
+\[
+	\cdots \longto \Hom_R(M_{i-1}, N) \longto
+	\Hom_R(M_i, N) \longto \Hom_R(M_{i+1}, N) \longto \cdots
+\]
+forms a complex of abelian groups, with the group $\Hom_R(M_{-i},N)$ in degree $i$. This determines a functor
+\[
+	{}_R\Ch^\opp \times {}_R\Mod \to {}_\bZ \Ch
+\]
+and  it induces a functor 
+\[
+	{}_R\Ho^\opp  \times {}_R\Mod \to {}_\bZ \Ho.
+\]
+on the homotopy categories,  by Exercise \ref{exc:contravariant-hom-on-chain-complexes}.
+
+
+\begin{definition}
+Let $n$ be an integer. We define the functor
+\[
+	\Ext^n_R(-,-) \colon {}_R\Mod^\opp \times {}_R\Mod \to \Ab,\,
+	(M,N) \mapsto \Ext^n_R(M,N)
+\]
+as the composition of the following functors:
+\begin{enumerate}
+\item the free resolution functor of Theorem \ref{thm:free-resolution-functor} (applied to the first coordinate)
+\[
+	F_\bullet(-) \times \id \colon {}_R\Mod^\opp \times {}_R\Mod \longto {}_R \Ho^\opp \times {}_R\Mod
+\]
+\item the functor induced by $\Hom_R$ as above
+\[
+	 {}_R \Ho^\opp \times {}_R\Mod \longto {}_\bZ \Ho
+\]
+\item the homology functor
+\[
+	\rH_{-n} \colon  {}_\bZ \Ho \to \Ab,
+\]
+which is well-defined by Proposition \ref{prop:homotopic-maps-agree-on-homology}.
+\end{enumerate}
+\end{definition}
+
+In other words, if
+\[
+	\cdots \longto F_1 \longto F_0 \longto M \longto 0
+\]
+is a free resolution of $M$, then the group $\Ext^n_R(M,N)$ is defined as
+the quotient group
+\[
+	\Ext^n_R(M,N) = 
+	\frac{ \ker \big( \Hom_R(F_n,N) \to \Hom_R(F_{n+1},N) \big)}
+	{\im \big( \Hom_R(F_{n-1},N) \to \Hom_R(F_{n},N) \big)},
+\]
+where the maps between the $\Hom$ groups are induced from the maps in the free resolution, and where we set $F_i=0$ for $i<0$, as before.
+
+
+\begin{remark}
+A priori the functor $\Ext^n_R(-,-)$ depends on the choices of free resolutions involved in $F_\bullet(-)$, but different choices give rise to isomorphic functors $\Ext^n_R(-,-)$.
+\end{remark}
+
+\begin{example}
+Let $m$ be a positive integer. We compute the groups $\Ext^n_{\bZ}(\bZ/m\bZ,\,\bZ)$ using the definition. As a first step we need to find a free resolution of $\bZ/m\bZ$. The obvious choice
+\[
+	0 \longto \bZ \overset{m}{\longto} \bZ \longto \bZ/m\bZ \longto 0
+\] 
+leads to the complex
+\[
+	F_\bullet = \big[ \cdots \longto 0 \longto \bZ \overset{m}{\longto} \bZ \longto 0 \longto 0 \longto \cdots \big]
+\]
+with $F_1=F_0=\bZ$. Note that $\Hom(\bZ,\bZ)= \bZ$, so that applying the contravariant additive functor $\Hom_\bZ(-,\,\bZ)$ to this complex gives a complex of the form
+\[
+	H_\bullet = \big[ \cdots \longto 0 \longto 0 \longto \bZ \longto \bZ \longto 0 \longto \cdots \big]
+\]
+with $H_0=H_{-1} = \bZ$. One checks that the map $\bZ\to\bZ$ is multiplication by $m$. We find $\rH_i(H_\bullet)=0$ for all $i\neq -1$, and $\rH_{-1}(H_\bullet) = \bZ/m\bZ$. From this we conclude
+\[
+	\Ext^n_{\bZ}(\bZ/m\bZ,\,\bZ) \cong \begin{cases} \bZ/m\bZ & n = 1 \\ 0 & n \neq 1 \end{cases}
+\]
+
+\end{example}
+
+
+By construction, the groups $\Ext^n(M,N)$ are zero for $n<0$. 
+
+\begin{proposition}
+The functors $\Ext^0_R(-,-)$ and $\Hom_R(-,-)$ are isomorphic.
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+	\cdots \longto F_1 \longto F_0 \longto M \longto 0
+\]
+be a free resolution of an $R$-module $M$. Then by Exercise \ref{exc:contravariant-short-exact-hom} we get
+an exact sequence
+\[
+	0 \longto \Hom(M,N) \longto \Hom(F_0,N) \longto \Hom(F_1,N). 
+\]
+Using the definition of $\Ext^0$ we find
+\[
+	\Ext^0(M,N) = \rH_0( \Hom(F_\bullet,N))  = 
+	\ker( \Hom(F_0,N) \longto \Hom(F_1,N) ),
+\]
+which gives an isomorphism $\Ext^0(M,N)=\Hom(M,N)$, functorial in $M$.
+\end{proof}
+
+
+We will see that the module $\Ext^1(M,N)$ is in bijection with isomorphism classes
+of short exact sequences
+\[
+	0 \longto N \longto E \longto M \longto 0
+\]
+of $R$-modules. There is also an interpretation to the modules $\Ext^n(M,N)$ with $n>1$ in terms of exact sequences
+\[
+	 0 \longto N \longto E_1 \longto \cdots \longto E_n \longto M \longto 0,
+\]
+but the statement is more delicate. 
+
+
+\section{The long exact sequence}
+
+%\begin{proposition}\label{prop:short-exact-sequence-resolutions}
+%Let $R$ be a ring and let
+%\[
+%	0 \longto M_1 \overset{\varphi}{\longto} M_2 \overset{\psi}{\longto} M_3 \longto 0
+%\]
+%be a short exact sequence of $R$-modules. Then there exist a commutative diagram
+%\[
+%\begin{tikzcd}
+%	& 0  \arrow{d}
+%	& 0 \arrow{d}
+%	& 0 \arrow{d}
+%	& 0 \arrow{d}
+%	&  \\
+%\cdots \arrow{r}
+%	& F_{1,2} \arrow{r} \arrow{d}  
+%	& F_{1,1} \arrow{r} \arrow{d}  
+%	& F_{1,0} \arrow{r}{\pi_1} \arrow{d}  
+%	& M_{1} \arrow{r} \arrow{d}{\varphi}
+%	& 0 \\
+%\cdots \arrow{r}
+%	& F_{2,2} \arrow{r} \arrow{d}  
+%	& F_{2,1} \arrow{r} \arrow{d}  
+%	& F_{2,0} \arrow{r}{\pi_2} \arrow{d}  
+%	& M_{2} \arrow{r} \arrow{d}{\psi}
+%	& 0 \\
+%\cdots \arrow{r}
+%	& F_{3,2} \arrow{r} \arrow{d}  
+%	& F_{3,1} \arrow{r} \arrow{d}  
+%	& F_{3,0} \arrow{r}{\pi_3} \arrow{d}  
+%	& M_{3} \arrow{r} \arrow{d}
+%	& 0 \\
+%	& 0 
+%	& 0 
+%	& 0 
+%	& 0  
+%	&  
+%\end{tikzcd}
+%\]
+%with exact rows and columns, and with the $F_{i,j}$ free $R$-modules.
+%\end{proposition}
+%
+%In other words: a short exact sequence of $R$-modules can be lifted to a short exact sequence of free resolutions.
+%
+%\begin{proof}[Proof of Proposition \ref{prop:short-exact-sequence-resolutions}]
+%The diagram is constructed from the right to the left, following a variation on the construction of free resolutions in the proof of Proposition \ref{prop:free-resolutions-exist}. 
+%
+%Let $I$ be a generating set of $M_1$, which we identify with a submodule of $M_2$. Let $J\subset M_2\setminus M_1$ such that $I\cup J$ generates $M_2$. Then the image of $J$ in $M_3$ generates $M_3$. Setting $F_{1,0} = R^{(I)}$, $F_{2,0} = R^{(I\cup J)}$, and
+%$F_{3,0} = R^{(J)}$ we obtain
+%commutative diagram
+%\[
+%\begin{tikzcd}
+%	& 0 \arrow{d}
+%	& 0 \arrow{d}
+%	&  \\
+%\cdots \arrow{r}
+%	& F_{1,0} \arrow{r}{\pi_1} \arrow{d}  
+%	& M_{1} \arrow{r} \arrow{d}{\varphi}
+%	& 0 \\
+%\cdots \arrow{r}
+%	& F_{2,0} \arrow{r}{\pi_2} \arrow{d}  
+%	& M_{2} \arrow{r} \arrow{d}{\psi}
+%	& 0 \\
+%\cdots \arrow{r}
+%	& F_{3,0} \arrow{r}{\pi_3} \arrow{d}  
+%	& M_{3} \arrow{r} \arrow{d}
+%	& 0 \\
+%	& 0 
+%	& 0  
+%	&  
+%\end{tikzcd}
+%\]
+%with exact rows and columns. By the snake lemma (Theorem \ref{thm:snake-lemma}), the induced sequence
+%\[
+%	0 \longto \ker \pi_1 \longto \ker \pi_2 \longto \ker \pi_3 \longto 0
+%\]
+%is exact, and using the above argument with the $M_i$ replaced by $\ker \pi_i$, we can extend the diagram to the left
+%with free modules $F_{1,1}$, $F_{2,1}$, and $F_{3,1}$.
+%Repeating the trick yields the desired diagram.
+%\end{proof}
+
+\begin{theorem}\label{thm:long-exact-sequence-of-Ext}
+Let $N$ be an $R$-module, and let
+\[
+	0 \longto M_1 \longto M_2 \longto M_3 \longto 0
+\]
+be a short exact sequence of $R$-modules. Then there is a natural exact sequence
+\[
+\mkern-72mu\begin{tikzcd}[row sep=small]
+	0 \arrow{r}
+		& \Hom(M_3,N) \arrow{r}
+		& \Hom(M_2,N) \arrow{r} 
+		& \Hom(M_1,N)  \arrow[out=-5, in=175]{dll} \\
+	& \Ext^1(M_3,N) \arrow{r}
+		& \Ext^1(M_2,N) \arrow{r} 
+		& \Ext^1(M_1,N)  \arrow[out=-5, in=175]{dll} \\
+	& \Ext^2(M_3,N) \arrow{r}
+		& \Ext^2(M_2,N) \arrow{r} 
+		& \quad\cdots\quad
+\end{tikzcd} 
+\]
+of abelian groups.
+\end{theorem}
+
+% TODO: more carefully phrase the supporting exercises in chapters 1/2 so they can be literally cited here
+
+\begin{proof}
+Choose free resolutions of the $M_i$ as in Exercise \ref{exc:short-exact-sequence-resolutions}, so that we have a short exact sequence of complexes
+\[
+	 0 \longto F_{1,\bullet} \longto F_{2,\bullet} \longto F_{3,\bullet} \longto 0.
+\]
+Denote by $H_{i,\bullet}$ the complex obtained by applying $\Hom(-,N)$ to $F_{i,\bullet}$, so we have
+\[
+	H_{i,j} = \Hom(F_{i,-j}, N).
+\]
+For every $i$ the exact sequence
+\[
+	0 \longto F_{1,i} \longto F_{2,i} \longto F_{3,i} \longto 0
+\]
+is split exact because $F_{3,i}$ is a free $R$-module (see Exercise \ref{exc:free-module-split-short-exact-sequence}), and hence also the induced sequence
+\[
+	0 \longto H_{3,-i} \longto H_{2,-i} \longto
+	H_{1,-i} \longto 0
+\]
+is exact (see Exercise \ref{exc:hom-of-split-exact-seq}). Applying Theorem \ref{thm:long-exact-sequence}
+to the short exact sequence of complexes of abelian groups
+\[
+	0 \longto H_{3,\bullet} \longto H_{2,\bullet} \longto H_{1,\bullet} \longto 0
+\]
+ we obtain a long exact sequence
+ \[
+\mkern-72mu\begin{tikzcd}
+		& \cdots \arrow{r}
+		& \rH_{i+1}(H_{2,\bullet}) \arrow{r} 
+		& \rH_{i+1}(H_{1,\bullet})  \arrow[out=-5, in=175]{dll} \\
+	&\rH_{i}(H_{3,\bullet})  \arrow{r}
+		& \rH_{i}(H_{2,\bullet}) \arrow{r} 
+		& \rH_{i}(H_{1,\bullet})  \arrow[out=-5, in=175]{dll} \\
+	& \rH_{i-1}(H_{3,\bullet}) \arrow{r}
+		& \rH_{i-1}(H_{2,\bullet}) \arrow{r} 
+		& \quad\cdots\quad
+\end{tikzcd} 
+\]
+which, taking into account the vanishing of $\Ext^{i}$ for $i<0$ and the fact that $\Ext^0=\Hom$, gives precisely the 
+exact sequence of the theorem. One verifies that this sequence does not depend on the choice of free resolutions.
+\end{proof}
+
+\section{$\Ext^1$ and  extensions}
+
+% TODO: get rid of the assumption that R is commutative
+% just get Z(R)-Mod-valued functors
+% maybe also: stress this when talking about Hom
+
+
+
+
+\begin{definition}
+Let $R$ be a ring and let $M$ and $N$ be $R$-modules. An \emph{extension of $M$ by $N$} is a short exact sequence
+\[
+	0 \longto N \longto E \longto M \longto 0
+\]
+of $R$-modules. Two such extensions are called \emph{equivalent} if there exists a commutative diagram
+\[
+\begin{tikzcd}
+0 \arrow{r} & N \arrow{r} \arrow{d}{\id} & E \arrow{r} \arrow{d} & M \arrow{r} \arrow{d}{\id} & 0 \\
+0  \arrow{r} & N \arrow {r} & E' \arrow{r} & M \arrow{r} & 0
+\end{tikzcd}
+\]
+of $R$-modules. We define the set $\ext_R(M,N)$ to be the set of equivalence classes of extensions of $M$ by $N$.
+\end{definition}
+
+Note that the morphism $E\to E'$ in the above diagram is automatically an isomorphism, see Exercise \ref{exc:morphism-of-extensions-is-isomorphism}. Warning: there can be non-equivalent extensions with $E\cong E'$, see Exercise \ref{exc:extensions-Z-mod-n}.
+
+
+We will now construct a map
+\[
+	\theta\colon \ext_R(M,N) \to \Ext^1_R(M,N)
+\]
+and show that it is a bijection. To define the map, consider an element $e\in \ext_R(M,N)$, represented by a 
+short exact sequence
+\[
+	0 \longto N \longto E \longto M \longto 0.
+\]
+By Theorem \ref{thm:long-exact-sequence-of-Ext} this induces a long exact sequence, of which a part reads
+\[
+	\cdots \longto \Hom_R(N,\, N) \longto \Ext^1_R(M,\,N) \longto \cdots
+\]
+We define $\theta(e) \in \Ext^1_R(M,\,N)$ to be the image of $\id_N$ under the above map. 
+
+\begin{theorem}\label{thm:main-thm-ext}
+The map
+\[
+	\theta\colon \ext_R(M,N) \to \Ext^1_R(M,N)
+\]
+is a bijection.
+\end{theorem}
+
+\begin{proof}
+We construct map 
+\[
+	\psi\colon \Ext^1_R(M,N) \to \ext_R(M,N)
+\]
+but omit the tedious verification that it is a two-sided inverse.
+
+Choose a free module $F$ and a surjection $F\to M$. Let $K$ be the kernel. Then we have a short exact sequence
+\[
+	0 \longto K \overset{\gamma}{\longto} F \longto M \longto 0.
+\]
+The induced long exact sequence of Theorem \ref{thm:long-exact-sequence-of-Ext} contains
+\[
+	\Hom_R(F,N) \longto \Hom_R(K,N) \overset{\delta}{\longto} \Ext^1_R(M,N) \longto \Ext^1_R(F,N).
+\]
+Since $F$ is a free module, it has a `trivial' one-term free resolution, and one sees that $\Ext^i_R(F,N)=0$ for all $i>0$. It follows that the map $\delta$ is surjective.
+
+Let $e \in \Ext^1_R(M,N)$. Choose an $R$-linear map $f\colon K \to N$ with $\delta(f)=e$.
+In the commutative diagram
+\[
+\begin{tikzcd}
+& 0 \arrow{r} \arrow{d} 
+	& K \arrow{r}{\id} \arrow{d}{(f,\gamma)} & K \arrow{r} \arrow{d}{\gamma} & 0 \\
+0 \arrow{r} & N \arrow{r}{\iota_1} & N \oplus F \arrow{r}{\pi_2} & F \arrow{r} & 0
+\end{tikzcd}
+\]
+both rows are exact, and all the vertical maps are injective (since $\gamma$ is injective). It follows that there is an induced short exact sequence of cokernels
+\[
+	 0 \longto N \longto E \longto M \longto 0
+\]
+with $E=\coker(K \to N\oplus F)$. We define $\psi(e)\in \ext_R(M,N)$ to be this extension. One verifies that this is well-defined: if also $f'\colon K\to N$ satisfies $\delta(f)=e$, leading to an extension $E'$, then $f'=f+h$ for some linear map $h\colon F\to N$, and one shows that the isomorphism
+\[
+	F\oplus N \to F\oplus N,\, (x,y) \mapsto (x,y+hx)
+\]
+induces an isomorphism $E\to E'$ of extensions.
+\end{proof}
+
+
+
+\newpage
+\section*{Exercises}
+
+\begin{exercise}
+Let $R$ be a ring, $F$ a free $R$-module, and $N$ an $R$-module. Show that $\Ext^i_R(F,N)=0$ for all $i\neq 0$.
+\end{exercise}
+
+\begin{exercise}
+Let $K$ be a field. Let $M$ and $N$ be $K$-modules. Show that $\Ext^i_K(M,N)=0$ for all $i\neq 0$.
+\end{exercise}
+
+
+
+\begin{exercise}
+Let $n$ and $m$ be positive integers. Compute for all $i$ the $\bZ$-modules
+\begin{enumerate}
+\item $\Ext^i_\bZ(\bZ,\bZ/m\bZ)$;
+\item $\Ext^i_\bZ(\bZ/n\bZ,\bZ)$;
+\item $\Ext^i_\bZ(\bZ/n\bZ,\bZ/m\bZ)$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Let $K$ be a field.
+Consider the ring $R=K[X^2,X^3] \subset K[X]$. Let $I=(X^2,X^3)$. Show that $\Ext^1_R(I,R/I)$ is non-zero, and conclude that $I$ is not a principal ideal. Show that also $\Ext^2_R(R/I,R/I)$ is non-zero.
+\end{exercise}
+
+\begin{exercise}
+Let $K$ be a field. Consider the ring $R=K[X,Y]$ and the $R$-module $M=K[X,Y]/(X,Y)$. Compute $\Ext^2_R(M,R)$. Conclude that $M$ does not have a free resolution of the form $0\to F_1 \to F_0 \to M \to 0$.
+\end{exercise}
+
+
+\begin{exercise}
+Let $R$ be a principal ideal domain. Show that for every $i\geq 2$, for every finitely generated $R$-module $M$,
+and for every $R$-module $N$ we have $\Ext^i_R(M,N)=0$.
+\end{exercise}
+
+
+\begin{exercise}Let $R$ be a ring, $N$ an $R$-module and $n\geq 1$. Assume that $\Ext^n_R(M,N)=0$ for all $R$-modules $M$. Show that also $\Ext^{n+1}_R(M,N)=0$ for all $R$-modules $M$. (Hint: consider a short exact sequence of the form $0 \to K \to F \to M \to 0$ with $F$ a free module). 
+\end{exercise}
+
+
+\begin{exercise}
+Let 
+\[
+	0 \longto N \longto E \longto M \longto 0
+\]
+be a short exact sequence of $R$-modules. Let $\varphi\colon N\to N'$ be a morphism of $R$-modules, and let $E'$ 
+be the pushout of $N\to E$ and $\varphi\colon N\to N'$. Show that there is a short exact sequence
+\[
+	0 \longto N' \longto E' \longto M \longto 0
+\]
+of $R$-modules. (Hint, see Exercise \ref{exc:module-pushout}).
+\end{exercise}
+
+
+\begin{exercise}
+Let 
+\[
+	0 \longto N \longto E \longto M \longto 0
+\]
+be a short exact sequence of $R$-modules. Let $\varphi\colon M'\to M$ be a morphism of $R$-modules, and let $E'$ 
+be the pullback of $E\to M$ and $\varphi\colon M'\to M$. Show that there is a short exact sequence
+\[
+	0 \longto N \longto E' \longto M' \longto 0
+\]
+of $R$-modules. (Hint, see Exercise \ref{exc:module-pushout}).
+\end{exercise}
+
+
+\begin{exercise}
+Let $R$ be a ring. Show directly (without using the relation with $\Ext^1$) that
+\[
+	{}_R\Mod^\opp \times {}_R\Mod \to \Set,\,
+	(M,N) \mapsto \ext_R(M,N)
+\]
+is a functor. (In particular: explain what the functor does on the level of morphisms).
+\end{exercise}
+
+\begin{exercise}\label{exc:extensions-Z-mod-n}
+Describe explicitly the $n$ elements of the set $\ext_\bZ(\bZ/n\bZ,\bZ)$ for:
+\begin{enumerate}
+\item $n$ a prime number;
+\item $n=pq$ with $p$ and $q$ distinct primes;
+\item $n=4$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}For $i=1,2$ let
+\[
+	 0 \longto N \overset{\alpha_i}\longto E_i \overset{\beta_i}\longto M \longto 0
+\]
+be a short exact sequence of $R$-modules. Define an $R$-module $E$ as the quotient
+\[
+	E := \frac{\ker \big( \beta_1 - \beta_2 \colon E_1 \oplus E_2 \to M \big)}
+	{\im \big( (\alpha_1,\alpha_2) \colon N \to E_1 \oplus E_2 \big)}.
+\]
+Show that there is a natural short exact sequence
+\[
+	0 \longto N \longto E \longto M \longto 0
+\] 
+of $R$-modules.
+\end{exercise}
+
+\begin{exercise}
+Let $K$ be a field and let $\lambda_1,\lambda_2\in K$. Let $M_i:= K[X]/(X-\lambda_i)$. 
+Show that $\Ext^1_{K[X]}(M_2,M_1) =0$ if $\lambda_1\neq \lambda_2$. Compute 
+$\Ext^1_{K[X]}(M_2,M_1)$ when $\lambda_2=\lambda_1$.
+\end{exercise}
+
+\begin{exercise}
+Let $K$ be a field, $\lambda_1,\lambda_2,\mu \in K$. Consider the matrix
+\[
+	A := \begin{pmatrix} \lambda_1 & \mu \\ 0 & \lambda_2 \end{pmatrix}
+\]
+and let $E$ be the $K[X]$-module given by $E=K^2$ on which $X$ acts by $A$. Show that
+$E$ sits in a short exact sequence of $K[X]$-modules
+\[
+	0 \longto M_1 \longto E \longto M_2 \longto 0
+\]
+where $M_i=K$ with $X$ acting as $\lambda_i$. Show that this sequence splits if and only if
+ $\lambda_2\neq \lambda_1$ or $\mu=0$. Relate this to the previous exercise.
+\end{exercise}
+
+
+\begin{exercise}
+Let $n$ be a positive integer, and consider the ring $R := \bZ[X]/(X^n-1)$. Let $M$ be the quotient module $R/(X-1)$. Compute the $R$-modules $\Ext^i_R(M,M)$ and $\Ext^i_R(M,R)$. (Hint: use the free resolution from Exercise \ref{exc:free-resolution-finite-cyclic-group}).
+\end{exercise}
+
+
+%%%%%%%%%%%
+% BIBLIOGRAPHY %
+%%%%%%%%%%%

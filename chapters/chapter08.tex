@@ -1,0 +1,445 @@
+
+\chapter{Adjoint functors}\label{chapter:adjoint-functors}
+
+\section{Adjoint pairs of functors}
+
+\begin{definition}
+Let $F\colon \cC \to \cD$ and $G\colon \cD \to \cC$ be functors between locally small categories. An \emph{adjunction} between $F$ and $G$ is an isomorphism 
+\[
+	\alpha\colon \Hom_\cD( F(-), - ) \longisomto \Hom_\cC( -, G(-) )
+\]
+of functors $\cC^\opp \times \cD \to \Set$ (see Example \ref{exa:hom-in-two-arguments}). If such an adjunction exists, we say  $F$ is \emph{left adjoint} to $G$, and  $G$ is \emph{right adjoint} to $F$. 
+\end{definition}
+
+
+In other words, an adjunction from $F$ to $G$ consists of the data of a bijection
+\begin{equation}\label{eqn:adjunction}
+	\alpha_{X,Y}\colon \Hom_\cD( FX, Y ) \longisomto \Hom_\cC( X, GY ),
+\end{equation}
+for every $X$ in $\cC$ and $Y$ in $\cD$, such that for every $f\colon X_1\to X_2$ the square
+\[
+\begin{tikzcd}
+\Hom_\cD( FX_1, Y ) \arrow{r}{\alpha_{X_1,Y}} & \Hom_\cC( X_1, GY ) \\
+\Hom_\cD( FX_2, Y ) \arrow{r}{\alpha_{X_2,Y}} \arrow{u}{-\circ Ff}
+	 & \Hom_\cC( X_2, GY ) \arrow{u}{-\circ f}
+\end{tikzcd}
+\]
+commutes, and for every $g\colon Y_1\to Y_2$ the square
+\[
+\begin{tikzcd}
+\Hom_\cD( FX, Y_1 ) \arrow{r}{\alpha_{X,Y_1}}  \arrow{d}{g\circ-}
+	& \Hom_\cC( X, GY_1 ) \arrow{d}{Gg\circ -} \\
+\Hom_\cD( FX, Y_2 ) \arrow{r}{\alpha_{X,Y_2}}
+	 & \Hom_\cC( X, GY_2 )
+\end{tikzcd}
+\]
+commutes. 
+
+\begin{remark}
+The terminology comes from an analogy with linear algebra: if $V$ and $W$ are vector spaces equipped with inner products, then linear maps $f\colon V\to W$ and $g\colon W\to V$ are called adjoint if we have
+\[
+	\langle f(v), w \rangle_W = \langle v, g(w) \rangle_V
+\]
+for all $v\in V$ and $w\in W$.
+\end{remark}
+
+
+Assume that $F\colon \cC \to \cD$ is a left adjoint of $G\colon \cD \to \cC$, with an adjunction $\alpha$. 
+Taking $Y=FX$ in (\ref{eqn:adjunction}), we obtain a bijection 
+\[
+	\alpha_{X,FX}\colon \Hom_\cD(FX,FX) \longisomto \Hom_\cC(X,GFX).
+\]
+The image of $\id_{FX}$ under this map gives a map
+\[
+	\eta_X \colon X \to GFX
+\]
+in $\cC$. Using the fact that $\alpha$ is a morphism of functors, one shows that the $\eta_X$ form a morphism of functors
+\[
+	\eta\colon \id_\cC \to GF.
+\]
+Similarly, taking $X=GY$ in (\ref{eqn:adjunction}) we obtain a morphism of functors
+\[
+	\epsilon\colon FG \to \id_\cD.
+\]
+The morphisms of functors $\eta$ and $\epsilon$ are called the \emph{unit} and \emph{co-unit} of the adjunction between $F$ and $G$.
+
+
+\section{Many examples}
+
+
+The main reason that adjunctions between functors are interesting, is that they are ubiquitous: they arise surprisingly often in multiple branches of mathematics. Here is a short list of examples.
+
+\begin{example}[Cartesian product and set of maps]
+Fix a set $A$. Then for all sets $X$ and $Y$ we we have a canonical bijection
+\[
+	\alpha_{X,Y}\colon \Hom(X\times A, Y ) \isomto \Hom(X, \Hom(A,Y))
+\]
+given  by mapping a function $f\colon X\times A \to Y$ to the function
+\[
+	X \to \Hom(A,Y),\, x \mapsto \left( a \mapsto f(x,a) \right).
+\]
+An inverse is given by mapping a function $g\colon X\to \Hom(A,Y)$ to
+\[
+	X\times A\to Y,\, (x,a) \mapsto g(x)(a).
+\]
+It is easy to check that $\alpha$ defines an adjunction, making the functor
+\[
+	\Set \to \Set,\,X \mapsto X \times A
+\]
+into a left adjoint to the functor
+\[
+	\Set \to \Set,\, Y \mapsto \Hom(A,Y).
+\]
+The unit $\eta\colon \id \to \Hom(A,-\times A)$ of this adjunction is given by
+\[
+	\eta_X \colon X \to \Hom(A,X\times A),\, x \mapsto \left( a \mapsto (x,a) \right)
+\]
+and the co-unit $\epsilon\colon \Hom(A,-)\times A\to \id$ is given by
+\[
+	\epsilon_X \colon \Hom(A,X)\times A \to X,\, (f,a) \mapsto f(a).
+\]
+\end{example}
+
+\begin{example}[Tensor product and Hom]
+This is a variation on the previous example. Let $R$ and $S$ be rings, and let  $A$ be an $(R,S)$-bimodule. Then the functor
+\[
+	\Mod_{R} \to \Mod_S,\, M \mapsto  M \otimes_R A
+\]
+is left adjoint to the functor
+\[
+	\Mod_S \to \Mod_R,\, N \mapsto \Hom_S(A,N),
+\]
+which comes down to the functorial isomorphism
+\[
+	\alpha_{M,N}\colon \Hom_S( M \otimes_R A,\, N ) \longisomto \Hom_R( M,\, \Hom_S(A,N) )
+\]
+of Theorem \ref{thm:tensor-hom-adjunction}.
+\end{example}
+
+
+\begin{example}[Free module and forgetful functor]\label{exa:free-forgetful-adjunction}
+Let $R$ be a ring. Let $M$ be an $R$-module and let $R^{(I)}$ be the free $R$-module on  a set $I$ (see Example \ref{exa:free-module-functor}). Then we have a canonical map
+\[
+	\alpha_{I,M} \colon \Hom_{{}_R\Mod}( R^{(I)},  M ) \longto \Hom_{\Set}(  I,  M  ),
+\]
+given by restricting a module homomorphism $\varphi \colon R^{(I)}\to M$ to the standard basis  $\{e_i\colon i\in I\}$. This map is a bijection, since a module homomorphism $R^{(I)} \to M$ is uniquely determined by the images of the basis vectors $e_i$, and conversely, given a map of sets $f\colon I \to M$ we obtain an $R$-module homomorphism
+\[
+	R^{(I)} \to M,\, \sum_{i\in I} r_i e_i \mapsto \sum_{i \in I} r_i f(i).
+\]
+This is just a reformulation of the familiar fact from linear algebra: to give a linear map from $V$ to $W$ is the same as to give the images of the vectors in a basis of $V$.
+
+If we denote by
+\[
+	G\colon {}_R\Mod \to \Set,\, M \mapsto M
+\]
+the forgetful functor (see Example \ref{exa:forgetful}) and by
+\[
+	F\colon \Set \to {}_R\Mod,\,I \mapsto R^{(I)}
+\] 
+the free module functor, then $\alpha$ defines a bijection
+\[
+	\alpha_{I,M}\colon \Hom_{{}_R\Mod}( FI, M ) \longisomto \Hom_{\Set}( I,  GM ),
+\]
+and one can verify directly that this defines an adjunction, making the free module functor $F$ into a left adjoint to the forgetful functor $G$. The unit of this adjunction is the morphism $\eta\colon \id \to GF$ given by the function
+\[
+	\eta_I \colon I \to R^{(I)},\, i \mapsto e_i,
+\]
+for every set $I$.
+\end{example}
+
+\begin{example}[Discrete topology, forgetful functor, trivial topology]\label{exa:discrete-forgetful-trivial}
+Any function \emph{from} a discrete topological space is automatically continuous. Likewise, any function \emph{to} a trivial topological space is automatically continuous. That is, we have 
+\[
+	\Hom_\Top(X_{\mathrm{disc}}, Y ) = \Hom_\Set( X, Y )
+\]
+and
+\[
+	\Hom_\Set( X, Y ) = \Hom_\Top( X, Y_{\mathrm{triv}}),
+\]
+and we see that the discrete topology functor
+\[
+	\Set \to \Top,\, X\mapsto X_{\mathrm{disc}}
+\]
+is left adjoint to the forgetful functor $\Top \to \Set$, and that the trivial topology functor
+\[
+	\Set \to \Top,\, Y \mapsto Y_{\mathrm{triv}}
+\]
+is right adjoint to the forgetful functor.
+\end{example}
+
+
+\begin{example}[Frobenius reciprocity]
+Let $k$ be a field,  let $G$ be a group and let $H\subset G$ be a subgroup. Then Frobenius reciprocity gives for every $k$-linear representation $V$ of $H$ and $W$ of $G$ a canonical isomorphism
+\[
+	\Hom_{{k[G]}}( \Ind^G_H V,\, W ) \isomto \Hom_{{k[H]}}( V,\, \Res^G_H W ),
+\]
+which makes the functor $\Ind^G_H$ into a left adjoint to $\Res^G_H$.
+\end{example}
+
+
+\section{Yoneda and uniqueness of adjoints}
+Let $\cC$ be a locally small category.
+If $X$ is an object in $\cC$, then we have a functor 
+\[
+	h_X := \Hom_\cC(-,X)\colon \cC^\opp \to \Set,
+\]
+see also \ref{exa:contravariant-hom-functor}.
+Now the  functors from $\cC^\opp$ to $\Set$ form themselves the objects of a category $\Fun(\cC^\opp,\Set)$, in which the morphisms are the morphisms of functors. We obtain a functor
+\[
+	h\colon \cC \to \Fun(\cC^\opp,\Set),\, X \mapsto h_X
+\]
+On the level of morphisms it is given by sending a map $f\colon X \to Y$ to the natural transformation $h_f\colon h_X \to h_Y$ given by
+\[
+	h_{f,T}\colon \Hom_\cC(T,X) \to \Hom_\cC(T,Y),\, g \mapsto fg
+\]
+for every $T$ in $\cC$.
+
+\begin{theorem}[Yoneda's Lemma]\label{thm:yoneda}
+The functor
+\[
+	\cC \to \Fun(\cC^\opp,\Set),\, X \mapsto h_X
+\]
+is fully faithful. 
+\end{theorem}
+
+\begin{proof}
+In other words, we need to show that for all pairs of objects $X$, $Y$ in $\cC$ the map
+\begin{equation}\label{eqn:yoneda-fully-faithfull}
+	\Hom_\cC(X,Y) \to \Hom_{\Fun(\cC^\opp,\Set)}(h_X,h_Y), f \mapsto h_f
+\end{equation}
+is a bijection. 
+
+We show this by constructing an inverse bijection. Let $\varphi\colon h_X\to h_Y$ be a morphism of functors. Then for every $T$ we have a map $\varphi_T\colon h_X(T) \to h_Y(T)$, and in particular, taking $T=X$, we have a map
+\[
+	\varphi_X \colon \Hom_\cC(X,X) \to \Hom_\cC(X,Y)
+\]
+and the image of $\id_X$ defines an element $\varphi_X(\id_X)$ in $\Hom_\cC(X,Y)$. We obtain a map
+\begin{equation}\label{eqn:yoneda-inverse}
+	\Hom_{\Fun(\cC^\opp,\Set)}(h_X,h_Y) \to \Hom_\cC(X,Y),\, \varphi \mapsto \varphi_X(\id_X).
+\end{equation}
+
+Using the definition of $h_f$, we see that for a morphism $f\colon X\to Y$ we have
+\[
+	h_{f,X}(\id_X) = f \circ \id_X = f,
+\]
+and hence that the composition of (\ref{eqn:yoneda-fully-faithfull}) followed by (\ref{eqn:yoneda-inverse}) is the
+identity on $\Hom_\cC(X,Y)$.
+
+To see that the other composition is the identity, let $\varphi\colon h_X\to h_Y$ be a morphism of functors. Under (\ref{eqn:yoneda-inverse})
+it is mapped to $\varphi_X(\id_X)$, which in turn under (\ref{eqn:yoneda-fully-faithfull}) is mapped to $h_{\varphi_X(\id_X)}$. To see that the morphisms of functors $\varphi$ and $h_{\varphi_X(\id_X)}$ coincide, it suffice to verify that for all $T$ in $\cC$ 
+the maps $h_{\varphi_X(\id_X),T}$ and $\varphi_T$ from $h_X(T)=\Hom(T,X)$ to $h_Y(T)=\Hom(T,Y)$ coincide.
+
+So let $g\in \Hom(T,X)$. We have
+\[
+	h_{\varphi_X(\id_X),T}(g) = \varphi_X(\id_X) \circ g. 
+\]
+Since $\varphi$ is a morphism of functors, the square
+\[
+\begin{tikzcd}
+\Hom_\cC(X,X) \arrow{r}{\varphi_X} \arrow{d}{-\circ g} & \Hom_\cC(X,Y) \arrow{d}{-\circ g} \\
+\Hom_\cC(T,X) \arrow{r}{\varphi_T} & \Hom_\cC(T,Y)
+\end{tikzcd}
+\]
+commutes. Tracing the element $\id_X$ under the two paths from $\Hom_\cC(X,X)$ to $\Hom_\cC(T,Y)$ we find
+\[
+	\varphi_X(\id_X) \circ g = \varphi_T(g)
+\]
+and hence
+\[
+	h_{\varphi_X(\id_X),T}(g) = \varphi_T(g),
+\]
+as we had to show.
+\end{proof}
+
+\begin{remark}
+There is something quite striking in the proof. The inverse bijection $\varphi \mapsto \varphi_X(\id_X)$ proceeds by first 
+removing from the morphism of functors $\varphi=(\varphi_T)_T$ all components except for the one at $T=X$, and then restricting the remaining function
+$\varphi_X$ to just the element $\id_X$ of $\Hom(X,X)$. Yet, despite this apparent massive loss of information, $\varphi \mapsto \varphi_X(\id_X)$ is a bijection, so that $\varphi$ can be completely recovered from $\varphi_X(\id_X)$.
+\end{remark}
+
+
+\begin{corollary}\label{cor:yoneda-iso}
+If $h_X$ and $h_Y$ are isomorphic functors, then $X$ and $Y$ are isomorphic objects in $\cC$. 
+\end{corollary}
+
+\begin{proof}
+See Exercise \ref{exc:fully-faithful-isomorphism}.
+\end{proof}
+
+% TODO: this needs a proof / or reference to exercise on isomorphisms and fully faithful categories
+
+\begin{corollary}[Uniqueness of right adjoints]
+If both $G_1\colon \cD \to \cC$ and $G_2\colon \cD \to \cC$ are right adjoints to a functor $F\colon \cC \to \cD$, then $G_1$ and $G_2$ are isomorphic functors.
+\end{corollary}
+
+\begin{proof}
+Choose adjunctions between $F$ and $G_1$ and between $F$ and $G_2$. Then we obtain isomorphisms
+\[
+	 \Hom_\cC( X, G_1Y ) \isomfrom \Hom_\cD( FX, Y ) \longisomto \Hom_\cC( X, G_2Y ),
+\]
+functorial in $X$ and $Y$. Composing these, we find for all $X$ in $\cC$ and $Y$ in $\cD$ an isomorphism
+\[
+	 \Hom_\cC( X, G_1Y ) \to \Hom_\cC( X, G_2Y ).
+\]
+Functoriality in $X$ implies that for every $Y$ in $\cD$ we find an isomorphism 
+\[
+	 \Hom_\cC( -, G_1Y) \longisomto \Hom_\cC( -, G_2Y )
+\]
+of functors $\cC^\opp \to \Set$, which by Yoneda's Lemma and Exercise \ref{exc:fully-faithful-isomorphism} 
+comes from a unique isomorphism
+\[
+	\gamma_{Y} \colon G_1Y \longisomto G_2Y
+\]
+in $\cC$. Functoriality in $Y$ implies that the collection $(\gamma_Y)_Y$ defines an isomorphism of functors
+\[
+	\gamma\colon G_1\longisomto G_2
+\]
+which finishes the proof.
+\end{proof}
+
+There is (of course) a dual of Yoneda's lemma. Given an object $X$ in $\cC$, consider the functor
+\[
+	h^X := \Hom_\cC(X,-)\colon \cC \to \Set.
+\]
+We have a functor
+\[
+	\cC^\opp \to \Fun(\cC,\Set),\, X \mapsto h^X
+\]
+On the level of morphisms it is given by sending a map $f\colon X \to Y$ to the natural transformation $h^f\colon h^Y \to h^X$ given by
+\[
+	h^f_T\colon \Hom_\cC(Y,T) \to \Hom_\cC(X,T),\, g \mapsto gf
+\]
+for every $T$ in $\cC$.
+
+\begin{theorem}[co-Yoneda's Lemma]\label{thm:co-yoneda}
+The functor
+\[
+	\cC^\opp \to \Fun(\cC,\Set),\, X \mapsto h^X
+\]
+is fully faithful. \qed
+\end{theorem}
+
+\begin{corollary}[Uniqueness of left adjoints]
+If both $F_1\colon \cC \to \cD$ and $F_2\colon \cC \to \cD$ are left adjoints to a functor $G\colon \cD \to \cC$, then $F_1$ and $F_2$ are isomorphic functors. \qed
+\end{corollary}
+
+
+\newpage
+\section*{Exercises}
+
+\begin{exercise}
+Verify that the unit $\eta$ and the co-unit $\epsilon$ of an adjunction are indeed morphisms of functors.
+\end{exercise}
+
+\begin{exercise}
+Let $F\colon \cC \to \cD$ be an equivalence  with quasi-inverse $G\colon \cD \to \cC$. Show that $F$ is both left and right adjoint to $G$.
+\end{exercise}
+
+\begin{exercise}\label{exc:abelianization-adjunction}
+Show that the abelianization functor $G\mapsto G^\ab$ (see Example \ref{exa:abelianization}) is a left adjoint to the inclusion functor $\Ab \to \Grp$. What are the unit and co-unit of this adjunction?
+\end{exercise}
+
+\begin{exercise}\label{exc:ordered-Z-and-R}
+Let $\cR$ be the category with $\ob \cR  = \bR$ and 
+\[
+	\Hom_\cR(x,y) = \begin{cases}
+	\{\star\} & x\leq y \\
+	\emptyset & x > y
+	\end{cases}
+\]
+for all $x,y\in \bR$ (see also Example \ref{exa:pre-ordered}). Let $\cZ$ be the full subcategory with $\ob \cZ =\bZ$ and let $F\colon \cZ \to \cR$ be the inclusion functor. Does this functor have a left adjoint? And a right adjoint? 
+\end{exercise}
+
+\begin{exercise}
+Assume $F\colon \cC_1\to \cC_2$ is left adjoint to $G\colon \cC_2\to \cC_1$ and $F'\colon \cC_2\to \cC_3$ is left adjoint to $G'\colon \cC_3\to\cC_2$. Show that $F'F$ is left adjoint to $GG'$. 
+\end{exercise}
+
+\begin{exercise}
+Let $\{\star\}$ be the `one-point category' consisting of a unique object $\star$ and a unique morphism $\id_\star$. Let $\cC$ be an arbitrary category. When does the (unique) functor $\cC \to \{\star\}$ have a left adjoint? And a right adjoint?
+\end{exercise}
+
+
+\begin{exercise}
+For a set $I$ denote by $\bZ[X_i \mid i\in I]$ the polynomial ring in variables $(X_i)$ indexed by $I$. Elements of $\bZ[X_i \mid i\in I]$ are finite $\bZ$-linear combinations of monomials in finitely many of the variables. Verify that $I\mapsto \bZ[X_i \mid i\in I]$ defines a functor $\Set \to \CRing$ which is left adjoint to the forgetful functor $\CRing \to \Set$.
+\end{exercise}
+
+
+\begin{exercise} 
+Let $F\colon \cC \to \cD$ be left adjoint to $G\colon \cD \to \cC$. Let $X$ be a cofinal object in $\cC$, show that $FX$ is cofinal in $\cD$. Similarly, if $Y$ is final in $\cD$, show that $GY$ is final in $\cC$. (Compare with Exercise \ref{exc:equivalence-final}).
+\end{exercise}
+
+\begin{exercise}\label{exc:forget-base-point}
+Show that the forgetful functor $\Top_\star \to \Top$ has a left adjoint but not a right adjoint.
+\end{exercise}
+
+
+\begin{exercise}
+Look up the definition of Stone-\v{C}ech compactification, and verify that it gives a left adjoint to the inclusion functor from the category of compact Hausdorff spaces to $\Top$. 
+\end{exercise}
+
+\begin{exercise}
+Let $G$ be a group and let $R$ be a  ring. Show that restriction defines a bijection between the sets of
+\begin{enumerate}
+\item ring homomorphisms $f\colon \bZ[G] \to R$ 
+\item group homomorphisms $G \to R^\times$.
+\end{enumerate}
+Interpret this bijection as an adjunction between functors between the categories of groups and rings.
+\end{exercise}
+
+\begin{exercise}[Triangle identities ($\star$)]
+Let $F\colon \cC \to \cD$ be a left adjoint to $G\colon \cD \to \cC$, with unit $\eta\colon \id_\cC \to GF$ and co-unit $\epsilon\colon FG \to \id_\cD$. Show that the diagrams
+\[
+\begin{tikzcd}
+FX \arrow{r}{F\eta_X} \arrow[swap]{rd}{\id} & FGFX \arrow{d}{\epsilon_{FX}} 
+	& & GY \arrow{r}{\eta_{GY}} \arrow[swap]{rd}{\id} & GFGY \arrow{d}{G\epsilon_Y} \\
+& FX & & & GY 
+\end{tikzcd}
+\]
+commute for every $X$ in $\cC$ and $Y$ in $\cD$. Conversely, assume that  $F\colon \cC \to \cD$ and $G\colon \cD \to \cC$
+are functors, and that  $\eta\colon \id_\cC \to GF$ and $\epsilon\colon FG \to \id_\cD$ are morphisms of functors for which the above triangles commute. Show that $F$ and $G$ form an adjoint pair of functors.
+\end{exercise}
+
+\begin{exercise}
+A functor $F\colon \cC^\opp \to \Set$ is called \emph{representable} if there exists an object $X$ in $\cC$ with $h_X \cong F$. We say that $F$ is \emph{represented} by $X$. Show that $\cC$ has a final object if and only if the constant functor $\cC^\opp \to \Set,\, T\mapsto \{\star\}$ is representable. 
+\end{exercise}
+
+\begin{exercise}
+Let $M$ be a right $R$-module and $N$ a left $R$-module. Describe a functor $F\colon \Ab^\opp \to \Set$ which is represented by the abelian group $M\otimes_R N$. Use this to verify that if $R$ is commutative, then $M\otimes_R N \cong N\otimes_R M$.
+\end{exercise}
+
+
+\begin{exercise}
+A functor $F\colon \cC\to \Set$ is called \emph{co-representable} if there exists an object $X$ in $\cC$ with $h^X\cong F$. 
+Let $f_1,\ldots, f_m \in \bZ[X_1,\ldots,X_n]$. Show that the functor
+\[
+	\CRing \to \Set,\, R \mapsto \{ x\in R^n \mid f_1(x)=\cdots=f_m(x)=0 \}
+\]
+of Example \ref{exa:pol-eq} is co-representable.
+\end{exercise}
+
+\begin{exercise}[$\star$]
+Show that the functor
+\[
+	\GL_n\colon \CRing \to \Set,\, R \mapsto \GL_n(R)
+\]
+of Exercise \ref{exc:functor-GLn} is co-representable. (Hint: first show that the functor $\GL_1\colon R \mapsto R^\times$ is isomorphic to $h^{R_1}$ with $R_1=\bZ[X,Y]/(XY-1)$.) Let $R_n$ be the commutative ring such that $\GL_n \cong h^{R_n}$. By the co-Yoneda lemma there is a unique ring homomorphism
+$R_1\to R_n$ inducing the natural transformation $\det\colon \GL_n\to \GL_1$. Describe  this ring homomorphism explicitly. 
+\end{exercise}
+
+\begin{exercise}[$\star$]
+For topological spaces $A$ and $Y$ define $C(A,Y)$ to be the set of continuous maps from $A$ to $Y$.  For every compact $K\subset A$ and open $U\subset Y$ let $C_{K,U}\subset C(A,Y)$ be the subset consisting of those $f\colon A\to Y$ with $f(K)\subset U$. We give $C(A,Y)$ the topology generated by the subsets $C_{K,U}$. (It is known as the compact-open topology). 
+
+Show that if $A$ is compact and Hausdorff, then the functor
+\[
+	\Top \to \Top \colon X \mapsto X\times A
+\]
+(giving $X\times A$ the product topology) is left adjoint to the functor
+\[
+	\Top \to \Top\colon Y \mapsto C(A,Y).
+\]
+\end{exercise}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTER: LIMITS AND COLIMITS 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
