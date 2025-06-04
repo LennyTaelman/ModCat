@@ -2108,7 +2108,7 @@ A typical example is the functor
 \]
 which can be defined for any locally small category $\cC$. If $f\colon X'\to X$ and $g\colon Y\to Y'$ are morphisms in $\cC$ (take note of the directions of the arrows), then we have an induced morphism
 \[	
-	\Hom(f,g)\colon \Hom(X,Y) \to \Hom_R(X',Y'),
+	\Hom(f,g)\colon \Hom(X,Y) \to \Hom(X',Y'),
 \]
 which is given by $\alpha \mapsto g\alpha f$. One says that $\Hom(-,-)$ is contravariant in the first, and covariant in the second argument.
 \end{example}
@@ -3973,7 +3973,7 @@ Of course, the limit of $\cI \to \cC$, if it exists, is unique up to unique isom
 
 
 \begin{examples}\label{exa:three-limits}
-If $\cI$ the discrete category on a set $I$ (see \ref{exa:discrete}), then $\lim_\cI X$ is the product $\prod_{i\in I} X_i$ (if it exists). If $\cI$ is empty, then the limit of the unique functor $\emptyset\to \cC$ is the final object of $\cC$ (if it exists). Taking for $\cI$ the category
+If $\cI$ the discrete category on a set $I$ (see \ref{exa:discrete-cat}), then $\lim_\cI X$ is the product $\prod_{i\in I} X_i$ (if it exists). If $\cI$ is empty, then the limit of the unique functor $\emptyset\to \cC$ is the final object of $\cC$ (if it exists). Taking for $\cI$ the category
 \[
 \begin{tikzcd}[row sep=small]
 	1 \arrow{rd} & \\  & 2, \\ 3 \arrow{ru} & 
