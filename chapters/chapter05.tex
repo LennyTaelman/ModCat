@@ -220,13 +220,13 @@ This can be combined with the notion of a contravariant functor.
 \begin{example}\label{exa:hom-in-two-arguments}
 A typical example is the functor
 \[
-	\Hom(-,-) \colon \cC^\opp \times \cC \to \Set,
+	\Hom_\cC(-,-) \colon \cC^\opp \times \cC \to \Set,
 \]
 which can be defined for any locally small category $\cC$. If $f\colon X'\to X$ and $g\colon Y\to Y'$ are morphisms in $\cC$ (take note of the directions of the arrows), then we have an induced morphism
 \[	
-	\Hom(f,g)\colon \Hom(X,Y) \to \Hom(X',Y'),
+	\Hom_\cC(X,Y) \to \Hom_\cC(X',Y'),
 \]
-which is given by $\alpha \mapsto g\alpha f$. One says that $\Hom(-,-)$ is contravariant in the first, and covariant in the second argument.
+which is given by $\alpha \mapsto g\alpha f$. One says that $\Hom_\cC(-,-)$ is contravariant in the first, and covariant in the second argument.
 \end{example}
 
 
